@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" loading="lazy">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CARHABTI, Your reliable car rental service.">
+    <meta name="keywords" content="car rental, auto, voiture, CARHABTI">
+    <meta name="author" content="Riadh Ghedira">
+    <title>CARHABTI</title>
+    <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <script defer src="./js/script.js"></script>
+</head>
+<body>
+    <div class="loading-screen" id="loading-screen">
+        <div class="tenor-gif-embed loading-gif" data-postid="15569727744487704912" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/loading-image-gif-15569727744487704912">Loading Image Sticker</a>from <a href="https://tenor.com/search/loading+image-stickers">Loading Image Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <h3 class="loading">loading...</h3>
+    </div>
+    <header class="header">
+        <div class="logo"><a href="#top" class="a-reverse"><img src="./src/logo.webp" alt="Logo" width="120"></a></div>
+        <nav class="main-nav">
+            <ul>
+                <li class="reverse-btn a-reverse"><a href="#top" class="a-reverse">Accueil</a></li>
+                <li><a href="#reservation">Reservation</a></li>
+                <li><a href="#agence">Nos agences</a></li>
+                <li><a href="#contact-form">Contact</a></li>
+            </ul>
+        </nav>
+        <nav class="login">
+            <ul>
+                <li><a href="">connexion</a></li>
+                <li class="reverse-btn a-reverse"><a class="a-reverse" href="">inscription</a></li>
+            </ul>
+        </nav>
+        <button type="button" class="nav-btn hidden " id="nav-btn" onclick="toggleSection()">☰</button>
+        
+    </header>
+    <section id="side-nav" class="side-nav hidden">
+        <button type="button" class="close-btn" onclick="toggleSection()">✖</button>
+        <nav class="navsection">
+            <ul>
+                <li class="reverse-btn a-reverse"><a href="#top" class="a-reverse">Accueil</a></li>
+                <li><a href="#reservation">Reservation</a></li>
+                <li><a href="#agence">Nos agences</a></li>
+                <li><a href="#contact-form">Contact</a></li>
+            </ul>
+            <ul>
+                <li><a href="">connexion</a></li>
+                <li class="reverse-btn a-reverse"><a class="a-reverse" href="">inscription</a></li>
+            </ul>
+        </nav>
+    </section>
+<a id="top"></a>
+    <main class="main">
+        
+    </main>
+    <footer >
+        <section class="footer">
+            <section class="contact">
+                <div class="name inline"><img src="./src/logo-white.webp" alt="CARHABTI" width="200"></div>
+                <h5 class="inline"><big>📞</big><a href="tel:+216 22 222 222"> + 216  22 222 222</a></h5>
+                <h5 class="inline"><big>📧</big><a href="mailto:booking@carhabti.tn"> booking@carhabti.tn</a> </h5>
+            </section>
+            <section class="agence">
+                <h2>Nos agences</h2>
+                <ul class="agence-list">
+                    <li><a href="">CARHABTI Tunis</a></li>
+                    <li><a href="">CARHABTI Airport TUNIS CARTHAGE</a></li>
+                    <li><a href="">CARHABTI Nabeul</a></li>
+                    <li><a href="">CARHABTI Grombalia</a></li>
+                    <li><a href="">CARHABTI Airport NFIDHA</a></li>
+                    <li><a href="">CARHABTI Sousse</a></li>
+                    <li><a href="">CARHABTI Monastir</a></li>
+                    <li><a href="">CARHABTI Airport HABIB BOURGUIBA MONASTIR</a></li>
+                    <li><a href="">CARHABTI Houmet Souk</a></li>
+                    <li><a href="">CARHABTI Airport DJERBA JIRJIS</a></li>
+                </ul>
+            </section>
+            <section class="follow-us">
+                <h2>Follow Us</h2>
+                <div class="social-nav"><a href="#">Facebook</a> | <a href="#">Youtube</a> | <a href="#">Instagram</a></div>
+            </section>
+            <section id="contact-form" class="contact-form">
+                <h2>Contact Us</h2>
+                <form action="https://httpbin.org/post" method="get">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Jhon Doe" />
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@example.com"/>
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Write your Message."></textarea>
+                    
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+            
+        </section>
+        <hr>
+        <p><small class="Copyright">Copyright 2025 • Carhabti, All Rights Reserved</small></p>
+    </footer>
+</body>
+</html>
