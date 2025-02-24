@@ -10,11 +10,13 @@
     <title>CARHABTI</title>
     <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="./js/script.js"></script>
+    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="loading-screen" id="loading-screen">
-        <div class="tenor-gif-embed loading-gif" data-postid="15569727744487704912" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/loading-image-gif-15569727744487704912">Loading Image Sticker</a>from <a href="https://tenor.com/search/loading+image-stickers">Loading Image Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <div class="loader"></div>
         <h3 class="loading">loading...</h3>
     </div>
     <header class="header">
@@ -40,20 +42,108 @@
         <button type="button" class="close-btn" onclick="toggleSection()">✖</button>
         <nav class="navsection">
             <ul>
-                <li class="reverse-btn a-reverse"><a href="#top" class="a-reverse">Accueil</a></li>
+                <li class="btn a-reverse"><a href="#top" class="a-reverse">Accueil</a></li>
                 <li><a href="#reservation">Reservation</a></li>
                 <li><a href="#agence">Nos agences</a></li>
                 <li><a href="#contact-form">Contact</a></li>
             </ul>
             <ul>
                 <li><a href="">connexion</a></li>
-                <li class="reverse-btn a-reverse"><a class="a-reverse" href="">inscription</a></li>
+                <li class="btn a-reverse"><a class="a-reverse" href="">inscription</a></li>
             </ul>
         </nav>
     </section>
 <a id="top"></a>
     <main class="main">
-        
+        <section class="home flex" id="home">
+            <div class="slogon">
+                <h1>Location simple <br>et <span class="bleu">Abordable</span></h1>
+                <p>Avec plus de 20 ans d'experience, CARHABTI <br> est un des principaux loueur de voiture au <br>Tunisie</p>
+            </div>
+            <div class="table flex">
+                <div class="table-column">
+                    <div class="line">
+                        <i class="icons fa-solid fa-location-dot"></i>
+                        <div>
+                            <h4>lieu de départ</h4>
+                            <p>Search your location</p>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <i class="icons fa-solid fa-location-dot"></i>
+                        <div>
+                            <h4>lieu de retour</h4>
+                            <p>Search your location</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-column">
+                    <div class="line">
+                        <hr>
+                        <i class="icons fa-solid fa-calendar-days"></i>
+                        <div>
+                            <h4>date de départ</h4>
+                            <p>Thu 16 Feb</p>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <hr>
+                        <i class="icons fa-solid fa-calendar-days"></i>
+                        <div>
+                            <h4>date de retour</h4>
+                            <p>Thu 16 Feb</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-column heure">
+                    <div class="line ">
+                        <hr>
+                        <i class="icons fa-regular fa-clock"></i>
+                        <div>
+                            <h4>heure</h4>
+                            <p>09:00</p>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <hr>
+                        <i class="icons fa-regular fa-clock"></i>
+                        <div>
+                            <h4>heure</h4>
+                            <p>09:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-column">
+                    <h4 class="reserver">reserver</h4>
+                </div>
+            </div>
+        </section>
+        <section class="how flex">
+            <h3>Comment louer une voiture?</h3>
+            <h2>Louez avec les trois étapes suivantes</h2>
+            <div class="steps">
+                <div class="step">
+                    <i class="icons fa-solid fa-search"></i>
+                    <h4>Renseignez la date/lieu</h4>
+                    <p>Entez le créneau et la ville auquels vous souhaitez prendre/rendre votre voiture</p>
+                </div>
+                <div class="step">
+                    <i class="icons fa-solid fa-calendar-days"></i>
+                    <h4>Choisissez votre voiture</h4>
+                    <p>Faites votre choix en indiquant vos préférences ; les disponibilités sont en temps réel !</p>
+                </div>
+                <div class="step">
+                    <i class="icons fa-solid fa-car"></i>
+                    <h4>Valider le paiement</h4>
+                    <p>Entrez les informations nécessaires et effectuez votre paiement en ligne</p>
+                </div>
+            </div>
+            <div class="brands">
+                <ul>
+
+                </ul>
+            </div>
+        </section>
     </main>
     <footer >
         <section class="footer">
@@ -79,7 +169,7 @@
             </section>
             <section class="follow-us">
                 <h2>Follow Us</h2>
-                <div class="social-nav"><a href="#">Facebook</a> | <a href="#">Youtube</a> | <a href="#">Instagram</a></div>
+                <div class="social-nav flex"><a href="#"><i class="fa-brands fa-square-facebook"></i></a> <hr> <a href="#"><i class="fa-brands fa-instagram"></i></a> <hr> <a href="#"><i class="fa-brands fa-youtube"></i></a></div>
             </section>
             <section id="contact-form" class="contact-form">
                 <h2>Contact Us</h2>
