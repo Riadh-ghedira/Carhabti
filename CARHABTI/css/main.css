@@ -1,0 +1,360 @@
+.main{
+    width: 100%;
+    box-sizing: border-box;
+    text-align: start;
+    text-wrap: nowrap;
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+    position: relative;
+}
+.main section{
+    margin-top: 100px;
+    width: 100%;
+    min-height: calc(100vh - 140px);
+    padding-block: 20px;
+}
+.slogon{
+    margin-left: 10%;
+}   
+.slogon h1{font-size: 3rem;}
+.slogon p{
+    margin-top: 10px;
+    font-size: 1rem;
+    text-wrap: wrap;
+    line-height: 1.5;
+}
+.bleu {
+    display: inline-block;
+    position: relative;
+    font-weight: bold;
+    color: var(--bleu); 
+}
+.bleu::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 12px;
+    background: var(--bleu);
+    border-radius: 50% 50% 0 0;
+    transform: skewY(-3deg); 
+    transform: scaleX(1.2);
+}
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: url('../src/bleu-porsh.png') no-repeat right center;
+    background-size:contain;
+    position: relative;
+    
+}
+.home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    transform: translateX(-100px);
+    width: 100%;
+    height: 100%;
+    opacity: 0.9 /* Adjust the opacity as needed */
+}
+.home * {
+    position: relative;
+    z-index: 101;
+}
+.table{
+    width: calc(100% - 20%);
+    background-color: var(--bg-color);
+    align-self: center;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+    padding: 10px;
+    padding-inline: 2%;
+    border-radius: 10px;
+    height: max-content;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.table-column{align-items: center;}
+.line{
+    display: flex;
+    column-gap: 20px;
+    padding: 10px;
+    align-content: center;
+    line-height: 1;
+}
+.line h4{text-transform: uppercase; font-size: 1rem;}
+.line p{font-size: 0.9rem;opacity: 0.5;}
+.line hr{opacity: 0.8; width: 0; height: 25px; align-self: center;}
+.reserver{
+    background-color: var(--btn-light);
+    color: var(--footer-color);
+    padding: 10px;
+    padding-inline: 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+.line .icons{
+    font-size: 1.4rem;
+    opacity: 0.5;
+    align-self: center;
+}
+
+.how{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.how h3{
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--bleu);
+    background-color: var(--bleu-transparent);
+    margin-bottom: 20px;
+}
+.how h2,.why h2 ,.why h2{
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+.steps{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: top;
+    column-gap: 20px;
+    row-gap: 20px;
+    flex-wrap: wrap;
+    width: calc(100% - 20%);
+}
+.step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 300px;
+    padding: 10px;
+    text-wrap: wrap;
+}
+.step h4{
+        font-size: 1.3rem;
+}
+.step p{
+        font-size: 1rem;
+}
+.step .icons{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--bleu);
+    padding: 50px;
+    border-radius: 20%;
+    background-color: var(--bleu-transparent);
+}
+.brands{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+
+}
+.why{
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-inline: 10%;
+    
+}
+.why div{
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    min-width: 400px;
+    
+}
+.why div h3{
+    text-align: start;
+    text-overflow: unset;
+    text-wrap: nowrap;
+    width:min-content;
+    background-color: var(--bleu-transparent);
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--bleu);
+    margin-bottom: 30px;
+}
+.audi{
+    z-index: 0;
+    display: block;
+    height: 90vh;
+    align-self: flex-start;
+    left: -35px;
+    margin-block: auto;
+    position:sticky;  
+}
+.why-list{
+    margin-top: 40px;
+}
+.why-list li{
+    display: flex;
+    column-gap: 10px;
+    margin-block: 40px;
+    line-height: 1.4;
+}
+.why-list li div h4{
+    font-size: 1.6rem;
+}
+.why-list li div p{
+    font-size: 1.2rem;
+    text-wrap: wrap;
+    max-width: 400px;
+}
+.div ul li{
+    display: flex;
+    align-items: center;
+}
+.why-item .icons{
+    color: var(--bleu);
+    font-size: 2rem;
+    padding: 30px;
+    background-color: var(--bleu-transparent);
+    border-radius: 10px;
+}
+
+/*dark mode*/
+@media (prefers-color-scheme: dark) {
+    .table{background-color: var(--btn-dark);}
+    .line .icons{color: var(--bleu);}
+}
+/*------------------------------------------------------*/
+/*responsive display*/
+@media (max-width: 760px) {
+    .title div {
+        font-size: 2rem;
+        flex-direction: column;
+        row-gap: 50px;
+    }
+    .title div img {
+        width: 250px;
+        height: 250px;
+    }
+    .title div h1{
+        font-size: 4rem;
+        max-width: 50%;
+    }
+    .social-nav{justify-self: center;}
+    .small{
+        font-size: 0.8rem;
+        display: none;
+    }
+    .table{justify-content: space-evenly;}
+    .heure{display: none;}
+    .table-column{row-gap: 30px;}
+    .how {
+        padding-block: 10px;
+    }
+    .how h3,.why h3 {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+    .how h2 {
+        font-size: 1rem;
+        text-wrap: wrap;
+        text-align: center;
+    }
+    .why h2{
+        font-size: 1rem;
+        text-wrap: wrap;
+    }
+    .steps {
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+    }
+    .step h4{
+        font-size: 1rem;
+    }
+    .step p{
+        font-size: 0.9rem;
+    }
+    .step {
+        max-width: 100%;
+        padding: 5px;
+    }
+    .step .icons {
+        font-size: 2rem;
+        padding: 30px;
+    }
+    .div{
+        min-width: 430px;
+        padding-right: 40px;
+    }
+    
+}
+
+@media (max-width: 1084px) {
+    .slogon{
+    margin-left: 7%;
+    margin-top: 100px;
+    }    
+    .slogon h1{font-size: 2.5rem;}
+    .slogon p{
+        margin-top: 10px;
+        font-size: 1rem;
+        text-wrap: wrap;
+        line-height: 1.5;
+    }
+    .reserver{align-self: center; font-size: 0.9rem;}
+    .table{width: calc(100% - 14%);padding-inline: 10px;}
+    .line h4{font-size: 0.9rem;}
+    .line p{font-size: 0.8rem;} 
+    .line .icons{font-size: 1.4rem;}
+    .how h2,.why h2 {
+       font-size: 2rem;
+    }
+    .how h3,.why h3 {
+        font-size: 0.9rem;
+    }
+    .step h4{
+        font-size: 1.2rem;
+    }
+    .step .icons {
+        font-size: 2.5rem;
+        padding: 40px;
+    } 
+    .step {
+        padding: 5px;
+    }
+    .brands{
+        flex-wrap: wrap;
+    }
+    .brand{
+        margin: 10px;
+    }
+}
+
+/*animation*/
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slideIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes slideOut { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes slideOutLeft { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes slideInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slideOutBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
+@keyframes slideInTop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/*--------------------------------------------------------------------------------*/
