@@ -185,9 +185,6 @@ header{
 .main{
     width: 100%;
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    margin-top: 120px;
     text-align: start;
     text-wrap: nowrap;
     display: flex;
@@ -195,9 +192,14 @@ header{
     min-height: 100vh;
     position: relative;
 }
+.main section{
+    margin-top: 100px;
+    width: 100%;
+    min-height: calc(100vh - 140px);
+    padding-block: 20px;
+}
 .slogon{
     margin-left: 10%;
-    margin-top: 5%;
 }   
 .slogon h1{font-size: 3rem;}
 .slogon p{
@@ -225,12 +227,10 @@ header{
     transform: scaleX(1.2);
 }
 .home{
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    height: calc(100vh - 120px);
     background: url('../src/bleu-porsh.png') no-repeat right center;
     background-size:contain;
     position: relative;
@@ -289,15 +289,12 @@ header{
     opacity: 0.5;
     align-self: center;
 }
+
 .how{
-    margin-top: 100px;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    min-height: calc(100vh - 120px);
-    padding-block: 20px;
 }
 .how h3{
     font-size: 1rem;
@@ -307,7 +304,7 @@ header{
     background-color: var(--bleu-transparent);
     margin-bottom: 20px;
 }
-.how h2{
+.how h2,.why h2 ,.why h2{
     font-size: 2.4rem;
     margin-bottom: 20px;
 }
@@ -342,6 +339,78 @@ header{
     padding: 50px;
     border-radius: 20%;
     background-color: var(--bleu-transparent);
+}
+.brands{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+
+}
+.why{
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-inline: 10%;
+    
+}
+.why div{
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    min-width: 400px;
+    
+}
+.why div h3{
+    text-align: start;
+    text-overflow: unset;
+    text-wrap: nowrap;
+    width:min-content;
+    background-color: var(--bleu-transparent);
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--bleu);
+    margin-bottom: 30px;
+}
+.audi{
+    z-index: 0;
+    display: block;
+    height: 90vh;
+    align-self: flex-start;
+    left: -35px;
+    margin-block: auto;
+    position:sticky;  
+}
+.why-list{
+    margin-top: 40px;
+}
+.why-list li{
+    display: flex;
+    column-gap: 10px;
+    margin-block: 40px;
+    line-height: 1.4;
+}
+.why-list li div h4{
+    font-size: 1.6rem;
+}
+.why-list li div p{
+    font-size: 1.2rem;
+    text-wrap: wrap;
+    max-width: 400px;
+}
+.div ul li{
+    display: flex;
+    align-items: center;
+}
+.why-item .icons{
+    color: var(--bleu);
+    font-size: 2rem;
+    padding: 30px;
+    background-color: var(--bleu-transparent);
+    border-radius: 10px;
 }
 /*partie footer*/
 footer {
@@ -561,7 +630,7 @@ footer hr{
     .how {
         padding-block: 10px;
     }
-    .how h3 {
+    .how h3,.why h3 {
         font-size: 0.8rem;
         padding: 8px;
     }
@@ -569,6 +638,10 @@ footer hr{
         font-size: 1rem;
         text-wrap: wrap;
         text-align: center;
+    }
+    .why h2{
+        font-size: 1rem;
+        text-wrap: wrap;
     }
     .steps {
         flex-direction: column;
@@ -589,6 +662,11 @@ footer hr{
         font-size: 2rem;
         padding: 30px;
     }
+    .div{
+        min-width: 430px;
+        padding-right: 40px;
+    }
+    
 }
 
 @media (max-width: 1084px) {
@@ -645,10 +723,10 @@ footer hr{
     .line h4{font-size: 0.9rem;}
     .line p{font-size: 0.8rem;} 
     .line .icons{font-size: 1.4rem;}
-    .how h2 {
+    .how h2,.why h2 {
        font-size: 2rem;
     }
-    .how h3 {
+    .how h3,.why h3 {
         font-size: 0.9rem;
     }
     .step h4{
@@ -660,5 +738,11 @@ footer hr{
     } 
     .step {
         padding: 5px;
+    }
+    .brands{
+        flex-wrap: wrap;
+    }
+    .brand{
+        margin: 10px;
     }
 }
