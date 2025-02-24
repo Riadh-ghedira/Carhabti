@@ -402,7 +402,7 @@ footer * {
     text-decoration: underline;
     text-wrap: wrap;
 }
-.social-nav{font-size: 2rem; column-gap: 15px; align-content: center; align-self: center;justify-self: center;}
+.social-nav{font-size: 2rem; column-gap: 15px; align-content: center; align-self: center;}
 .social-nav hr{height: 30px; opacity: 1; }
 .contact-form {
     display: flex;
@@ -550,7 +550,7 @@ footer hr{
         font-size: 4rem;
         max-width: 50%;
     }
-    
+    .social-nav{justify-self: center;}
     .small{
         font-size: 0.8rem;
         display: none;
