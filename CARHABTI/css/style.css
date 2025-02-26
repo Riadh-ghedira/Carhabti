@@ -76,6 +76,7 @@ a:hover{cursor: pointer;opacity: 0.7;}
 }
 .hidden{display: none;}
 .flex{display: flex;}
+.center{display: flex; flex-direction: column; justify-content: center;}
 .inline{
     display: flex;
     padding-inline: 10px;
