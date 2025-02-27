@@ -112,18 +112,18 @@
     align-items: center;
     justify-content: space-evenly;
 }
-.how h3 , .parc-prev h3 ,.why h3{
+section h3{
     text-overflow: unset;
     text-wrap: nowrap;
     width:min-content;
     background-color: var(--bleu-transparent);
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 10px;
     border-radius: 10px;
     color: var(--bleu);
     margin-bottom: 30px
 }
-.how h2,.why h2 ,.parc-prev h2{
+section h2{
     font-size: 2.4rem;
     margin-bottom: 20px;
     text-wrap: wrap;
@@ -278,6 +278,9 @@
     border: none;
     box-shadow: 4px 3px 5px rgba(0,0,0,0.2);
 }
+.parc-btn:hover{
+        background-color: var(--btn-light-hover);
+}
 .parc{
     column-gap: 30px;
     justify-content: space-evenly;
@@ -287,11 +290,63 @@
     scrollbar-width: none;
     padding-inline: 2%;
 }
+.map{text-align: center;align-items: center;row-gap: 20px;padding-block: 50px;}
+.map-img{
+    padding: 10px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    width: 400px;
+    z-index: 20;
+}
+.deco::before{
+    content: '\201D';
+    position: absolute;
+    color: var(--bleu-transparent);
+    font-size: 35rem;
+    font-family: sans-serif;
+    z-index: 10;
+    line-height: 100px;
+    rotate: 180deg;
+    transform: translate(500px);       
+}
+    
+.deco::after{
+    content: '\201B\201B';
+    position: absolute;
+    color: var(--bleu-transparent);
+    font-size: 35rem;
+    line-height: 100px;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    z-index: 10;
+    rotate: 180deg;
+    transform: translate(-200px , 200px);         
+}
 
 /*dark mode*/
 @media (prefers-color-scheme: dark) {
     .table{background-color: var(--btn-dark);}
     .line .icons{color: var(--bleu);}
+    .car{
+        background-color: var(--btn-dark);
+        color: whitesmoke;
+    }
+    .car-img{
+        background-blend-mode: soft-light;
+        color: var(--btn-dark);
+        image-rendering: optimizeQuality;
+        mask-image: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.7) , var(--bleu-transparent));    
+    }
+    .parc-btn{
+        background-color: var(--btn-dark);
+        color: rgba(245, 245, 245,0.7);
+    }
+    .parc-btn:hover{
+        background-color: var(--btn-light-hover);
+        color: whitesmoke;
+
+    }
+    .map-img{background-color: var(--btn-dark);}
 }
 /*------------------------------------------------------*/
 /*responsive display*/
