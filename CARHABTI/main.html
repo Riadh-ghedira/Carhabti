@@ -274,8 +274,16 @@
             <h2>Découvrez nos différentes implantations au Tunisie</h2>
             <h1 class="deco"></h1>
             <img class="map-img" src="./src/map.webp" alt="" width="200">
+            <button class="parc-btn btn" onclick="togglemap()">
+                Voir dans Google Maps →
+            </button>
         </section>
+        
     </main>
+    <section class="mapview" id="mapview">
+        <button type="button" class="close-btn" onclick="togglemap()">✖</button>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d51106.80286534704!2d10.110451466518674!3d36.81432192553028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2stn!4v1740685831933!5m2!1sen!2stn" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
     <footer >
         <section class="footer">
             <section class="contact">
@@ -317,6 +325,7 @@
                     <button type="submit">Submit</button>
                 </form>
             </section>
+            
             
         </section>
         <hr>
