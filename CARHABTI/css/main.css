@@ -17,7 +17,7 @@
 .slogon{
     margin-left: 10%;
 }   
-.slogon h1{font-size: 3rem;}
+.slogon h1{font-size: 2.5rem;}
 .slogon p{
     margin-top: 10px;
     font-size: 1rem;
@@ -71,7 +71,7 @@
     align-self: center;
     box-sizing: border-box;
     margin-bottom: 50px;
-    padding: 10px;
+    padding: 1rem;
     padding-inline: 2%;
     border-radius: 10px;
     height: max-content;
@@ -89,7 +89,7 @@
     line-height: 1;
 }
 .line h4{text-transform: uppercase; font-size: 1rem;}
-.line p{font-size: 0.9rem;opacity: 0.5;}
+.line p{font-size: 0.8rem;opacity: 0.5;}
 .line hr{opacity: 0.8; width: 0; height: 25px; align-self: center;}
 .reserver{
     background-color: var(--btn-light);
@@ -147,7 +147,7 @@ section h2{
     text-wrap: wrap;
 }
 .step h4{
-        font-size: 1.3rem;
+        font-size: 1.2rem;
 }
 .step p{
         font-size: 1rem;
@@ -156,7 +156,7 @@ section h2{
     font-size: 2.5rem;
     margin-bottom: 10px;
     color: var(--bleu);
-    padding: 50px;
+    padding: 1.2rem;
     border-radius: 20%;
     background-color: var(--bleu-transparent);
 }
@@ -194,7 +194,16 @@ section h2{
     align-self: flex-start;
     left: -35px;
     margin-block: auto;
-    position:sticky;  
+    position:sticky; 
+    opacity: 0.9;
+}
+.why-item .icons{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--bleu);
+    padding: 1.2rem;
+    border-radius: 20%;
+    background-color: var(--bleu-transparent);
 }
 .why-list{
     margin-top: 40px;
@@ -206,23 +215,16 @@ section h2{
     line-height: 1.4;
 }
 .why-list li div h4{
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 .why-list li div p{
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-wrap: wrap;
     max-width: 400px;
 }
 .div ul li{
     display: flex;
     align-items: center;
-}
-.why-item .icons{
-    color: var(--bleu);
-    font-size: 2rem;
-    padding: 30px;
-    background-color: var(--bleu-transparent);
-    border-radius: 10px;
 }
 .parc-prev{
     align-content: center;
@@ -264,14 +266,14 @@ section h2{
     justify-content: space-between;
     box-sizing: border-box;
     padding: 10px ;
-    font-size: 1rem;
+    font-size: 0.9rem;
     opacity: 0.8;
 
 }
 .parc-btn{
     width: fit-content;
-    padding: 10px 30px;
-    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
     align-self: center;
     border-radius: 10px;
     margin-top: 30px;
@@ -398,16 +400,35 @@ section h2{
     .how {
         padding-block: 10px;
     }
-    .how h3,.why h3 {
+    .why {
+        padding-block: 10px;
+        padding-inline: 5%;
+    }
+    .why-item div p{
+        font-size: 0.8rem;
+        text-wrap: wrap;
+
+    }
+    .why-item .icons{
+        font-size: 1.8rem;
+        padding: 1rem;
+    }
+    .how h3,.why h3 ,.parc-prev h3 , .map h3{
         font-size: 0.8rem;
         padding: 8px;
+    }
+    .audi{
+        transform: translateY(110px);
+    }
+    .why-list{
+        margin-top: 15px;
     }
     .how h2 {
         font-size: 1rem;
         text-wrap: wrap;
         text-align: center;
     }
-    .why h2{
+    .why h2,.parc-prev h2{
         font-size: 1rem;
         text-wrap: wrap;
     }
@@ -428,7 +449,7 @@ section h2{
     }
     .step .icons {
         font-size: 2rem;
-        padding: 30px;
+        padding: 1rem;
     }
     .div{
         min-width: 430px;
@@ -442,30 +463,30 @@ section h2{
     margin-left: 7%;
     margin-top: 100px;
     }    
-    .slogon h1{font-size: 2.5rem;}
+    .slogon h1{font-size: 2rem;}
     .slogon p{
         margin-top: 10px;
-        font-size: 1rem;
+        font-size: 0.9rem;
         text-wrap: wrap;
         line-height: 1.5;
     }
     .reserver{align-self: center; font-size: 0.9rem;}
     .table{width: calc(100% - 14%);padding-inline: 10px;}
     .line h4{font-size: 0.9rem;}
-    .line p{font-size: 0.8rem;} 
+    .line p{font-size: 0.7rem;} 
     .line .icons{font-size: 1.4rem;}
-    .how h2,.why h2 {
+    .how h2,.why h2 , .parc-prev h2 , .map h2{
        font-size: 2rem;
     }
-    .how h3,.why h3 {
+    .how h3,.why h3 , .parc-prev h3 , .map h3{
         font-size: 0.9rem;
     }
     .step h4{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
-    .step .icons {
-        font-size: 2.5rem;
-        padding: 40px;
+    .step .icons , .why-item .icons{
+        font-size: 1.8rem;
+        padding: 1rem;
     } 
     .step {
         padding: 5px;
@@ -475,6 +496,13 @@ section h2{
     }
     .brand{
         margin: 10px;
+    }
+    .why-item div p{
+        font-size: 0.8rem;
+        text-wrap: wrap;
+    }
+    .why-item div h4{
+        font-size: 1.2rem;
     }
 }
 

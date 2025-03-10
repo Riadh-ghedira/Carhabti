@@ -1,7 +1,9 @@
 :root {
     --bg-color: #F7FBFF;
+    --bg-color-08: rgb(247, 251, 255,.8);
     --text-color: #3c3744;
     --dark-bg-color: #1b1e26;
+    --dark-bg-color-08: rgb(27, 30, 38,.8);
     --dark-text-color: #eaeaea;
     --footer-bg: #051C34;
     --footer-color: #eaeaea;
@@ -96,6 +98,7 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-x: clip;
+    font-size: 16px; 
 }
 /*side nav*/
 .side-nav{
@@ -109,13 +112,17 @@ body{
     z-index: 500;
     opacity: 1;
     animation: slideInRight 0.2s  ease-in forwards;
-    transition: 0.5s;
+    transition: 1s;
     padding: 1rem;
     box-sizing: border-box;
     display: none;
     justify-content: center;
     padding-top: 80px;
 }
+.side-nav.fadeout {
+    animation: slideOutRight 0.2s ease-out forwards;
+}
+.side-nav:hover{background-color: var(--bleu); transition: 0.3s;}
 .nav-btn{
     font-size: 1.5rem;
     cursor: pointer;
@@ -168,22 +175,26 @@ header{
     height: 70px;
     display: flex;
     justify-content: space-between; 
+    background-color: var(--bg-color-08);
     align-items: center;
     border-color: inherit;
-    background-color: var(--bg-color);
     color: var(--btn-light);
-    padding: 0.3rem 0.8rem;
+    padding: 0.5rem 1rem;
     box-sizing: border-box;
     padding-inline: 3%;
 }
+header:hover{background-color: var(--bg-color);}
 .logo {margin-top: 5px;}
 .logo:hover{opacity: 1;cursor: pointer;}
 .login ul,.main-nav ul{
     display: flex;
-    column-gap: 20px;
+    column-gap: 15px;
     text-transform: uppercase;
     font-size: small;
     align-items: center;
+}
+.main-nav ul li, .login ul li {
+    font-size: 0.9rem;
 }
 /*------------------------------------------------------------------------*/
 
@@ -260,7 +271,7 @@ footer * {
 .contact-form h2 {
     text-align: center;
     margin-bottom: 10px;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 .contact-form label {
     display: block;
@@ -276,7 +287,7 @@ footer * {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 .contact-form button {
     display: block;
@@ -325,11 +336,18 @@ footer hr{
 /*--------------------------------------------------------------------------------*/
 /*dark mode*/
 @media (prefers-color-scheme: dark) {
-    body {
+    body, .loading-screen {
         background: var(--dark-bg-color);
         color: var(--dark-text-color);
     }
-    .header{background-color: var(--dark-bg-color);}
+    .header {
+        background: var(--dark-bg-color-08);
+        color: var(--dark-text-color);
+    }
+    .header:hover{
+        background-color: var(--dark-bg-color);
+        transition: 0.5s;
+    }
     .side-nav {background: var(--dark-header-footer-bg);}
     .contact-form input , .contact-form textarea {
         background-color: var(--dark-bg-color);
