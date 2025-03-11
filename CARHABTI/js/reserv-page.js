@@ -1,23 +1,11 @@
-class Car {
-  constructor(img, name, price, climatisation, transmission, fuel) {
-    this.img = img;
-    this.name = name;
-    this.price = price;
-    this.climatisation = climatisation;
-    this.transmission = transmission;
-    this.fuel = fuel;
-    this.personne = personne;
-  }
-}
 const reservation = document.getElementById('reservation');
 const parc = document.getElementById('parc');
-
 const carImg = document.getElementById('car-img');
 const carName = document.getElementById('car-name');
 const carPrice = document.getElementById('car-price');
 const transmission = document.getElementById('transmission');
 const fuel = document.getElementById('fuel');
-const personne = document.getElementById('personne');
+const passager = document.getElementById('passager');
 
 const setCar = (car) => {
   carImg.src = car.img;
@@ -25,11 +13,12 @@ const setCar = (car) => {
   carPrice.textContent = car.price;
   transmission.textContent = car.transmission;
   fuel.textContent = car.fuel;
-  personne.textContent = car.personne;
+  passager.textContent = car.passager;
 };
 
-const showReservation = (img, name, price, climatisation, transmission, fuel) => {
-  setCar(new Car(img, name, price, climatisation, transmission, fuel));
+const showReservation = (id) => {
+  const car = carList.find((car) => car.id === id);
+  setCar(car);
   reservation.classList.remove('hidden');
   parc.classList.add('hidden');
 };
@@ -39,56 +28,57 @@ const showParc = () => {
   parc.classList.remove('hidden');
 };
 
-const carsData = [
-  {
-    img: './src/car-4.webp',
-    name: 'Renault Megane',
-    price: '100DT',
-    climatisation: 'Oui',
-    transmission: 'Auto',
-    fuel: 'Essence'
-  },
-  {
-    img: './src/car-1.webp',
-    name: 'Dacia Logan',
-    price: '80DT',
-    climatisation: 'Non',
-    transmission: 'Manuelle',
-    fuel: 'Diesel'
-  },
- 
-];
-
-const createCarDiv = (car, index) => {
+const createCarDiv = (car) => {
   const carDiv = document.createElement('div');
   carDiv.classList.add('car');
-  carDiv.id = `car-${index}`;
+  carDiv.id = `car-${car.id}`;
   carDiv.innerHTML = `
     <img class="car-img" src="${car.img}" width="auto">
     <div>
       <h4>${car.name}</h4>
-      <span class="rating inline"><i></i> 4.8 <span> (2.436 reviews)</span></span>
+      <span class="rating inline"><i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating} <span> (${car.reviewNumber} reviews)</span></span>
       <div class="specs flex">
         <div class="column">
-          <p class="passager">4 Passagers</p>
-          <p class="clim">${car.climatisation}</p>
+          <p class="passager"><i class="fa-solid fa-user"></i> ${car.passager} Passagers</p>
+          <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation} climatisation</p>
         </div>
         <div class="column">
-          <p class="gear">${car.transmission}</p>
-          <p class="doors">4 Doors</p>
+          <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
+          <p class="doors"><i class="fa-solid fa-car-side"></i> 4 Doors</p>
         </div>
       </div>
     </div>
     <div class="center">
       <hr>
-      <button class="reverse-btn" onclick="showReservation('${car.img}', '${car.name}', '${car.price}', '${car.climatisation}', '${car.transmission}', '${car.fuel}')">Rent Now →</button>
+      <button class="reverse-btn" onclick="showReservation(${car.id})">Rent Now →</button>
     </div>
   `;
   return carDiv;
 };
 
 const parcDiv = document.querySelector('.parc');
-carsData.forEach((car, index) => {
-  const carDiv = createCarDiv(car, index);
-  parcDiv.appendChild(carDiv);
+
+const loadCarListFromData = async (filePath) => {
+  const response = await fetch(filePath);
+  const data = await response.json();
+  data.forEach(car => {
+    carList.push(new Car(car.id, car.img, car.name, car.price, car.climatisation, car.transmission, car.fuel, car.passager, car.rating, car.reviewNumber));
+  });
+  carList.forEach((car) => {
+    const carDiv = createCarDiv(car);
+    parcDiv.appendChild(carDiv);
+  });
+};
+
+const loadSelectedCar = () => {
+  const selectedCarId = localStorage.getItem('selectedCarId');
+  if (selectedCarId) {
+    showReservation(parseInt(selectedCarId, 10));
+    localStorage.removeItem('selectedCarId');
+  }
+};
+
+loadCarListFromData('./data/car.json').then(() => {
+  loadSelectedCar();
 });
+

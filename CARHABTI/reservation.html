@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="./js/script.js"></script>
     <script defer src="./js/reserv-page.js"></script>
+    <script defer src="./js/car.js"></script>
     <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -68,12 +69,12 @@
             <button type="button" class="close-reserv" onclick="showParc()">✖</button>
             <section class="car-info">
                 <div class="img-box">
-                    <img id="car-img" src="" alt=""width="560">
+                    <img id="car-img" src="./src/bg.webp" alt=""width="560">
                 </div>
                 <div class="specs flex">
-                    <h3><span id="personne">4</span> personne</h3>
-                    <h3><span id="transmission">automatique</span></h3>
-                    <h3><span id="fuel"></span>fuel</h3>
+                    <h3><i class="fa-solid fa-user"></i><span id="passager">4</span> personne</h3>
+                    <h3><i class="fa-solid fa-map-pin"></i> <span id="transmission"> automatique</span></h3>
+                    <h3><i class="fa-solid fa-gas-pump"></i> <span id="fuel"></span></h3>
                 </div>
                 <div class="info flex">
                     <div class="prise-en-charge">
@@ -150,7 +151,7 @@
                 </div>
                 <div class="message">
                     <label for="message">Message</label><br>
-                    <textarea id="message" name="message" rows="1" required placeholder="Write your message here."></textarea>
+                    <textarea id="message" name="message" rows="2" required placeholder="Write your message here."></textarea>
                 </div>
                 <table class="check">
                     <tr>

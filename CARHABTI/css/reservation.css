@@ -54,7 +54,7 @@
     margin-top: 20px;
 }
 .car h4 {font-size: 1.2rem; font-weight: 700; text-align: start;margin-bottom: 10px;}
-.specs{
+.car div.specs{
     width: 100%;
     justify-content: space-between;
     box-sizing: border-box;
@@ -82,7 +82,7 @@
     right: 50px;
     font-size: 1.5rem;
     cursor: pointer;
-    color: whitesmoke;
+    color: black;
     background-color: inherit;
     box-sizing: border-box;
     opacity: 0.5;
@@ -98,20 +98,18 @@ section {
   width: fit-content;
   height: fit-content;
 }
- .img-box {
+.img-box {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
   border-radius: 10px;
-  background: var(--footer-bg) url('../src/bg.webp') no-repeat center center;
-  background-size: cover;
-  position: relative;
+  background: var(--footer-bg);
 }
  .img-box img {
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--footer-bg);
+    height: 100%;
 }
  
  label{margin-right: 5px;}
@@ -226,6 +224,13 @@ section {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.prise-en-charge h2 {
+    display: -webkit-box; 
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /*dark mode*/
 @media (prefers-color-scheme: dark) {
     .info input, .info select , .personal-info input, .personal-info textarea{
@@ -250,6 +255,9 @@ section {
         color: var(--btn-dark);
         image-rendering: optimizeQuality;
         mask-image: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.7) , var(--bleu-transparent));    
+    }
+    .close-reserv{
+        color: whitesmoke;
     }
 }
 /*--------------------------------------------------------------------------------*/
