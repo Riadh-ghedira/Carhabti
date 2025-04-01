@@ -1,0 +1,16 @@
+[
+  {
+    "name": "John Doe",
+    "password": "password123",
+    "phone": "1234567890",
+    "email": "johndoe@example.com",
+    "photo": ""
+  },
+  {
+    "name": "Jane Smith",
+    "password": "securepass456",
+    "phone": "0987654321",
+    "email": "janesmith@example.com",
+    "photo": ""
+  }
+]

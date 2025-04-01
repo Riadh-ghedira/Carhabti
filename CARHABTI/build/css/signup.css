@@ -19,7 +19,6 @@ h2{
   color: red;
   font-size: 0.7rem;
   text-align: left;
-  display: none;
 }
 h2::after{
   content: '';
@@ -39,7 +38,7 @@ h2::after{
   color: var(--btn-light-hover);
   text-decoration: underline;
 }
-#login-form {
+#signup-form {
   padding: 20px;
   background-color: inherit;
   border-radius: 10px;
@@ -47,8 +46,12 @@ h2::after{
   margin: 0 auto 40px;
   
 }
-
-#login-form h2 {
+.error{
+  color: red;
+  font-size: 0.7rem;
+  text-align: left;
+}
+#signup-form h2 {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -57,21 +60,21 @@ h2::after{
   margin-top: 20px;
 }
 
-#login-form label {
+#signup-form label {
   display: block;
   margin-top: 20px;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-#login-form input {
+#signup-form input {
   width: 96%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-#login-form button {
+#signup-form button {
   display: block;
   width: 100%;
   margin-top: 20px;
@@ -84,17 +87,17 @@ h2::after{
   cursor: pointer;
 }
 
-#login-form button:hover {
+#signup-form button:hover {
   background-color: var(--btn-light-hover);
 }
 @media (prefers-color-scheme: dark) {
-  #login-form {
+  #signup-form {
     color: whitesmoke;
   }
-  #login-form button{
+  #signup-form button{
     background-color: var(--btn-dark);
   }
-  #login-form input {
+  #signup-form input {
     background-color: rgba(245, 245, 245, 0.1);
     border: solid 1px whitesmoke;
     border:none;
@@ -109,7 +112,8 @@ h2::after{
 }
 
 @media (max-width: 760px) {
-  #login-form {
+
+  #signup-form {
     margin-left: 25px;
     margin-right: 25px;
 }

@@ -17,6 +17,7 @@
     <script src="./build/components/sidenav.js" defer></script>
     <script src="./build/components/footer.js" defer></script>
     <script defer src="./build/js/script.js"></script>
+    <script defer src="./build/js/login.js"></script>
     <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -26,7 +27,19 @@
     
     <a id="top"></a>
     <main class="main">
-      <!-- Your main content here -->
+      <section id="login-form">
+        <h2>Login</h2>
+        <form action="https://httpbin.org/post"  method="get">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <p class="error" id="email-error">*Wrong e-mail</p>
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password" required>
+            <p class="error" id="password-error">*Wrong password</p>
+            <button type="submit">Login</button>
+            <p class="msg">don't have an account? <a href="signup.html" class="bleu">Sign up</a>.</p>
+        </form>
+    </section>
     </main>
     
     <footer-component></footer-component>

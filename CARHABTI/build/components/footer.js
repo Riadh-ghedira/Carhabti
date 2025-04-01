@@ -77,7 +77,7 @@ button:hover{cursor: pointer;}
 footer {
     width: 100%;
     box-sizing: border-box;
-    background: var(--footer-bg) url('../src/bg.webp') no-repeat center center;
+    background: var(--footer-bg) url('./src/bg.webp') no-repeat center center;
     background-size: cover;
     position: relative;
     color: var(--footer-color);
@@ -98,7 +98,7 @@ footer::before {
     width: 100%;
     height: 100%;
     background: var(--footer-bg);
-    opacity: 0.9 /* Adjust the opacity as needed */
+    opacity: 0.9
 }
 footer * {
     position: relative;
@@ -225,7 +225,7 @@ footer hr{
 /*responsive display*/
 @media (max-width: 760px) {
     footer{
-        background: var(--footer-bg)url('../src/bg-small.webp') no-repeat center center;
+        background: var(--footer-bg)url('./src/bg-small.webp') no-repeat center center;
         background-size: cover;
         position: relative;
     }
@@ -330,9 +330,9 @@ footer hr{
               <h2>Contact Us</h2>
               <form action="https://httpbin.org/post" method="get">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required placeholder="Jhon Doe" />
+                <input type="text" id="contact-name" name="name" autocomplete="name" required placeholder="Jhon Doe" />
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required placeholder="example@example.com"/>
+                <input type="email" id="contact-email" name="email" autocomplete="email" required placeholder="example@example.com"/>
                 <label for="message">Message:</label>
                 <textarea id="message" name="message" rows="5" required placeholder="Write your Message."></textarea>
                 <button type="submit">Submit</button>
@@ -342,6 +342,7 @@ footer hr{
           <hr>
           <p><small class="Copyright">Copyright 2025 • Carhabti, All Rights Reserved</small></p>
         </footer>
+        <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
       `;
     }
     connectedCallback() {

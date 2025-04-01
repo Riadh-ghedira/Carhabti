@@ -163,14 +163,14 @@ header:hover{background-color: var(--bg-color);}
             <ul>
               <li class="reverse-btn a-reverse"><a href="./main.html#top" class="a-reverse">Accueil</a></li>
               <li><a href="./reservation.html">Parc-auto</a></li>
-              <li><a href="#agence">Nos agences</a></li>
+              <li><a href="main.html#agence">Nos agences</a></li>
               <li ><a a href="#contact-form" class="contact-link" >Contact</a></li>
             </ul>
           </nav>
           <nav class="login">
             <ul>
               <li><a href="./login.html">connexion</a></li>
-              <li class="reverse-btn a-reverse"><a class="a-reverse" href="./signin.html">inscription</a></li>
+              <li class="reverse-btn a-reverse"><a class="a-reverse" href="./signup.html">inscription</a></li>
             </ul>
           </nav>
           <button type="button" class="nav-btn hidden" id="nav-btn">☰</button>

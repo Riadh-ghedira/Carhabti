@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CARHABTI, Your reliable car rental service."/>
+    <meta name="keywords" content="car rental, auto, voiture, CARHABTI" />
+    <meta name="author" content="Riadh Ghedira" />
+    <title>CARHABTI</title>
+    <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./build/css/style.css" />
+    <link rel="stylesheet" href="./build/css/signup.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="./build/components/loading.js" defer></script>
+    <script src="./build/components/header.js" defer></script>
+    <script src="./build/components/sidenav.js" defer></script>
+    <script src="./build/components/footer.js" defer></script>
+    <script src="./build/js/script.js" defer></script>
+    <script type="module" src="./build/js/Account.js"></script>
+    <script src="./build/js/signup.js" defer></script>
+    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
+  </head>
+  <body>
+    <loading-component></loading-component>
+    <header-component></header-component>
+    <side-nav-component></side-nav-component>
+    <a id="top"></a>
+    <main class="main">
+      <section id="signup-form">
+        <h2>Sign up</h2>
+        <form
+          action="./data/account.json"
+          method="post"
+          target="_blank"
+          enctype="multipart/form-data"
+        >
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Jhon Doe"
+            autocomplete="name"
+            required
+          />
+          <p class="error" id="name-error"></p>
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@example.com"
+            autocomplete="email"
+            required
+          />
+          <p class="error" id="email-error"></p>
+          <label for="password">Password:</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            required
+          />
+          <p class="error" id="password-error"></p>
+          <label for="confirmpassword">Confirm Password:</label>
+          <input
+            id="confirmpassword"
+            name="confirmpassword"
+            type="password"
+            autocomplete="new-password"
+            required
+          />
+          <p class="error" id="confirmpassword-error"></p>
+          <button id="sub-btn" type="submit">Sign up</button>
+          <p class="msg">
+            you already have an account?
+            <a href="login.html" class="bleu">Login</a>
+          </p>
+        </form>
+      </section>
+    </main>
+    <footer-component></footer-component>
+  </body>
+</html>

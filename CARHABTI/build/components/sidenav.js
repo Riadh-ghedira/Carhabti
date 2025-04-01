@@ -192,12 +192,12 @@ class SideNavComponent extends HTMLElement {
             <ul>
               <li class="btn a-reverse"><a href="./main.html#top" class="a-reverse">Accueil</a></li>
               <li><a href="./reservation.html">Parc-auto</a></li>
-              <li><a href="#agence">Nos agences</a></li>
+              <li><a href="main.htlm#agence">Nos agences</a></li>
               <li><a a href="#contact-form" class="contact-link">Contact</a></li>
             </ul>
             <ul>
               <li><a href="./login.html">connexion</a></li>
-              <li class="btn a-reverse"><a class="a-reverse" href="./signin.html">inscription</a></li>
+              <li class="btn a-reverse"><a class="a-reverse" href="./signup.html">inscription</a></li>
             </ul>
           </nav>
         </section>

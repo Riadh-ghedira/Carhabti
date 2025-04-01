@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const main = document.querySelector('.main');
   const footerEl = footerRoot.querySelector('.footer');
   function handleOutsideClick() {
+    if (window.innerWidth > 760) {
+      button.style.display = 'none';
+    }
+    else {
+      button.style.display = 'block';
+    }
     if (section.style.display === 'flex') {
       section.classList.add('fadeout');
       setTimeout(() => {
@@ -49,14 +55,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   footerEl.addEventListener('click', handleOutsideClick);
   main.addEventListener('click', handleOutsideClick);
-  
-  const map = document.getElementById('mapview');
-  function togglemap() {
-    if (map.style.display === 'none' || map.style.display === '') {
-      map.style.display = 'flex';
-    } else {
-      map.style.display = 'none';
-    }
-  }
+  window.addEventListener('resize', handleOutsideClick);
+
 });
+const map = document.getElementById('mapview');
+function togglemap() {
+  if (map.style.display === 'none' || map.style.display === '') {
+    map.style.display = 'flex';
+  } else {
+    map.style.display = 'none';
+  }
+};
 
