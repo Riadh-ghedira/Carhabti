@@ -1,3 +1,9 @@
+class FooterComponent extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      this.shadowRoot.innerHTML = `
+        <style>
 :root {
     --bg-color: #F7FBFF;
     --bg-color-08: rgb(247, 251, 255,.8);
@@ -17,30 +23,6 @@
     --bleu-mid-transparent: rgba(21, 114, 211, 0.5);
     scrollbar-color: var(--bleu) transparent;
     scrollbar-width: thin;
-}
-/*loading*/
-.loading-screen { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: white; 
-    color: black; 
-    display: flex; 
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    font-size: 2rem; 
-    z-index: 1000; 
-}
-.loader {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ddd;
-  border-top-color: #3498db; 
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
 }
 /*----------------------------------------*/
 * {
@@ -88,116 +70,7 @@ button:hover{cursor: pointer;}
     align-items: center;
     box-sizing: border-box;
 }
-body{
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    background: var(--bg-color);
-    color: var(--text-color);
-    animation: fadeIn 1s ease-in forwards;
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: clip;
-    font-size: 16px; 
-}
-/*side nav*/
-.side-nav{
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100%;
-    background: var(--side-nav-bg);
-    color: var(--bg-color);
-    z-index: 500;
-    opacity: 1;
-    animation: slideInRight 0.2s  ease-in forwards;
-    transition: 1s;
-    padding: 1rem;
-    box-sizing: border-box;
-    display: none;
-    justify-content: center;
-    padding-top: 80px;
-}
-.side-nav.fadeout {
-    animation: slideOutRight 0.2s ease-out forwards;
-}
-.side-nav:hover{background-color: var(--bleu); transition: 0.3s;}
-.nav-btn{
-    font-size: 1.5rem;
-    cursor: pointer;
-    opacity: 0.5;
-    background-color: inherit;
-    box-sizing: border-box;
-    border: none;
-    display: none;
-}
-.nav-btn:hover{
-    opacity: 1;
-}
-.close-btn{
-    position: absolute;
-    top: 0;
-    right: 5px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: whitesmoke;
-    background-color: inherit;
-    box-sizing: border-box;
-    opacity: 0.5;
-    border: none;
-    z-index: 1000;
-    margin: 5px;
-}
-.close-btn:hover{
-    opacity: 1;
-}
-.navsection {
-    font-size: 1.5rem;
-    height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    text-transform: uppercase;
-    text-align: center;
-}
-.navsection ul li{
-    margin-block: 10px;
-}
-/*--------------------------------------------------------------------------------*/
-/*header*/
-header{
-    position: fixed;
-    z-index: 400;
-    top: 0;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: space-between; 
-    background-color: var(--bg-color-08);
-    align-items: center;
-    border-color: inherit;
-    color: var(--btn-light);
-    padding: 0.5rem 1rem;
-    box-sizing: border-box;
-    padding-inline: 3%;
-}
-header:hover{background-color: var(--bg-color);}
-.logo {margin-top: 5px;}
-.logo:hover{opacity: 1;cursor: pointer;}
-.login ul,.main-nav ul{
-    display: flex;
-    column-gap: 15px;
-    text-transform: uppercase;
-    font-size: small;
-    align-items: center;
-}
-.main-nav ul li, .login ul li {
-    font-size: 0.9rem;
-}
+
 /*------------------------------------------------------------------------*/
 
 /*partie footer*/
@@ -338,19 +211,6 @@ footer hr{
 /*--------------------------------------------------------------------------------*/
 /*dark mode*/
 @media (prefers-color-scheme: dark) {
-    body, .loading-screen {
-        background: var(--dark-bg-color);
-        color: var(--dark-text-color);
-    }
-    .header {
-        background: var(--dark-bg-color-08);
-        color: var(--dark-text-color);
-    }
-    .header:hover{
-        background-color: var(--dark-bg-color);
-        transition: 0.5s;
-    }
-    .side-nav {background: var(--dark-header-footer-bg);}
     .contact-form input , .contact-form textarea {
         background-color: var(--dark-bg-color);
         border:none;
@@ -359,17 +219,11 @@ footer hr{
     .contact-form button {
         background-color: var(--btn-dark);
     }
-    .side-nav{
-        background-color: var(--bleu-mid-transparent);
 
-    }
 }
 /*------------------------------------------------------*/
 /*responsive display*/
 @media (max-width: 760px) {
-    .main {font-size: 14px;}
-    .main-nav,.login{display: none;}
-    .nav-btn{display: block;}
     footer{
         background: var(--footer-bg)url('../src/bg-small.webp') no-repeat center center;
         background-size: cover;
@@ -399,66 +253,15 @@ footer hr{
         max-width: 300px;
         font-size: 0.9rem;
     }
-    .navsection {font-size: 1.2rem;}
     .contact-form h2 {font-size: 1.5rem;}
     .contact-form label {font-size: 0.9rem;}
     .contact-form button {font-size: 0.9rem;}
-    .title div {
-        font-size: 2rem;
-        flex-direction: column;
-        row-gap: 50px;
-    }
-    .title div img {
-        width: 250px;
-        height: 250px;
-    }
-    .title div h1{
-        font-size: 4rem;
-        max-width: 50%;
-    }
     .social-nav{justify-self: center;}
     .small{
         font-size: 0.8rem;
         display: none;
     }
-    .table{justify-content: space-evenly;}
-    .heure{display: none;}
-    .table-column{row-gap: 30px;}
-    .how {
-        padding-block: 10px;
-    }
-    .how h3,.why h3 {
-        font-size: 0.8rem;
-        padding: 8px;
-    }
-    .how h2 {
-        font-size: 1rem;
-        text-wrap: wrap;
-        text-align: center;
-    }
-    .why h2{
-        font-size: 1rem;
-        text-wrap: wrap;
-    }
-    .steps {
-        flex-direction: column;
-        align-items: center;
-        width: 300px;
-    }
-    .step h4{
-        font-size: 1rem;
-    }
-    .step p{
-        font-size: 0.9rem;
-    }
-    .step {
-        max-width: 100%;
-        padding: 5px;
-    }
-    .step .icons {
-        font-size: 2rem;
-        padding: 30px;
-    }
+    
     .div{
         min-width: 430px;
         padding-right: 40px;
@@ -467,14 +270,6 @@ footer hr{
 }
 
 @media (max-width: 1084px) {
-    .main {
-        font-size: 15px;
-    }
-    .header {
-        padding-inline: 2%;
-        width: 100%
-        
-    }
     .footer {
         padding-inline: 2%;
         width: 100%
@@ -489,9 +284,7 @@ footer hr{
         max-width: 300px;
         font-size: 0.95rem;
     }
-    .navsection {
-        font-size: 1.3rem;
-    }
+
     footer {
         font-size: 15px;
     }
@@ -504,42 +297,64 @@ footer hr{
     .contact-form button {
         font-size: 0.95rem;
     }
-    .slogon{
-    margin-left: 7%;
-    margin-top: 100px;
-    }    
-    .slogon h1{font-size: 2.5rem;}
-    .slogon p{
-        margin-top: 10px;
-        font-size: 1rem;
-        text-wrap: wrap;
-        line-height: 1.5;
-    }
-    .reserver{align-self: center; font-size: 0.9rem;}
-    .table{width: calc(100% - 14%);padding-inline: 10px;}
-    .line h4{font-size: 0.9rem;}
-    .line p{font-size: 0.8rem;} 
-    .line .icons{font-size: 1.4rem;}
-    .how h2,.why h2 {
-       font-size: 2rem;
-    }
-    .how h3,.why h3 {
-        font-size: 0.9rem;
-    }
-    .step h4{
-        font-size: 1.2rem;
-    }
-    .step .icons {
-        font-size: 2.5rem;
-        padding: 40px;
-    } 
-    .step {
-        padding: 5px;
-    }
-    .brands{
-        flex-wrap: wrap;
-    }
-    .brand{
-        margin: 10px;
-    }
 }
+        </style>
+        <footer>
+          <section class="footer">
+            <section class="contact">
+              <div class="name inline"><img src="./src/logo-white.webp" alt="CARHABTI" width="200" loading="lazy"></div>
+              <h5 class="inline"><big>📞</big><a href="tel:+216 22 222 222"> + 216  22 222 222</a></h5>
+              <h5 class="inline"><big>📧</big><a href="mailto:booking@carhabti.tn"> booking@carhabti.tn</a> </h5>
+            </section>
+            <section class="agence">
+              <h2>Nos agences</h2>
+              <ul class="agence-list">
+                <li><a href="">CARHABTI Tunis</a></li>
+                <li><a href="">CARHABTI Airport TUNIS CARTHAGE</a></li>
+                <li><a href="">CARHABTI Nabeul</a></li>
+                <li><a href="">CARHABTI Grombalia</a></li>
+                <li><a href="">CARHABTI Airport NFIDHA</a></li>
+                <li><a href="">CARHABTI Sousse</a></li>
+                <li><a href="">CARHABTI Monastir</a></li>
+                <li><a href="">CARHABTI Airport HABIB BOURGUIBA MONASTIR</a></li>
+                <li><a href="">CARHABTI Houmet Souk</a></li>
+                <li><a href="">CARHABTI Airport DJERBA JIRJIS</a></li>
+              </ul>
+            </section>
+            <section class="follow-us">
+              <h2>Follow Us</h2>
+              <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
+              <div class="social-nav flex"><a href="#"><i class="fa-brands fa-square-facebook"></i></a> <hr> <a href="#"><i class="fa-brands fa-instagram"></i></a> <hr> <a href="#"><i class="fa-brands fa-youtube"></i></a></div>
+            </section>
+            <section id="contact-form" class="contact-form">
+              <h2>Contact Us</h2>
+              <form action="https://httpbin.org/post" method="get">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Jhon Doe" />
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="example@example.com"/>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Write your Message."></textarea>
+                <button type="submit">Submit</button>
+              </form>
+            </section>
+          </section>
+          <hr>
+          <p><small class="Copyright">Copyright 2025 • Carhabti, All Rights Reserved</small></p>
+        </footer>
+      `;
+    }
+    connectedCallback() {
+        // Listen for navigation events
+        document.addEventListener('internal-navigate', (e) => {
+          const targetId = e.detail.targetId;
+          const target = this.shadowRoot.getElementById(targetId);
+          
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+  }
+  
+  customElements.define('footer-component', FooterComponent);

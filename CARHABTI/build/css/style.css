@@ -1,0 +1,173 @@
+:root {
+    --bg-color: #F7FBFF;
+    --bg-color-08: rgb(247, 251, 255,.8);
+    --text-color: #3c3744;
+    --dark-bg-color: #1b1e26;
+    --dark-bg-color-08: rgb(27, 30, 38,.8);
+    --dark-text-color: #eaeaea;
+    --footer-bg: #051C34;
+    --footer-color: #eaeaea;
+    --side-nav-bg: rgba(21, 114, 211, 0.3);
+    --btn-light: #1572D3;
+    --btn-light-hover: rgba(21, 114, 211 , 0.6);
+    --btn-dark: #042344cb;
+    --btn-dark-hover: #3a7ca5;
+    --bleu: #1572D3;
+    --bleu-transparent: rgba(21, 114, 211, 0.1);
+    --bleu-mid-transparent: rgba(21, 114, 211, 0.5);
+    scrollbar-color: var(--bleu) transparent;
+    scrollbar-width: thin;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    font-family: Arial, sans-serif;
+    color: inherit;
+    text-decoration: inherit;
+    list-style: none;
+    cursor: default;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background: var(--bg-color);
+    color: var(--text-color);
+    animation: fadeIn 1s ease-in forwards;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: clip;
+    font-size: 16px; 
+}
+
+a { opacity: 1; }
+a:hover { cursor: pointer; opacity: 0.7; }
+button:hover { cursor: pointer; }
+.a-reverse { opacity: 0.9; }
+.a-reverse:hover { opacity: 1; cursor: pointer; }
+
+.reverse-btn {
+    background-color: var(--btn-light);
+    color: #eaeaea;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.reverse-btn:hover {
+    background-color: var(--btn-light-hover);
+    opacity: 1;
+}
+
+.btn {
+    background-color: var(--bg-color);
+    color: var(--bleu);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: var(--bg-color);
+    opacity: 1;
+}
+.close-btn{
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: whitesmoke;
+    background-color: transparent;
+    box-sizing: border-box;
+    opacity: 0.5;
+    border: none;
+    z-index: 1000;
+    margin: 5px;
+}
+.close-btn:hover{
+    opacity: 1;
+}
+
+.hidden { display: none; }
+.flex { display: flex; }
+.center { display: flex; flex-direction: column; justify-content: center; }
+.inline {
+    display: flex;
+    padding-inline: 10px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Main Content Styles */
+main {
+    flex: 1;
+    width: 100%;
+    padding-top: 40px;
+}
+footer-component {
+    margin: 0;
+    width: 100%;
+}
+header-component {
+    margin: 0;
+    width: 100%;
+}
+/* Animation Styles */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slideIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes slideOut { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes slideOutLeft { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes slideInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slideOutBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
+@keyframes slideInTop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+    body, .loading-screen {
+        background: var(--dark-bg-color);
+        color: var(--dark-text-color);
+    }
+
+    header-component::part(header) {
+        background: var(--dark-bg-color-08);
+        color: var(--dark-text-color);
+    }
+
+    header-component::part(header):hover {
+        background-color: var(--dark-bg-color);
+        transition: 0.5s;
+    }
+
+    side-nav-component::part(side-nav) {
+        background-color: var(--bleu-mid-transparent);
+    }
+
+}
+
+/* Responsive Styles */
+@media (max-width: 1084px) {
+    body {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 760px) {
+    body {
+        font-size: 14px;
+    }
+}
