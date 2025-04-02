@@ -12,5 +12,12 @@
     "phone": "0987654321",
     "email": "janesmith@example.com",
     "photo": ""
+  },
+  {
+    "name": "Riadh Ghedira",
+    "password": "hello123",
+    "phone": "",
+    "email": "ghedirariadh75@gmail.com",
+    "photo": ""
   }
 ]

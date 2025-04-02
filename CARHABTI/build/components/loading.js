@@ -36,6 +36,12 @@ class LoadingComponent extends HTMLElement {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
+          @media (preference-color-scheme: dark) {
+            .loading-screen {
+              background: #1b1e26;
+              color: #eaeaea;
+            }
+          }
         </style>
         <div class="loading-screen">
           <div class="loader"></div>

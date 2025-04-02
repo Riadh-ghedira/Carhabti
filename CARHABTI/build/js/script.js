@@ -17,6 +17,43 @@ document.addEventListener('DOMContentLoaded', function () {
   const button = headerRoot.getElementById('nav-btn');
   const closeBtn = sideNavRoot.querySelector('.close-btn');
   const section = sideNavRoot.getElementById('side-nav');
+  const userNav = headerRoot.getElementById('user-nav');
+  const loginNav = headerRoot.getElementById('login');
+  const logoutBtn = headerRoot.getElementById('logout');
+  const userName = headerRoot.getElementById('user');
+  const sideUserNav = sideNavRoot.getElementById('user-side-nav');
+  const sideloginNav = sideNavRoot.getElementById('side-login');
+  const sidelogoutBtn = sideNavRoot.getElementById('side-logout');
+  const sideUserName = sideNavRoot.getElementById('user-side');
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  
+  if (isLoggedIn) {
+      userNav.classList.remove('hidden');
+      loginNav.classList.remove('flex');
+      userNav.classList.add('flex');
+      loginNav.classList.add('hidden');
+      sideUserNav.classList.remove('hidden');
+      sideloginNav.classList.add('hidden');
+      userName.textContent = localStorage.getItem('userName');
+      sideUserName.textContent = localStorage.getItem('userName');
+      
+    } else {
+      userNav.classList.add('hidden');
+      loginNav.classList.add('flex');
+      userNav.classList.remove('flex');
+      loginNav.classList.remove('hidden');
+      sideUserNav.classList.add('hidden');
+      sideloginNav.classList.remove('hidden');
+  }
+  
+  logoutBtn.addEventListener('click', () => {
+      localStorage.setItem('isLoggedIn', 'false');
+      window.location.href = './main.html'; 
+  });
+  sidelogoutBtn.addEventListener('click', () => {
+      localStorage.setItem('isLoggedIn', 'false');
+      window.location.href = './main.html'; 
+  });
   if (header && sideNav) {
     button.addEventListener('click', function (e) {
       if (section.style.display === 'none' || section.style.display === '') {

@@ -195,9 +195,13 @@ class SideNavComponent extends HTMLElement {
               <li><a href="main.htlm#agence">Nos agences</a></li>
               <li><a a href="#contact-form" class="contact-link">Contact</a></li>
             </ul>
-            <ul>
+            <ul class="login " id ="side-login">
               <li><a href="./login.html">connexion</a></li>
               <li class="btn a-reverse"><a class="a-reverse" href="./signup.html">inscription</a></li>
+            </ul>
+            <ul class="user-nav hidden " id="user-side-nav">
+                <li><a id="user-side" href="./account.html"></a> <i class="fa-solid fa-user"></i></li>
+                <li class="btn a-reverse"><a id="side-logout">Déconnexion</a></li>
             </ul>
           </nav>
         </section>

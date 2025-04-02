@@ -107,7 +107,7 @@ h2::after{
     background-color: var(--btn-dark);
   }
   .bleu {
-    color: var(--btn-dark);
+    color: lightblue;
   }
 }
 

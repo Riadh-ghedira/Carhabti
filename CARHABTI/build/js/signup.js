@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const passwordError = document.getElementById('password-error');
   const confirmPasswordError = document.getElementById('confirmpassword-error');
   const submitButton = document.getElementById('sub-btn');
-  console.log(loadAccountEmails());
+
+  console.log(loadAccountEmails()); 
 
   emailInput.addEventListener('input', validateEmail);
   passwordInput.addEventListener('input', validatePassword);
@@ -115,31 +116,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function saveAccount(account) {
     try {
-      // Fetch existing accounts
-      const response = await fetch('./data/account.json');
-      if (!response.ok) {
-        throw new Error('Failed to load existing account data');
-      }
-      const accounts = await response.json();
-
-      // Append the new account
-      accounts.push(account);
-
-      // Save updated accounts back to the server
-      const saveResponse = await fetch('./data/account.json', {
-        method: 'PUT', // Use PUT to overwrite the file
+      const response = await fetch('../../save_account.php', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(accounts),
+        body: JSON.stringify(account),
       });
 
-      if (!saveResponse.ok) {
-        throw new Error('Failed to save updated account data');
-      }
-      return await saveResponse.json();
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Failed to save');
+
+      console.log('Account saved:', result);
+      return result;
     } catch (error) {
-      console.error('Error saving account data:', error);
+      console.error('Error:', error);
       throw error;
     }
   }

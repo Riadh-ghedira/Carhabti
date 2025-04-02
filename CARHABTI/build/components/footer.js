@@ -1,3 +1,4 @@
+
 class FooterComponent extends HTMLElement {
     constructor() {
       super();
@@ -342,7 +343,6 @@ footer hr{
           <hr>
           <p><small class="Copyright">Copyright 2025 • Carhabti, All Rights Reserved</small></p>
         </footer>
-        <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
       `;
     }
     connectedCallback() {

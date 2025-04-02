@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="./build/css/style.css" />
     <link rel="stylesheet" href="./build/css/signup.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <script src="./build/components/loading.js" defer></script>
-    <script src="./build/components/header.js" defer></script>
-    <script src="./build/components/sidenav.js" defer></script>
-    <script src="./build/components/footer.js" defer></script>
-    <script src="./build/js/script.js" defer></script>
+    <script defer src="./build/components/loading.js" ></script>
+    <script type="module" src="./build/components/header.js" ></script>
+    <script type="module" src="./build/components/sidenav.js" ></script>
+    <script type="module" src="./build/components/footer.js" ></script>
     <script type="module" src="./build/js/Account.js"></script>
-    <script src="./build/js/signup.js" defer></script>
+    <script src="./build/js/script.js" defer></script>
+    <script type="module" src="./build/js/signup.js" defer></script>
     <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
   </head>
   <body>
@@ -30,7 +30,7 @@
       <section id="signup-form">
         <h2>Sign up</h2>
         <form
-          action="./data/account.json"
+          action="save_account.php"
           method="post"
           target="_blank"
           enctype="multipart/form-data"
