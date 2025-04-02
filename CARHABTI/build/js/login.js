@@ -52,10 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const isAuthenticated = await authenticateUser(email, password);
-        const name = await getName(email); 
+        const name = await getName(email);
         if (isAuthenticated) {
           alert('Login successful');
           form.reset();
+          const isAdmin = await Admin(email);
+          if (isAdmin) localStorage.setItem('isAdmin', 'true');
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userName', name);
           window.location.href = '../CARHABTI/main.html';
@@ -68,7 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-
+  async function Admin(email) {
+    try {
+      const response = await fetch('./data/admin-list.json');
+      if (!response.ok) {
+        throw new Error('Failed to load admin list');
+      }
+      const list = await response.json();
+      if (!Array.isArray(list)) {
+        console.error('Admin list is not in the expected format');
+        return false;
+      }
+      return list.some((admin) => admin.email === email);
+    } catch (error) {
+      console.error('Error finding admin:', error);
+      return false;
+    }
+  }
   async function authenticateUser(email, password) {
     try {
       const response = await fetch('./data/account.json');

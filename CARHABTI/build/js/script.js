@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
   
   logoutBtn.addEventListener('click', () => {
       localStorage.setItem('isLoggedIn', 'false');
+      localStorage.setItem('isAdmin', 'false');
       window.location.href = './main.html'; 
   });
   sidelogoutBtn.addEventListener('click', () => {
       localStorage.setItem('isLoggedIn', 'false');
+      localStorage.setItem('isAdmin', 'false');
       window.location.href = './main.html'; 
   });
   if (header && sideNav) {

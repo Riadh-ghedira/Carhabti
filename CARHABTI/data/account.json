@@ -19,5 +19,12 @@
     "phone": "",
     "email": "ghedirariadh75@gmail.com",
     "photo": ""
+  },
+  {
+    "name": "Admin",
+    "password": "Admin2222",
+    "phone":"",
+    "email":"admin@admin.car",
+    "photo":""
   }
 ]
