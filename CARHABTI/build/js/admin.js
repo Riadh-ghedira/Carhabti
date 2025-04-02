@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const addCarForm = document.getElementById('add-car-form');
   if (!isAdmin) {
-    addCarForm.style.display = 'none'; 
+    addCarForm.style.display = 'none';
     addCarForm.querySelectorAll('input, button, select').forEach((element) => {
-      element.disabled = true; 
+      element.disabled = true;
     });
     return;
   }
@@ -103,7 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function processImage() {
     if (formInputs.image.files[0]) {
-      return URL.createObjectURL(formInputs.image.files[0]);
+      const file = formInputs.image.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('./upload.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error('Failed to upload image');
+        const data = await response.json();
+        return data.filePath;
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('Failed to upload image. Using default image.');
+      }
     }
     return './src/bg.webp';
   }

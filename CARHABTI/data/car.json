@@ -226,5 +226,41 @@
     "passager": "2",
     "rating": 0,
     "reviewNumber": 0
+  },
+  {
+    "id": 1743620290781,
+    "img": "./src/bg.webp",
+    "name": "Golf 1",
+    "price": "2DT",
+    "climatisation": "Avec",
+    "transmission": "Manual",
+    "fuel": "Hybrid",
+    "passager": "8+",
+    "rating": 0,
+    "reviewNumber": 0
+  },
+  {
+    "id": 1743620655272,
+    "img": "./src/bg.webp",
+    "name": "Golf 8",
+    "price": "100DT",
+    "climatisation": "Avec",
+    "transmission": "Automatic",
+    "fuel": "Petrol",
+    "passager": "4",
+    "rating": 0,
+    "reviewNumber": 0
+  },
+  {
+    "id": 1743620795042,
+    "img": "./src/Porsche-911-GT3-2024-2-1024x577.webp",
+    "name": "Porsche 911 gt3",
+    "price": "1500DT",
+    "climatisation": "Avec",
+    "transmission": "Automatic",
+    "fuel": "Hybrid",
+    "passager": "2",
+    "rating": 0,
+    "reviewNumber": 0
   }
 ]
