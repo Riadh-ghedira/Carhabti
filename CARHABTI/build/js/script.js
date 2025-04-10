@@ -36,25 +36,86 @@ document.addEventListener('DOMContentLoaded', function () {
       sideloginNav.classList.add('hidden');
       userName.textContent = localStorage.getItem('userName');
       sideUserName.textContent = localStorage.getItem('userName');
+  const nav = headerRoot.querySelectorAll('.main-nav ul li');
+  nav.forEach(element => {
+    element.classList.remove('a-reverse');
+    element.classList.remove('reverse-btn');
+  });
+  const relativePath = window.location.pathname + window.location.hash;
+  switch (relativePath) {
+    
+    case '/CARHABTI/reservation.html':
+      nav[1].classList.add('a-reverse');
+      nav[1].classList.add('reverse-btn');
+      break;
+ 
+    default:
+      nav[0].classList.add('a-reverse');
+      nav[0].classList.add('reverse-btn');
+      break;
+  };
+  window.addEventListener('scroll', () => {
+    const rect = document.getElementById('agence').getBoundingClientRect();
+    const contactRect = footerRoot.getElementById('contact-form').getBoundingClientRect();
+    nav.forEach(element => {
+      element.classList.remove('a-reverse');
+      element.classList.remove('reverse-btn');
+    });
+    if (rect.top <( window.innerHeight / 2)  && rect.bottom > ( window.innerHeight / 2)) {
+      nav[2].classList.add('a-reverse');
+      nav[2].classList.add('reverse-btn');
+    }else if (contactRect.top < window.innerHeight && contactRect.bottom > 0) {
       
-    } else {
-      userNav.classList.add('hidden');
-      loginNav.classList.add('flex');
-      userNav.classList.remove('flex');
-      loginNav.classList.remove('hidden');
-      sideUserNav.classList.add('hidden');
-      sideloginNav.classList.remove('hidden');
+      nav[3].classList.add('a-reverse');
+      nav[3].classList.add('reverse-btn');
+    }
+    else {
+      switch (relativePath) {
+        
+        case '/CARHABTI/reservation.html':
+          nav[1].classList.add('a-reverse');
+          nav[1].classList.add('reverse-btn');
+          break;
+    
+        case '/CARHABTI/main.html':
+          nav[0].classList.add('a-reverse');
+          nav[0].classList.add('reverse-btn');
+          break;
+        case '/CARHABTI/main.html#top':
+          nav[0].classList.add('a-reverse');
+          nav[0].classList.add('reverse-btn');
+          break;
+      };
+    }
+  });
+  if (isLoggedIn) {
+    userNav.classList.remove('hidden');
+    loginNav.classList.remove('flex');
+    userNav.classList.add('flex');
+    loginNav.classList.add('hidden');
+    sideUserNav.classList.remove('hidden');
+    sideloginNav.classList.add('hidden');
+    userName.textContent = localStorage.getItem('userName');
+    sideUserName.textContent = localStorage.getItem('userName');
+
+  } else {
+    userNav.classList.add('hidden');
+    loginNav.classList.add('flex');
+    userNav.classList.remove('flex');
+    loginNav.classList.remove('hidden');
+    sideUserNav.classList.add('hidden');
+    sideloginNav.classList.remove('hidden');
   }
-  
+
   logoutBtn.addEventListener('click', () => {
-      localStorage.setItem('isLoggedIn', 'false');
-      localStorage.setItem('isAdmin', 'false');
-      window.location.href = './main.html'; 
+    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('isAdmin', 'false');
+    window.location.href = './main.html';
   });
   sidelogoutBtn.addEventListener('click', () => {
-      localStorage.setItem('isLoggedIn', 'false');
-      localStorage.setItem('isAdmin', 'false');
-      window.location.href = './main.html'; 
+    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('isAdmin', 'false');
+    window.location.href = './main.html';
   });
   if (header && sideNav) {
     button.addEventListener('click', function (e) {
