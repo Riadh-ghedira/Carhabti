@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return isValid;
   }
 
-  async function handleFormSubmission() {
+  const handleFormSubmission = async () => {
     if (!validateForm()) return;
 
     try {
@@ -101,14 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function processImage() {
+  const processImage = async () => {
     if (formInputs.image.files[0]) {
       const file = formInputs.image.files[0];
       const formData = new FormData();
       formData.append('file', file);
 
       try {
-        const response = await fetch('./upload.php', {
+        const response = await fetch('../php/upload.php', {
           method: 'POST',
           body: formData,
         });
@@ -124,13 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return './src/bg.webp';
   }
 
-  async function fetchCarData() {
+  const fetchCarData = async () => {
     const response = await fetch('./data/car.json');
     if (!response.ok) throw new Error('Failed to fetch car data');
     return await response.json();
   }
 
-  async function saveCarData(cars) {
+  const saveCarData = async (cars) => {
     const filePath = './data/car.json';
 
     // Create a new Blob for the updated car data

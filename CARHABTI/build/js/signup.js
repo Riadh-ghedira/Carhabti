@@ -11,29 +11,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmPasswordError = document.getElementById('confirmpassword-error');
   const submitButton = document.getElementById('sub-btn');
 
-  console.log(loadAccountEmails()); 
+  emailInput.addEventListener('input', async () => {
+    await validateEmail();
+    toggleSubmitButton();
+  });
 
-  emailInput.addEventListener('input', validateEmail);
-  passwordInput.addEventListener('input', validatePassword);
-  confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+  passwordInput.addEventListener('input', () => {
+    validatePassword();
+    toggleSubmitButton();
+  });
+
+  confirmPasswordInput.addEventListener('input', () => {
+    validateConfirmPassword();
+    toggleSubmitButton();
+  });
 
   let isFormValid = false;
 
-  async function validateForm() {
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
-
+  const validateForm = async () => {
     const isEmailValid = await validateEmail();
     const isPasswordValid = validatePassword();
     const isConfirmValid = validateConfirmPassword();
 
     isFormValid = isEmailValid && isPasswordValid && isConfirmValid;
     return isFormValid;
-  }
+  };
 
-  async function validateEmail() {
+  const validateEmail = async () => {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -54,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
       emailError.textContent = 'Error checking email availability';
       return false;
     }
-  }
+  };
 
-  function validatePassword() {
+  const validatePassword = () => {
     const password = passwordInput.value;
 
     if (password.length < 8) {
@@ -73,71 +77,34 @@ document.addEventListener('DOMContentLoaded', () => {
       passwordError.textContent = '';
       return true;
     }
-  }
+  };
 
-  function validateConfirmPassword() {
+  const validateConfirmPassword = () => {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
 
-    if (password !== confirmPassword) {
-      confirmPasswordError.textContent = 'Passwords do not match';
-      return false;
-    } else if (confirmPassword.length === 0) {
+    if (confirmPassword.length === 0) {
       confirmPasswordError.textContent = 'Please confirm your password';
+      return false;
+    } else if (password !== confirmPassword) {
+      confirmPasswordError.textContent = 'Passwords do not match';
       return false;
     } else {
       confirmPasswordError.textContent = '';
       return true;
     }
-  }
+  };
 
-  submitButton.addEventListener('click', async (event) => {
-    event.preventDefault();
+  const toggleSubmitButton = async () => {
+    const isFormValid = await validateForm();
+    submitButton.disabled = !isFormValid;
+  };
 
-    if (await validateForm()) {
-      const account = new Account(
-        nameInput.value.trim(),
-        passwordInput.value,
-        '', // phone
-        emailInput.value.trim(),
-        '', // photo
-      );
+  submitButton.disabled = true;
 
-      try {
-        await saveAccount(account);
-        alert('Account created successfully');
-        form.reset();
-      } catch (error) {
-        alert('Failed to create account. Please try again.');
-        console.error('Account creation error:', error);
-      }
-    }
-  });
-
-  async function saveAccount(account) {
+  const loadAccountEmails = async () => {
     try {
-      const response = await fetch('../../save_account.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(account),
-      });
-
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Failed to save');
-
-      console.log('Account saved:', result);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  }
-
-  async function loadAccountEmails() {
-    try {
-      const response = await fetch('./data/account.json');
+      const response = await fetch('../../data/account.json');
       if (!response.ok) {
         throw new Error('Failed to load account data');
       }
@@ -147,5 +114,43 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error loading account emails:', error);
       return [];
     }
-  }
+  };
+
+  submitButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    if (await validateForm()) {
+      const account = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        password: passwordInput.value,
+        phone: '',
+        photo: '',
+      };
+
+      try {
+        const response = await fetch('../php/save_account.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(account),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save account');
+        }
+
+        const result = await response.json();
+        alert('Account created successfully');
+        console.log('Account saved:', result);
+        form.reset();
+        toggleSubmitButton();
+        window.location.href = './main.html';
+      } catch (error) {
+        alert('Failed to create account. Please try again.');
+        console.error('Error:', error);
+      }
+    }
+  });
 });
