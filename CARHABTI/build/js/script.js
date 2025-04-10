@@ -26,16 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const sidelogoutBtn = sideNavRoot.getElementById('side-logout');
   const sideUserName = sideNavRoot.getElementById('user-side');
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  
-  if (isLoggedIn) {
-      userNav.classList.remove('hidden');
-      loginNav.classList.remove('flex');
-      userNav.classList.add('flex');
-      loginNav.classList.add('hidden');
-      sideUserNav.classList.remove('hidden');
-      sideloginNav.classList.add('hidden');
-      userName.textContent = localStorage.getItem('userName');
-      sideUserName.textContent = localStorage.getItem('userName');
   const nav = headerRoot.querySelectorAll('.main-nav ul li');
   nav.forEach(element => {
     element.classList.remove('a-reverse');
