@@ -2,13 +2,22 @@ const reservation = document.getElementById('reservation');
 const parc = document.getElementById('parc');
 const carImg = document.getElementById('car-img');
 const carName = document.getElementById('car-name');
-const carPrice = document.getElementById('car-price');
+const carPrice = document.getElementById('car-price-show');
 const transmission = document.getElementById('transmission');
 const fuel = document.getElementById('fuel');
 const passager = document.getElementById('passager');
+const parcDiv = document.querySelector('.parc');
+let lastScrollPosition = 0;
+ 
+
+const isValidImage = (imgSrc) => {
+  return typeof imgSrc === 'string' && imgSrc.trim().length > 20 || imgSrc.startsWith('./src/');
+};
+
+
 
 const setCar = (car) => {
-  carImg.src = car.img;
+  carImg.src = isValidImage(car.img) ? car.img : './src/bg.webp'
   carName.textContent = car.name;
   carPrice.textContent = car.price;
   transmission.textContent = car.transmission;
@@ -17,15 +26,19 @@ const setCar = (car) => {
 };
 
 const showReservation = (id) => {
+  lastScrollPosition = window.scrollY;
   const car = carList.find((car) => car.id === id);
   setCar(car);
   reservation.classList.remove('hidden');
+  window.scrollTo(0, 0);
   parc.classList.add('hidden');
 };
 
 const showParc = () => {
+  window.scrollTo(0, lastScrollPosition ,{ behavior: 'smooth' });
   reservation.classList.add('hidden');
   parc.classList.remove('hidden');
+
 };
 
 const createCarDiv = (car) => {
@@ -33,7 +46,8 @@ const createCarDiv = (car) => {
   carDiv.classList.add('car');
   carDiv.id = `car-${car.id}`;
   carDiv.innerHTML = `
-    <img class="car-img" src="${car.img}" width="auto">
+    <img class="car-img" src="${isValidImage(car.img) ? car.img : './src/bg.webp'}" width="auto">
+      <div>
     <div>
       <h4>${car.name}</h4>
       <span class="rating inline"><i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating} <span> (${car.reviewNumber} reviews)</span></span>
@@ -56,7 +70,6 @@ const createCarDiv = (car) => {
   return carDiv;
 };
 
-const parcDiv = document.querySelector('.parc');
 
 const loadCarListFromData = async (filePath) => {
   const response = await fetch(filePath);

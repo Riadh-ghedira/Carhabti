@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return;
   }
+
   const addCarBtn = document.getElementById('add-car');
   const closeBtn = document.getElementById('close-add-div');
   const parc = document.querySelector('.parc');
@@ -19,17 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
     airCondition: document.getElementById('air-condition'),
     fuelType: document.getElementById('fuel-type'),
     passengerCapacity: document.getElementById('passenger-capacity'),
-    transmission: document.getElementById('transmission'),
+    transmission: document.getElementById('transmission-select'),
   };
-  const submitBtn = addCarForm.querySelector('button[type="submit"]');
 
+  const submitBtn = addCarForm.querySelector('button[type="submit"]');
   addCarForm.classList.add('hidden');
+
   isAdmin
     ? addCarBtn.classList.remove('hidden')
     : addCarBtn.classList.add('hidden');
-  if (!isAdmin) {
-    addCarForm.style.display = 'none';
-  }
 
   addCarBtn.addEventListener('click', showForm);
   closeBtn.addEventListener('click', closeForm);
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const newCar = {
         id: Date.now(),
-        img: await processImage(),
+        img: await processImage(), // base64 string
         name: formInputs.name.value.trim(),
         price: `${formInputs.price.value.trim()}DT`,
         climatisation: formInputs.airCondition.checked ? 'Avec' : 'Sans',
@@ -99,65 +98,68 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error:', error);
       alert('Failed to add car. Please try again.');
     }
-  }
+  };
 
-  const processImage = async () => {
-    if (formInputs.image.files[0]) {
+  const processImage = () => {
+    return new Promise((resolve, reject) => {
       const file = formInputs.image.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
 
-      try {
-        const response = await fetch('../php/upload.php', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (!response.ok) throw new Error('Failed to upload image');
-        const data = await response.json();
-        return data.filePath;
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        alert('Failed to upload image. Using default image.');
+      if (!file) {
+        console.warn('No image file selected. Using default image.');
+        return resolve('./src/bg.webp'); // fallback path
       }
-    }
-    return './src/bg.webp';
-  }
+
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result); // base64 string
+      reader.onerror = (error) => {
+        console.error('Error reading image:', error);
+        resolve('./src/bg.webp');
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const fetchCarData = async () => {
     const response = await fetch('./data/car.json');
     if (!response.ok) throw new Error('Failed to fetch car data');
     return await response.json();
-  }
+  };
 
   const saveCarData = async (cars) => {
-    const filePath = './data/car.json';
-
-    // Create a new Blob for the updated car data
     const blob = new Blob([JSON.stringify(cars, null, 2)], {
       type: 'application/json',
     });
 
-    // Use the File System Access API to save the file in the same directory
     try {
-      const handle = await window.showSaveFilePicker({
-        suggestedName: 'car.json',
-        types: [
-          {
-            description: 'JSON Files',
-            accept: { 'application/json': ['.json'] },
-          },
-        ],
-      });
+      if (window.showSaveFilePicker) {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'car.json',
+          types: [
+            {
+              description: 'JSON Files',
+              accept: { 'application/json': ['.json'] },
+            },
+          ],
+        });
 
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      await writable.close();
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
 
-      console.log(`File saved to ${filePath}`);
+        console.log('File saved successfully.');
+      } else {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'car.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        console.log('File downloaded successfully.');
+      }
     } catch (error) {
       console.error('Error saving file:', error);
       alert('Failed to save the file. Please try again.');
     }
-  }
+  };
 });

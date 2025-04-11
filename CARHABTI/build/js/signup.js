@@ -127,30 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         phone: '',
         photo: '',
       };
-
-      try {
-        const response = await fetch('../php/save_account.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(account),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to save account');
-        }
-
-        const result = await response.json();
-        alert('Account created successfully');
-        console.log('Account saved:', result);
-        form.reset();
-        toggleSubmitButton();
-        window.location.href = './main.html';
-      } catch (error) {
-        alert('Failed to create account. Please try again.');
-        console.error('Error:', error);
-      }
+      
     }
   });
 });
