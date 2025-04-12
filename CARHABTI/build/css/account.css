@@ -186,9 +186,18 @@ hr{
     display: none;
 }
 /*--------------------------------------------------------------------------------*/
-
-
-
+ @media (preference-color-scheme: dark) {
+  #compte-form label{
+    color: white;
+  }
+  #compte-form input::placeholder {
+    color: white;
+  }
+  #compte-form input {
+    color: whitesmoke;
+  }
+   
+}
 
 /*animation*/
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
