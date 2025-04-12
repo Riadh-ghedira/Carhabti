@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
     mirror.className = 'input-mirror';
     document.body.appendChild(mirror);
 
-    const resizeInput = (n = 20) => {
+    const resizeInput = (n = 27) => {
       mirror.textContent = input.value || input.placeholder || '';
       input.style.width = `${mirror.offsetWidth + n}px`;
     };
