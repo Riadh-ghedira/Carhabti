@@ -1,10 +1,14 @@
 export default class Account {
-  constructor(name, password, phone, email, photo) {
+  constructor(name, password, phone, email, photo, address, birthDate, cin, permis) {
     this.name = name;
     this.password = password;
     this.phone = phone;
     this.email = email;
     this.photo = photo;
+    this.address = address;
+    this.birthDate = birthDate;
+    this.cin = cin;
+    this.permis = permis;
   }
 
   updatePassword(newPassword) {

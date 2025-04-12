@@ -67,13 +67,7 @@ const autoScrollParc = () => {
   setInterval(scroll, scrollInterval);
 };
 
-parcContainer.addEventListener('mouseenter', () => {
-  clearInterval(autoScrollParc);
-});
 
-parcContainer.addEventListener('mouseleave', () => {
-  autoScrollParc();
-});
 
 addBestRatedCars('./data/car.json').then(() => {
   autoScrollParc();

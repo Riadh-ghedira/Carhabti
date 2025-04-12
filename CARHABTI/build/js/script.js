@@ -38,12 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
       nav[1].classList.add('a-reverse');
       nav[1].classList.add('reverse-btn');
       break;
- 
+      
     default:
       nav[0].classList.add('a-reverse');
       nav[0].classList.add('reverse-btn');
       break;
-  };
+    };
   window.addEventListener('scroll', () => {
     const rect = document.getElementById('agence').getBoundingClientRect();
     const contactRect = footerRoot.getElementById('contact-form').getBoundingClientRect();
@@ -60,21 +60,21 @@ document.addEventListener('DOMContentLoaded', function () {
       nav[3].classList.add('reverse-btn');
     }
     else {
-      switch (relativePath) {
-        
-        case '/CARHABTI/reservation.html':
-          nav[1].classList.add('a-reverse');
-          nav[1].classList.add('reverse-btn');
-          break;
+    switch (relativePath) {
+      
+    case '/CARHABTI/reservation.html':
+    nav[1].classList.add('a-reverse');
+    nav[1].classList.add('reverse-btn');
+    break;
     
-        case '/CARHABTI/main.html':
-          nav[0].classList.add('a-reverse');
-          nav[0].classList.add('reverse-btn');
-          break;
-        case '/CARHABTI/main.html#top':
-          nav[0].classList.add('a-reverse');
-          nav[0].classList.add('reverse-btn');
-          break;
+    case '/CARHABTI/main.html':
+      nav[0].classList.add('a-reverse');
+      nav[0].classList.add('reverse-btn');
+      break;
+      case '/CARHABTI/main.html#top':
+        nav[0].classList.add('a-reverse');
+        nav[0].classList.add('reverse-btn');
+        break;
       };
     }
   });
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     sideloginNav.classList.add('hidden');
     userName.textContent = localStorage.getItem('userName');
     sideUserName.textContent = localStorage.getItem('userName');
-
+    
   } else {
     userNav.classList.add('hidden');
     loginNav.classList.add('flex');
@@ -96,17 +96,13 @@ document.addEventListener('DOMContentLoaded', function () {
     sideUserNav.classList.add('hidden');
     sideloginNav.classList.remove('hidden');
   }
-
-  logoutBtn.addEventListener('click', () => {
+  const logout = () => {
     localStorage.setItem('isLoggedIn', 'false');
     localStorage.setItem('isAdmin', 'false');
     window.location.href = './main.html';
-  });
-  sidelogoutBtn.addEventListener('click', () => {
-    localStorage.setItem('isLoggedIn', 'false');
-    localStorage.setItem('isAdmin', 'false');
-    window.location.href = './main.html';
-  });
+  };
+  sidelogoutBtn.addEventListener('click', () => {logout();});
+  logoutBtn.addEventListener('click', () => {logout();});
   if (header && sideNav) {
     button.addEventListener('click', function (e) {
       if (section.style.display === 'none' || section.style.display === '') {
@@ -146,13 +142,13 @@ document.addEventListener('DOMContentLoaded', function () {
   footerEl.addEventListener('click', handleOutsideClick);
   main.addEventListener('click', handleOutsideClick);
   window.addEventListener('resize', handleOutsideClick);
-
+  
 });
 const map = document.getElementById('mapview');
 function togglemap() {
-  if (map.style.display === 'none' || map.style.display === '') {
-    map.style.display = 'flex';
-  } else {
+    if (map.style.display === 'none' || map.style.display === '') {
+      map.style.display = 'flex';
+    } else {
     map.style.display = 'none';
   }
 };

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CARHABTI, Your reliable car rental service.">
+    <meta name="keywords" content="car rental, auto, voiture, CARHABTI">
+    <meta name="author" content="Riadh Ghedira">
+    <title>CARHABTI</title>
+    <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./build/css/style.css">
+    <link rel="stylesheet" href="./build/css/account.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="./build/components/loading.js" ></script>
+    <script type="module" src="./build/components/header.js" ></script>
+    <script type="module" src="./build/components/sidenav.js" ></script>
+    <script type="module" src="./build/components/footer.js" ></script>
+    <script defer src="./build/js/script.js"></script>
+    <script type="module" src="./build/js/Account.js"></script>
+    <script type="module" src="./build/js/setting.js"></script>
+    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
+    <style></style>
+</head>
+<body>
+    <loading-component></loading-component>
+    <header-component></header-component>
+    <side-nav-component></side-nav-component>
+    <a id="top"></a>
+    <main class="main flex">
+        <div class="nav">
+            <button class="nav-item flex" id="account">
+                <i class="fa-solid fa-user"></i>
+                <h3>Mon Compte</h3>
+                <i class="fa-solid fa-angle-right right"></i>
+            </button>
+            <hr>
+            <button class="nav-item flex" id="reservations">
+                <i class="fa-solid fa-car"></i>
+                <h3>Mes Réservations</h3>
+                <i class="fa-solid fa-angle-right right"></i>
+            </button>
+            <hr>
+            <button class="nav-item flex" id="historique">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h3>Historique</h3>
+                <i class="fa-solid fa-angle-right right"></i>
+            </button>
+            <hr>
+            <button class="nav-item flex" id="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <h3 >Déconnexion</h3>
+                <i class="fa-solid fa-angle-right right"></i>
+            </button>
+            <hr>
+        </div>
+        <hr>
+        <div class="display" id="account-display">
+            <form id="compte-form">
+              <div class="compte" id="compte">
+                <div class="pers-image input-group">
+                  <img src="./src/logo-white.webp" width="100%" height="auto" alt="" id="img">
+                  <i class="fa-solid fa-pencil edit" id="edit-img"></i>
+                </div>
+          
+                <div class="input-group">
+                  <input type="text" id="name-input" name="name" value="Nom Prénom" disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-name"></i>
+                </div>
+
+                <div class="input-group">
+                  <label for="email-input"><i class="fa-solid fa-envelope"></i> Email:</label>
+                  <input type="email" id="email-input" name="email"  disabled>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="password-input"><i class="fa-solid fa-lock"></i> Mot de passe:</label>
+                  <input type="password" id="password-input" name="password" placeholder="••••••••" disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-password"></i>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="tel-input"><i class="fa-solid fa-phone"></i> Téléphone:</label>
+                  <input type="tel" id="tel-input" name="tel" value="+216 12345678" disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-tel"></i>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="adresse-input"><i class="fa-solid fa-map-marker-alt"></i> Adresse:</label>
+                  <input type="text" id="adresse-input" name="adresse" value="Tunis, Tunisia"   disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-adresse"></i>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="birth-input"><i class="fa-solid fa-birthday-cake"></i> Date de naissance:</label>
+                  <input type="date" id="birth-input" name="birth" value="2000-01-01"   disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-birth"></i>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="cin-input"><i class="fa-solid fa-id-card"></i> CIN:</label>
+                  <input type="text" id="cin-input" name="cin" value="12345678"     disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-cin"></i>
+                </div>
+                <hr>
+                <div class="input-group">
+                  <label for="permis-input"><i class="fa-solid fa-id-badge"></i> Permis:</label>
+                  <input type="text" id="permis-input" name="permis" value="12345678"   disabled>
+                  <i class="fa-solid fa-pencil edit" id="edit-permis"></i>
+                </div>
+                <hr>
+                <button type="button" class="confirm-btn" id="save">Confirmer les modifications</button>
+              </div>
+            </form>
+        </div>
+        <div class="display" id="reservations-display">
+            <h2>Mes Réservations</h2>
+            
+        </div>
+        <div class="display" id="historique-display">
+            <h2>Historique</h2>
+        </div>
+    </main>
+    <footer-component></footer-component>
+</body>
+</html>

@@ -43,6 +43,64 @@ document.addEventListener('DOMContentLoaded', () => {
     return isEmailValid && isPasswordValid;
   }
 
+  const callAlertBox = (msg, type = '') => {
+    const alertBox = document.createElement('div');
+    alertBox.classList.add('alert-box');
+    alertBox.innerHTML = `
+      <style>
+      .alert-box {
+        height: auto;
+        width: 300px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.3s ease-in-out;
+        column-gap: 15px;
+        background-color: ${type === 'error' ? '#ffe6e6' : '#e6ffe6'};
+        z-index: 2000;
+        font-family: Arial, sans-serif;
+      }
+      .alert-box .icon {
+        font-size: 24px;
+      }
+      .alert-box .msg {
+        font-size: 16px;
+        font-weight: 500;
+        disolay: flex;
+        align-items: center;
+        justyfy-content: center;
+        color: ${type === 'error' ? '#cc0000' : '#006600'};
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      </style>
+      <div class="icon" style="color: ${type === 'error' ? '#cc0000' : '#006600'};">
+      <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+      </div>
+      <div class="msg"><p>${msg}</p></div>
+    `;
+    alertBox.style.backgroundColor = type === 'error' ? '#ff000065' : '#00ff2265';
+    document.body.appendChild(alertBox);
+
+    setTimeout(() => {
+      alertBox.remove();
+    }, 3000);
+  };
+
   submitButton.addEventListener('click', async (event) => {
     event.preventDefault();
 
@@ -52,41 +110,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const isAuthenticated = await authenticateUser(email, password);
-        const name = await getName(email);
         if (isAuthenticated) {
-          alert('Login successful');
-          form.reset();
-          const isAdmin = await Admin(email);
-          if (isAdmin) localStorage.setItem('isAdmin', 'true');
+          const name = await getName(email);
+          const isAdmin = await checkAdmin(email);
+
+          localStorage.setItem('email', email);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userName', name);
-          window.location.href = '../CARHABTI/main.html';
+
+          if (isAdmin) {
+            localStorage.setItem('isAdmin', 'true');
+          }
+
+          callAlertBox('Login successful');
+          form.reset();
+
+          setTimeout(() => {
+            window.location.href = '../CARHABTI/main.html';
+          }, 2000);
         } else {
-          alert('Invalid email or password');
+          callAlertBox('Invalid email or password', 'error');
         }
       } catch (error) {
-        alert('Failed to login. Please try again.');
+        callAlertBox('Failed to login. Please try again.', 'error');
         console.error('Login error:', error);
       }
     }
   });
-  async function Admin(email) {
+
+  async function checkAdmin(email) {
     try {
       const response = await fetch('./data/admin-list.json');
       if (!response.ok) {
         throw new Error('Failed to load admin list');
       }
+
       const list = await response.json();
-      if (!Array.isArray(list)) {
-        console.error('Admin list is not in the expected format');
-        return false;
-      }
-      return list.some((admin) => admin.email === email);
+      return Array.isArray(list) && list.some((admin) => admin.email === email);
     } catch (error) {
-      console.error('Error finding admin:', error);
+      console.error('Error checking admin:', error);
       return false;
     }
   }
+
   async function authenticateUser(email, password) {
     try {
       const response = await fetch('./data/account.json');
@@ -96,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const accounts = await response.json();
       return accounts.some(
-        (account) => account.email === email && account.password === password,
+        (account) => account.email === email && account.password === password
       );
     } catch (error) {
       console.error('Error authenticating user:', error);
