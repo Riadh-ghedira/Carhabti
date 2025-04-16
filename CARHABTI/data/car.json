@@ -262,5 +262,17 @@
     "passager": "2",
     "rating": 0,
     "reviewNumber": 0
+  },
+  {
+    "id": 1744729794364,
+    "img": "./src/bg.webp",
+    "name": "Polo 3",
+    "price": "50DT",
+    "climatisation": "Avec",
+    "transmission": "Manual",
+    "fuel": "Electric",
+    "passager": "8+",
+    "rating": 0,
+    "reviewNumber": 0
   }
 ]

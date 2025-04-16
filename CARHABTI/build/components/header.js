@@ -99,6 +99,7 @@ class HeaderComponent extends HTMLElement {
           .nav-btn:hover{
               opacity: 1;
           }
+              .logo a img{cursor: pointer;}
           header:hover{background-color: var(--bg-color);}
           .logo {margin-top: 5px;}
           .logo:hover{opacity: 1;cursor: pointer;}
