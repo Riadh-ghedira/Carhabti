@@ -5,6 +5,9 @@
     $db_pass = '';
     $db_name = 'carhabti';
     $db_port = 3307; 
+
+
+    
     try{
         $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name, $db_port);
         if (!$conn) {
