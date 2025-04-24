@@ -1,5 +1,3 @@
-import Account from './Account.js';
-
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
@@ -14,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('isLoggedIn') === 'true') {
     window.location.href = './main.html';
   }
+
   emailInput.addEventListener('input', async () => {
     await validateEmail();
     toggleSubmitButton();
@@ -45,18 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    try {
-      const existingEmails = await loadAccountEmails();
-      if (existingEmails.includes(email)) {
-        emailError.textContent = 'Email already exists';
-        return false;
-      }
-      emailError.textContent = '';
-      return true;
-    } catch (error) {
-      emailError.textContent = 'Error checking email availability';
-      return false;
-    }
+    emailError.textContent = '';
+    return true;
   };
 
   const validatePassword = () => {
@@ -98,112 +87,53 @@ document.addEventListener('DOMContentLoaded', () => {
     submitButton.disabled = !isValid;
   };
 
-  const loadAccountEmails = async () => {
-    try {
-      const response = await fetch('./data/account.json');
-      if (!response.ok) throw new Error('Failed to load account data');
-      const accounts = await response.json();
-      return accounts.map((account) => account.email);
-    } catch (error) {
-      console.error('Error loading emails:', error);
-      return [];
-    }
-  };
-
-  const loadAccounts = async () => {
-    try {
-      const response = await fetch('./data/account.json');
-      if (!response.ok) throw new Error('Failed to load account data');
-      return await response.json();
-    } catch (error) {
-      console.error('Error loading accounts:', error);
-      return [];
-    }
-  };
-
-  const saveAccounts = async (accounts) => {
-    const blob = new Blob([JSON.stringify(accounts, null, 2)], {
-      type: 'application/json'
-    });
-
-    try {
-      const handle = await window.showSaveFilePicker({
-        suggestedName: 'account.json',
-        types: [{
-          description: 'JSON File',
-          accept: { 'application/json': ['.json'] }
-        }]
-      });
-
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      callAlertBox('Account created successfully!');
-      localStorage.setItem('email', emailInput.value.trim());
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userName', nameInput.value.trim());
-      setTimeout(() => { 
-        window.location.href = './main.html'; 
-      }, 3000);
-      await writable.close();
-      
-    } catch (error) {
-      console.error('File picker save failed:', error);
-      callAlertBox('Failed to save. Please try again.', 'error');
-    }
-
-  };
-
   const callAlertBox = (msg, type = '') => {
     const alertBox = document.createElement('div');
     alertBox.classList.add('alert-box');
     alertBox.innerHTML = `
       <style>
-      .alert-box {
-        height: auto;
-        width: 300px;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        position: fixed;
-        top: 60px;
-        right: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.3s ease-in-out;
-        column-gap: 15px;
-        background-color: ${type === 'error' ? '#ffe6e6' : '#e6ffe6'};
-        z-index: 2000;
-        font-family: Arial, sans-serif;
-      }
-      .alert-box .icon {
-        font-size: 24px;
-      }
-      .alert-box .msg {
-        font-size: 16px;
-        font-weight: 500;
-        disolay: flex;
-        align-items: center;
-        justyfy-content: center;
-        color: ${type === 'error' ? '#cc0000' : '#006600'};
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
+        .alert-box {
+          height: auto;
+          width: 300px;
+          padding: 15px 20px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          position: fixed;
+          top: 60px;
+          right: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          animation: fadeIn 0.3s ease-in-out;
+          column-gap: 15px;
+          background-color: ${type === 'error' ? '#ffe6e6' : '#e6ffe6'};
+          z-index: 2000;
+          font-family: Arial, sans-serif;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+        .alert-box .icon {
+          font-size: 24px;
         }
-      }
+        .alert-box .msg {
+          font-size: 16px;
+          font-weight: 500;
+          color: ${type === 'error' ? '#cc0000' : '#006600'};
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       </style>
       <div class="icon" style="color: ${type === 'error' ? '#cc0000' : '#006600'};">
-      <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+        <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
       </div>
       <div class="msg"><p>${msg}</p></div>
     `;
-    alertBox.style.backgroundColor = type === 'error' ? '#ffe6e6' : '#e6ffe6';
     document.body.appendChild(alertBox);
 
     setTimeout(() => {
@@ -211,26 +141,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   };
 
-  document.getElementById('sub-btn').addEventListener('click', async (event) => {
+  document.getElementById('signup-form-el').addEventListener('submit', async (event) => {
     event.preventDefault();
-  
     if (await validateForm()) {
-      let accounts = await loadAccounts();
-  
-      const newAccount = new Account(
-        nameInput.value.trim(),
-        passwordInput.value,
-        '', // phone
-        emailInput.value.trim(),
-        '', // photo
-        '', // address
-        '', // birthDate
-        '', // cin
-        ''  // permis
-      );
-  
-      accounts.push(newAccount);
-      saveAccounts(accounts);
+      event.target.submit();
+    } else {
+      callAlertBox('Please fix the errors before submitting.', 'error');
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("status") === "success") {
+      callAlertBox("Account created successfully!");
+    } else if (params.get("status") === "error") {
+      callAlertBox("Error creating account. Try again.", "error");
     }
   });
 });

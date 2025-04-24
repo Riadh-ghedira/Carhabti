@@ -16,9 +16,8 @@
     <script type="module" src="./build/components/header.js" ></script>
     <script type="module" src="./build/components/sidenav.js" ></script>
     <script type="module" src="./build/components/footer.js" ></script>
-    <script type="module" src="./build/js/Account.js"></script>
+    <script src="./build/js/signup.js"></script>
     <script src="./build/js/script.js" defer></script>
-    <script type="module" src="./build/js/signup.js" defer></script>
     <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
   </head>
   <body>
@@ -30,9 +29,9 @@
       <section id="signup-form">
         <h2>Sign up</h2>
         <form
-          action="./build/php/save_account.php"
+          action="./build/php/signup.php"
+          id="signup-form-el"
           method="post"
-          target="_blank"
           enctype="multipart/form-data"
         >
           <label for="name">Name:</label>
@@ -40,7 +39,7 @@
             type="text"
             id="name"
             name="name"
-            placeholder="Jhon Doe"
+            placeholder="John Doe"
             autocomplete="name"
             required
           />
@@ -73,9 +72,9 @@
             required
           />
           <p class="error" id="confirmpassword-error"></p>
-          <button id="sub-btn" type="submit">Sign up</button>
+          <button id="sub-btn" type="submit" name="submit">Sign up</button>
           <p class="msg">
-            you already have an account?
+            Already have an account?
             <a href="login.html" class="bleu">Login</a>
           </p>
         </form>
