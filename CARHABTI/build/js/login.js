@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   emailInput.addEventListener('input', validateEmail);
   passwordInput.addEventListener('input', validatePassword);
 
+  localStorage.getItem('isLoggedIn') === 'true' ? window.location.href = '../CARHABTI/main.html' : null;
+
   function validateEmail() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -181,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.status === 'success') {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('email', result.email);
-          localStorage.setItem('name', result.name);
+          localStorage.setItem('userName', result.name);
           localStorage.setItem('isAdmin', result.isAdmin ? 'true' : 'false');
           return { success: true };
         } else {

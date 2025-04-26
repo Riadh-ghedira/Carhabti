@@ -8,22 +8,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $confirmPassword = $_POST['confirmpassword'];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header("Location: signup.html?status=error");
+        echo json_encode(["status" => "invalid_email", "message" => "Invalid email format"]);
         exit;
     }
 
     if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-        header("Location: signup.html?status=error");
+        echo json_encode(["status" => "invalid_password", "message" => "Invalid password"]);
         exit;
     }
 
     if ($password !== $confirmPassword) {
-        header("Location: signup.html?status=error");
+        echo json_encode(["status" => "invalid_confi_password", "message" => "Invalid comfirmation password"]);
         exit;
     }
 
     if (in_array($email, get_emails())) {
-        header("Location: signup.html?status=error");
+        echo json_encode(["status" => "invalid_email", "message" => "user already exists"]);
         exit;
     }
     $stmt->close();
@@ -33,10 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $stmt->bind_param("sss", $name, $email, $hashedPassword);
 
     if ($stmt->execute()) {
-        header("Location: signup.html?status=success");
+        $res = ["status" => "success","name" => $user['name'],"email" => $user['email'],"isAdmin" => $_SESSION['isAdmin']];
+        echo json_encode($res);
         exit;
     } else {
-        header("Location: signup.html?status=error");
+        echo json_encode(["status" => "Server_error", "message" => "Server error"]);
         exit;
     }
 

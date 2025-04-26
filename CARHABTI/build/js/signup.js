@@ -150,12 +150,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("status") === "success") {
-      callAlertBox("Account created successfully!");
-    } else if (params.get("status") === "error") {
-      callAlertBox("Error creating account. Try again.", "error");
-    }
-  });
+  
 });

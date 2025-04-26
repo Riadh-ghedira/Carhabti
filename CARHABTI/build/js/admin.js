@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const addCarForm = document.getElementById('add-car-form');
+  console.log('Admin: ' + isAdmin);
   if (!isAdmin) {
     addCarForm.style.display = 'none';
     addCarForm.querySelectorAll('input, button, select').forEach((element) => {

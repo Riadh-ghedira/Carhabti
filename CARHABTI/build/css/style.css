@@ -119,7 +119,6 @@ header-component {
     width: 100%;
 }
 /* Animation Styles */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 @keyframes slideIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 @keyframes slideOut { from { transform: translateY(0); } to { transform: translateY(-100%); } }
@@ -170,4 +169,31 @@ header-component {
     body {
         font-size: 14px;
     }
+}
+.alert-box {
+    height: auto;
+    width: 300px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    column-gap: 15px;
+    z-index: 2000;
+    font-family: Arial, sans-serif;
+}
+.alert-box.success { background-color: #e6ffe6; }
+.alert-box.error { background-color: #ffe6e6; }
+.alert-box .icon { font-size: 24px; }
+.alert-box .msg { font-size: 16px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+.alert-box.success .msg, .alert-box.success .icon { color: #006600; }
+.alert-box.error .msg, .alert-box.error .icon { color: #cc0000; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
