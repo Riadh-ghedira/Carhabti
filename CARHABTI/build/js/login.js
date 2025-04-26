@@ -1,7 +1,5 @@
-import Account from './Account.js';
-
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('#login-form form');
+  const form = document.getElementById('login-form-el');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   const emailError = document.getElementById('email-error');
@@ -11,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   emailInput.addEventListener('input', validateEmail);
   passwordInput.addEventListener('input', validatePassword);
 
-  async function validateEmail() {
+  function validateEmail() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -36,14 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  async function validateForm() {
-    const isEmailValid = await validateEmail();
+  function validateForm() {
+    const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
 
     return isEmailValid && isPasswordValid;
   }
 
   const callAlertBox = (msg, type = '') => {
+    console.log(`Alert: ${msg} (${type})`); // Log alerts to console as well
+    
     const alertBox = document.createElement('div');
     alertBox.classList.add('alert-box');
     alertBox.innerHTML = `
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .alert-box .msg {
         font-size: 16px;
         font-weight: 500;
-        disolay: flex;
+        display: flex;
         align-items: center;
-        justyfy-content: center;
+        justify-content: center;
         color: ${type === 'error' ? '#cc0000' : '#006600'};
       }
       @keyframes fadeIn {
@@ -89,11 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       </style>
       <div class="icon" style="color: ${type === 'error' ? '#cc0000' : '#006600'};">
-      <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+        <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
       </div>
       <div class="msg"><p>${msg}</p></div>
     `;
-    alertBox.style.backgroundColor = type === 'error' ? '#ff000065' : '#00ff2265';
     document.body.appendChild(alertBox);
 
     setTimeout(() => {
@@ -101,27 +100,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   };
 
-  submitButton.addEventListener('click', async (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    console.log('Form submitted');
 
-    if (await validateForm()) {
+    if (validateForm()) {
       const email = emailInput.value.trim();
       const password = passwordInput.value;
+      console.log(`Attempting login with email: ${email}`);
+
+      const btnText = submitButton.querySelector('.btn-text');
+      const spinner = submitButton.querySelector('.spinner');
+
+      btnText.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      submitButton.disabled = true;
 
       try {
-        const isAuthenticated = await authenticateUser(email, password);
-        if (isAuthenticated) {
-          const name = await getName(email);
-          const isAdmin = await checkAdmin(email);
-
-          localStorage.setItem('email', email);
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('userName', name);
-
-          if (isAdmin) {
-            localStorage.setItem('isAdmin', 'true');
-          }
-
+        const result = await authenticateUser(email, password);
+        console.log('Authentication result:', result);
+        
+        if (result.success) {
           callAlertBox('Login successful');
           form.reset();
 
@@ -129,60 +128,81 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '../CARHABTI/main.html';
           }, 2000);
         } else {
-          callAlertBox('Invalid email or password', 'error');
+          callAlertBox(result.message || 'Authentication failed', 'error');
         }
       } catch (error) {
         callAlertBox('Failed to login. Please try again.', 'error');
         console.error('Login error:', error);
+      } finally {
+        btnText.style.display = 'inline-block';
+        spinner.style.display = 'none';
+        submitButton.disabled = false;
       }
     }
   });
 
-  async function checkAdmin(email) {
-    try {
-      const response = await fetch('./data/admin-list.json');
-      if (!response.ok) {
-        throw new Error('Failed to load admin list');
-      }
-
-      const list = await response.json();
-      return Array.isArray(list) && list.some((admin) => admin.email === email);
-    } catch (error) {
-      console.error('Error checking admin:', error);
-      return false;
-    }
-  }
-
   async function authenticateUser(email, password) {
     try {
-      const response = await fetch('./data/account.json');
+      console.log('Creating form data');
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      
+      console.log('Sending request to server');
+      const response = await fetch('/carhabti/CARHABTI/build/php/login.php', {
+        method: 'POST',
+        body: formData
+      });
+      
+      console.log('Response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error('Failed to load account data');
+        console.error('Server error:', response.status, response.statusText);
+        return { 
+          success: false, 
+          message: `Server error: ${response.status} ${response.statusText}` 
+        };
       }
-
-      const accounts = await response.json();
-      return accounts.some(
-        (account) => account.email === email && account.password === password
-      );
-    } catch (error) {
-      console.error('Error authenticating user:', error);
-      throw error;
-    }
-  }
-
-  async function getName(email) {
-    try {
-      const response = await fetch('./data/account.json');
-      if (!response.ok) {
-        throw new Error('Failed to load account data');
+      
+      try {
+        const responseText = await response.text();
+        console.log('Raw response:', responseText);
+        
+        if (!responseText.trim()) {
+          return { 
+            success: false, 
+            message: 'Server returned empty response' 
+          };
+        }
+        
+        const result = JSON.parse(responseText);
+        console.log('Parsed response:', result);
+        
+        if (result.status === 'success') {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('email', result.email);
+          localStorage.setItem('name', result.name);
+          localStorage.setItem('isAdmin', result.isAdmin ? 'true' : 'false');
+          return { success: true };
+        } else {
+          return { 
+            success: false, 
+            message: result.message || 'Authentication failed' 
+          };
+        }
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        return { 
+          success: false, 
+          message: 'Failed to parse server response' 
+        };
       }
-
-      const accounts = await response.json();
-      const account = accounts.find((account) => account.email === email);
-      return account ? account.name : '';
     } catch (error) {
-      console.error('Error fetching user name:', error);
-      return '';
+      console.error('Network error:', error);
+      return { 
+        success: false, 
+        message: 'Network error: ' + error.message 
+      };
     }
   }
 });

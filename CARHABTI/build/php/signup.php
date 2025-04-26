@@ -1,5 +1,5 @@
 <?php
-include_once 'database.php';
+include 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $name = htmlspecialchars(trim($_POST['name']));
@@ -22,11 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         exit;
     }
 
-    $stmt = $conn->prepare("SELECT email FROM account WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-    if ($stmt->num_rows > 0) {
+    if (in_array($email, get_emails())) {
         header("Location: signup.html?status=error");
         exit;
     }
