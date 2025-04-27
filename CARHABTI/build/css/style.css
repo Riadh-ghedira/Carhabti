@@ -178,6 +178,7 @@ header-component {
     justify-content: flex-start;
     align-items: center;
     position: fixed;
+    background-color: #e6ffe6;
     top: 60px;
     right: 20px;
     border-radius: 10px;

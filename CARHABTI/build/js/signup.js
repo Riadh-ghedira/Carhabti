@@ -1,41 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('signup-form-el');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   const confirmPasswordInput = document.getElementById('confirmpassword');
+  const nameError = document.getElementById('name-error');
   const emailError = document.getElementById('email-error');
   const passwordError = document.getElementById('password-error');
   const confirmPasswordError = document.getElementById('confirmpassword-error');
   const submitButton = document.getElementById('sub-btn');
 
-  submitButton.disabled = true;
   if (localStorage.getItem('isLoggedIn') === 'true') {
     window.location.href = './main.html';
   }
+  fetch('/carhabti/CARHABTI/build/php/check_session.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.isLoggedIn) window.location.href = './main.html';
+    });
 
-  emailInput.addEventListener('input', async () => {
-    await validateEmail();
-    toggleSubmitButton();
-  });
+  nameInput.addEventListener('input', validateName);
+  emailInput.addEventListener('input', validateEmail);
+  passwordInput.addEventListener('input', validatePassword);
+  confirmPasswordInput.addEventListener('input', validateConfirmPassword);
 
-  passwordInput.addEventListener('input', () => {
-    validatePassword();
-    toggleSubmitButton();
-  });
+  function validateName() {
+    const name = nameInput.value.trim();
+    if (name.length < 2) {
+      nameError.textContent = 'Name must be at least 2 characters';
+      return false;
+    }
+    nameError.textContent = '';
+    return true;
+  }
 
-  confirmPasswordInput.addEventListener('input', () => {
-    validateConfirmPassword();
-    toggleSubmitButton();
-  });
-
-  const validateForm = async () => {
-    const isEmailValid = await validateEmail();
-    const isPasswordValid = validatePassword();
-    const isConfirmValid = validateConfirmPassword();
-    return isEmailValid && isPasswordValid && isConfirmValid;
-  };
-
-  const validateEmail = async () => {
+  function validateEmail() {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -46,11 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     emailError.textContent = '';
     return true;
-  };
+  }
 
-  const validatePassword = () => {
+  function validatePassword() {
     const password = passwordInput.value;
-
     if (password.length < 8) {
       passwordError.textContent = 'At least 8 characters required';
       return false;
@@ -60,95 +58,115 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (!/[0-9]/.test(password)) {
       passwordError.textContent = 'Include at least one number';
       return false;
-    } else {
-      passwordError.textContent = '';
-      return true;
     }
-  };
+    passwordError.textContent = '';
+    return true;
+  }
 
-  const validateConfirmPassword = () => {
+  function validateConfirmPassword() {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
-
     if (confirmPassword.length === 0) {
       confirmPasswordError.textContent = 'Please confirm your password';
       return false;
     } else if (password !== confirmPassword) {
       confirmPasswordError.textContent = 'Passwords do not match';
       return false;
-    } else {
-      confirmPasswordError.textContent = '';
-      return true;
     }
-  };
+    confirmPasswordError.textContent = '';
+    return true;
+  }
 
-  const toggleSubmitButton = async () => {
-    const isValid = await validateForm();
-    submitButton.disabled = !isValid;
-  };
+  function validateForm() {
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    const isConfirmValid = validateConfirmPassword();
+    return isNameValid && isEmailValid && isPasswordValid && isConfirmValid;
+  }
 
-  const callAlertBox = (msg, type = '') => {
+  const callAlertBox = (msg, type = 'success') => {
+    console.log(`Alert: ${msg} (${type})`);
     const alertBox = document.createElement('div');
-    alertBox.classList.add('alert-box');
+    alertBox.classList.add('alert-box', type);
     alertBox.innerHTML = `
-      <style>
-        .alert-box {
-          height: auto;
-          width: 300px;
-          padding: 15px 20px;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          position: fixed;
-          top: 60px;
-          right: 20px;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          animation: fadeIn 0.3s ease-in-out;
-          column-gap: 15px;
-          background-color: ${type === 'error' ? '#ffe6e6' : '#e6ffe6'};
-          z-index: 2000;
-          font-family: Arial, sans-serif;
-        }
-        .alert-box .icon {
-          font-size: 24px;
-        }
-        .alert-box .msg {
-          font-size: 16px;
-          font-weight: 500;
-          color: ${type === 'error' ? '#cc0000' : '#006600'};
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      </style>
-      <div class="icon" style="color: ${type === 'error' ? '#cc0000' : '#006600'};">
-        <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
-      </div>
+      <div class="icon"><i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i></div>
       <div class="msg"><p>${msg}</p></div>
     `;
     document.body.appendChild(alertBox);
-
-    setTimeout(() => {
-      alertBox.remove();
-    }, 3000);
+    setTimeout(() => alertBox.remove(), 3000);
   };
 
-  document.getElementById('signup-form-el').addEventListener('submit', async (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (await validateForm()) {
-      event.target.submit();
-    } else {
-      callAlertBox('Please fix the errors before submitting.', 'error');
+    console.log('Form submitted');
+
+    if (validateForm()) { 
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      const btnText = submitButton.querySelector('.btn-text');
+      const spinner = submitButton.querySelector('.spinner');
+
+      btnText.style.display = 'none';
+      spinner.style.display = 'inline-block';
+      submitButton.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('confirmpassword', confirmPassword);
+        formData.append('submit', 'true');
+
+        const response = await fetch('/carhabti/CARHABTI/build/php/signup.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        console.log('Response status:', response.status);
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+
+        const responseText = await response.text();
+        console.log('Raw response:', responseText);
+
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('JSON parse error:', parseError);
+          throw new Error('Invalid server response format');
+        }
+
+        console.log('Parsed response:', result);
+
+        if (result.status === 'success') {
+          callAlertBox('Signup successful');
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('email', result.email);
+          localStorage.setItem('userName', result.name);
+          localStorage.setItem('isAdmin', result.isAdmin ? 'true' : 'false');
+          form.reset();
+          setTimeout(() => {
+            window.location.href = './main.html';
+          }, 2000);
+        } else {
+          callAlertBox(result.message || 'Signup failed', 'error');
+        }
+      } catch (error) {
+        callAlertBox(error.message || 'Failed to signup. Please try again.', 'error');
+        console.error('Signup error:', error);
+      } finally {
+        btnText.style.display = 'inline-block';
+        spinner.style.display = 'none';
+        submitButton.disabled = false;
+      }
     }
   });
-
-  
 });

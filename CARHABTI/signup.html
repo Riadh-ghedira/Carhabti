@@ -8,16 +8,16 @@
     <meta name="keywords" content="car rental, auto, voiture, CARHABTI" />
     <meta name="author" content="Riadh Ghedira" />
     <title>CARHABTI</title>
-    <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./build/css/style.css" />
-    <link rel="stylesheet" href="./build/css/signup.css" />
+    <link rel="shortcut icon" href="/carhabti/CARHABTI/src/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/carhabti/CARHABTI/build/css/style.css" />
+    <link rel="stylesheet" href="/carhabti/CARHABTI/build/css/signup.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <script defer src="./build/components/loading.js" ></script>
-    <script type="module" src="./build/components/header.js" ></script>
-    <script type="module" src="./build/components/sidenav.js" ></script>
-    <script type="module" src="./build/components/footer.js" ></script>
-    <script src="./build/js/signup.js"></script>
-    <script src="./build/js/script.js" defer></script>
+    <script defer src="/carhabti/CARHABTI/build/components/loading.js"></script>
+    <script type="module" src="/carhabti/CARHABTI/build/components/header.js"></script>
+    <script type="module" src="/carhabti/CARHABTI/build/components/sidenav.js"></script>
+    <script type="module" src="/carhabti/CARHABTI/build/components/footer.js"></script>
+    <script src="/carhabti/CARHABTI/build/js/signup.js" defer></script>
+    <script src="/carhabti/CARHABTI/build/js/script.js" defer></script>
     <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous" defer></script>
   </head>
   <body>
@@ -28,12 +28,7 @@
     <main class="main">
       <section id="signup-form">
         <h2>Sign up</h2>
-        <form
-          action="./build/php/signup.php"
-          id="signup-form-el"
-          method="post"
-          enctype="multipart/form-data"
-        >
+        <form id="signup-form-el" method="post">
           <label for="name">Name:</label>
           <input
             type="text"
@@ -72,7 +67,12 @@
             required
           />
           <p class="error" id="confirmpassword-error"></p>
-          <button id="sub-btn" type="submit" name="submit">Sign up</button>
+          <button id="sub-btn" type="submit" name="submit">
+            <span class="btn-text">Sign up</span>
+            <span class="spinner" style="display: none;">
+              <i class="fa fa-spinner fa-spin"></i>
+            </span>
+          </button>
           <p class="msg">
             Already have an account?
             <a href="login.html" class="bleu">Login</a>

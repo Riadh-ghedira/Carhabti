@@ -113,6 +113,29 @@ class HeaderComponent extends HTMLElement {
           .main-nav ul li, .login ul li , .user-nav ul li{
               font-size: 0.9rem;
           }
+          .logout-btn {
+              background-color: var(--btn-light);
+              border: none;
+              color: #eaeaea;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+          .logout-btn:hover{
+            background-color: transparent;
+            cursor: pointer;
+            opacity: 1;}
+
+          .logout-btn .spinner {
+              display: none;
+            }
+          .logout-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+            .logout-btn span:hover{
+            cursor: pointer;}
 
           /*animation*/
           @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -177,8 +200,15 @@ class HeaderComponent extends HTMLElement {
           </nav>
             <nav id="user-nav" class="user-nav" >
                 <ul>
-                <li><a id="user" href="./account.html"></a> <i class="fa-solid fa-user"></i></li>
-                <li class="reverse-btn a-reverse"><a id="logout">Déconnexion <i class="fa-solid fa-power-off"></i></a></li>
+                  <li><a id="user" href="./account.html"></a> <i class="fa-solid fa-user"></i></li>
+                  <li class="reverse-btn a-reverse">
+                    <a id="logout-btn" class="btn a-reverse logout-btn">
+                      <span class="btn-text">Deconnect</span>
+                      <span class="spinner" style="display: none;">
+                        <i class="fa fa-spinner fa-spin"></i>
+                      </span>
+                    </a>
+                  </li>
                 </ul>
             </nav>
           <button type="button" class="nav-btn hidden" id="nav-btn">☰</button>

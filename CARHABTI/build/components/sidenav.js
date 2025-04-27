@@ -147,6 +147,29 @@ class SideNavComponent extends HTMLElement {
         .navsection ul li{
             margin-block: 10px;
         }
+        .logout-btn {
+            background-color: var(--btn-light);
+            border: none;
+            cursor: pointer;
+            color: #eaeaea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+        .logout-btn .spinner {
+            display: none;
+          }
+        .logout-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+          .logout-btn:hover{
+            background-color: transparent;
+            cursor: pointer;
+            opacity: 1;}
+        .logout-btn span:hover{
+            cursor: pointer;}
+
         /*--------------------------------------------------------------------------------*/
         /*header*/
 
@@ -201,10 +224,18 @@ class SideNavComponent extends HTMLElement {
             </ul>
             <ul class="user-nav hidden " id="user-side-nav">
                 <li><a id="user-side" href="./account.html"></a> <i class="fa-solid fa-user"></i></li>
-                <li class="btn a-reverse"><a id="side-logout">Déconnexion</a></li>
+                <li class="reverse-btn a-reverse">
+                    <a id="side-logout-btn" class="btn a-reverse logout-btn">
+                      <span class="btn-text">Deconnect</span>
+                      <span class="spinner" style="display: none;">
+                        <i class="fa fa-spinner fa-spin"></i>
+                      </span>
+                    </a>
+                </li>
             </ul>
           </nav>
         </section>
+        
       `;
     }
   
