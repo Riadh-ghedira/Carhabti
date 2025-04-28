@@ -1,34 +1,34 @@
 const parcContainer = document.querySelector('.parc');
 
 const isValidImage = (imgSrc) => {
-  return typeof imgSrc === 'string' && imgSrc.trim().length > 20 || imgSrc.startsWith('./src/');
+  return typeof imgSrc === 'string' && (imgSrc.trim().startsWith('data:image/') || imgSrc.startsWith('./src/'));
 };
 
-const addBestRatedCars = async (filePath) => {
-  const response = await fetch(filePath);
+const addBestRatedCars = async () => {
+  const response = await fetch('./build/php/cars.php');
   const data = await response.json();
-
-  const bestRatedCars = data.sort((a, b) => b.rating - a.rating).slice(0, 8);
+  const carList = data.filter(car => car.crash === '0' && car.disponibility === '1'); 
+  const bestRatedCars = carList.sort((a, b) => b.rating - a.rating).slice(0, 8);
 
   bestRatedCars.forEach(car => {
     const carDiv = document.createElement('div');
     carDiv.classList.add('car');
     carDiv.innerHTML = `
-      <img class="car-img" src="${isValidImage(car.img) ? car.img : './src/bg.webp'}" width="auto">
+      <img class="car-img" src="${isValidImage(car.photo) ? car.photo : './src/bg.webp'}" width="auto">
       <div>
         <h4>${car.name}</h4>
         <span class="rating inline">
           <i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating}
-          <span> (${car.reviewNumber} reviews)</span>
+          <span> (${car.nbviews} reviews)</span>
         </span>
         <div class="specs flex">
           <div class="column">
-            <p class="passager"><i class="fa-solid fa-user"></i> ${car.passager} Passagers</p>
-            <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation} climatisation</p>
+            <p class="passager"><i class="fa-solid fa-user"></i> ${car.capacity} Passagers</p>
+            <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation === 1 ? 'With' : 'No'} climatisation</p>
           </div>
           <div class="column">
             <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
-            <p class="doors"><i class="fa-solid fa-car-side"></i> 4 Doors</p>
+            <p class="doors"><i class="fa-solid fa-car-side"></i> ${car.doors} Doors</p>
           </div>
         </div>
       </div>
@@ -40,8 +40,6 @@ const addBestRatedCars = async (filePath) => {
     parcContainer.appendChild(carDiv);
   });
 };
-
-
 
 const Reservation = (id) => {
   localStorage.setItem('selectedCarId', id);
@@ -67,8 +65,6 @@ const autoScrollParc = () => {
   setInterval(scroll, scrollInterval);
 };
 
-
-
-addBestRatedCars('./data/car.json').then(() => {
+addBestRatedCars().then(() => {
   autoScrollParc();
 });

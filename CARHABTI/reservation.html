@@ -48,11 +48,86 @@
           </div>
         </div>
       </section>
+      <section class="add-car-form" id="edit-car-form">
+        <button class="close-btn" id="close-edit-div">✖</button>
+        <h2>Edit Car</h2>
+        <form id="edit-car-form-element">
+          <input type="hidden" id="edit-car-id" name="car-id" />
+          <div class="form-group">
+            <label for="edit-car-name">Car Name:</label>
+            <input type="text" id="edit-car-name" name="car-name" required placeholder="Enter car name" />
+          </div>
+          <div class="form-group">
+            <label for="edit-car-price">Price per Day (DT):</label>
+            <input type="number" id="edit-car-price" name="car-price" required placeholder="Enter price per day" />
+          </div>
+          <div class="form-group">
+            <label for="edit-car-image">Car Image:</label>
+            <input type="file" id="edit-car-image" name="car-image" accept="image/*" />
+          </div>
+          <div class="form-group">
+            <label>Features:</label>
+            <div>
+              <input type="checkbox" id="edit-air-condition" name="features[]" value="Air Condition" />
+              <label for="edit-air-condition">Air Condition</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-fuel-type">Fuel Type:</label>
+            <select id="edit-fuel-type" name="fuel-type" required>
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Electric">Electric</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-passenger-capacity">Passenger Capacity:</label>
+            <select id="edit-passenger-capacity" name="passenger-capacity" required>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="7">7</option>
+              <option value="8+">8+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-transmission">Transmission:</label>
+            <select id="edit-transmission-select" name="transmission" required>
+              <option value="Manual">Manual</option>
+              <option value="Automatic">Automatic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-doors">Doors:</label>
+            <select id="edit-doors" name="doors" required>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-crash">Crashed:</label>
+            <select id="edit-crash" name="crash" required>
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-disponibility">Disponibility:</label>
+            <select id="edit-disponibility" name="disponibility" required>
+              <option value="1">Available</option>
+              <option value="0">Unavailable</option>
+            </select>
+          </div>
+          <button type="submit">Update Car</button>
+        </form>
+      </section>
       <section class="add-car-form" id="add-car-form">
         <button class="close-btn" id="close-add-div">✖</button>
         <h2>Add Car</h2>
-        <form action="./add-car.php" method="post">
-          <div class="form-group">
+        <form action="./build/php/add-car.php" method="post" id="add-car-form-element">
+          <div class="form-group" >
             <label for="car-name">Car Name:</label>
             <input
               type="text"

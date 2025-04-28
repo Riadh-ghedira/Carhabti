@@ -25,9 +25,9 @@ $user = get_user_data($email);
 
 if ($user) {
     if (password_verify($password, $user['password'])) {
-         
         $res = ["status" => "success","name" => $user['name'],"email" => $user['email'],"isAdmin" => $user['admin']];
         echo json_encode($res);
+        save_to_session($email, $user['name'], $user['admin']);
         exit;
     } else {
         echo json_encode(["status" => "invalid_password", "message" => "Invalid password"]);
@@ -36,4 +36,11 @@ if ($user) {
 } else {
     echo json_encode(["status" => "user_not_found", "message" => "User not found"]);
     exit;
+}
+function save_to_session($email, $name, $isAdmin) {
+    $_SESSION['isLoggedIn'] = true;
+    $_SESSION['email'] = $email;
+    $_SESSION['name'] = $name;
+    $_SESSION['isAdmin'] = $isAdmin;
+    setcookie('localStorageEmail', $email, time() + (86400 * 30), "/"); // 86400 = 1 day
 }

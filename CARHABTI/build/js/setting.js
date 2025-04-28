@@ -22,291 +22,389 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputs = document.querySelectorAll('.input-group input');
   let accounts = [];
   let allowChange = false;
+  let userData = null;
+  let currentPasswordValue = null;
 
-  // Confirm password before editing
-  const confirmPasswordChange = () => {
-    const confirmBox = document.createElement('div');
-    confirmBox.className = 'confirm-box';
-
-    confirmBox.innerHTML = `
-      <div class="confirm-content">
-        <label for="current-password">Enter current password:</label>
-        <input type="password" id="current-password" placeholder="Current Password" required>
-        <p>Are you sure you want to change the password?</p>
-        <div style="margin-top: 10px;">
-          <button id="confirm-yes">Yes</button>
-          <button id="confirm-no">Cancel</button>
-        </div>
-      </div>
-    `;
-
-    addConfirmBoxStyles();
-    document.body.appendChild(confirmBox);
-
-    const yesBtn = confirmBox.querySelector('#confirm-yes');
-    const noBtn = confirmBox.querySelector('#confirm-no');
-    const currentPasswordInput = document.getElementById('current-password');
-
-    yesBtn.addEventListener('click', () => {
-      const enteredPassword = currentPasswordInput.value;
-      const actualPassword = password.value;
-
-      if (enteredPassword === actualPassword) {
-        allowChange = true;
-        password.disabled = false;
-        password.focus();
-        confirmBox.remove();
+  const callAlertBox = (msg, type = 'success') => {
+      const alertBox = document.createElement('div');
+      alertBox.classList.add('alert-box', type);
+      alertBox.innerHTML = `
+          <div class="icon"><i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i></div>
+          <div class="msg"><p>${msg}</p></div>
+      `;
+      
+      alertBox.style.position = 'fixed';
+      alertBox.style.top = '20px';
+      alertBox.style.right = '20px';
+      alertBox.style.padding = '10px 20px';
+      alertBox.style.borderRadius = '5px';
+      alertBox.style.zIndex = '1000';
+      alertBox.style.display = 'flex';
+      alertBox.style.alignItems = 'center';
+      alertBox.style.gap = '10px';
+      
+      if (type === 'success') {
+          alertBox.style.backgroundColor = '#d4edda';
+          alertBox.style.color = '#155724';
+          alertBox.style.border = '1px solid #c3e6cb';
       } else {
-        currentPasswordInput.style.borderColor = 'red';
-        currentPasswordInput.placeholder = 'Incorrect password!';
+          alertBox.style.backgroundColor = '#f8d7da';
+          alertBox.style.color = '#721c24';
+          alertBox.style.border = '1px solid #f5c6cb';
       }
-    });
-
-    noBtn.addEventListener('click', () => {
-      allowChange = false;
-      password.disabled = true;
-      confirmBox.remove();
-    });
+      
+      document.body.appendChild(alertBox);
+      setTimeout(() => alertBox.remove(), 3000);
   };
 
-  // Confirm before choosing photo
-  const changePhoto = () => {
-    const confirmBox = document.createElement('div');
-    confirmBox.className = 'confirm-box';
+  const confirmPasswordChange = () => {
+      const confirmBox = document.createElement('div');
+      confirmBox.className = 'confirm-box';
 
-    confirmBox.innerHTML = `
-      <div class="confirm-content">
-        <p>Are you sure you want to change your profile photo?</p>
-        <div style="margin-top: 10px;">
-          <button id="confirm-yes">Yes</button>
-          <button id="confirm-no">Cancel</button>
-        </div>
-      </div>
-    `;
+      confirmBox.innerHTML = `
+          <div class="confirm-content">
+              <label for="current-password">Enter current password:</label>
+              <input type="password" id="current-password" placeholder="Current Password" required>
+              <p>Are you sure you want to change the password?</p>
+              <div style="margin-top: 10px;">
+                  <button id="confirm-yes">Yes</button>
+                  <button id="confirm-no">Cancel</button>
+              </div>
+          </div>
+      `;
 
-    addConfirmBoxStyles();
-    document.body.appendChild(confirmBox);
+      addConfirmBoxStyles();
+      document.body.appendChild(confirmBox);
 
-    const yesBtn = confirmBox.querySelector('#confirm-yes');
-    const noBtn = confirmBox.querySelector('#confirm-no');
+      const yesBtn = confirmBox.querySelector('#confirm-yes');
+      const noBtn = confirmBox.querySelector('#confirm-no');
+      const currentPasswordInput = document.getElementById("current-password");
 
-    yesBtn.addEventListener('click', () => {
-      const fileInput = document.createElement('input');
-      fileInput.type = 'file';
-      fileInput.accept = 'image/*';
-
-      fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-          img.src = reader.result;
-          callAlertBox('Photo updated! Remember to save.', 'success');
-        };
-        reader.readAsDataURL(file);
+      yesBtn.addEventListener('click', () => {
+          const enteredPassword = currentPasswordInput.value;
+          
+          if (enteredPassword) {
+              currentPasswordValue = enteredPassword;
+              allowChange = true;
+              password.disabled = false;
+              password.value = '';
+              password.focus();
+              confirmBox.remove();
+          } else {
+              currentPasswordInput.style.borderColor = 'red';
+              currentPasswordInput.placeholder = 'Password required!';
+          }
       });
 
-      fileInput.click();
-      confirmBox.remove();
-    });
-
-    noBtn.addEventListener('click', () => {
-      confirmBox.remove();
-    });
+      noBtn.addEventListener('click', () => {
+          allowChange = false;
+          password.disabled = true;
+          confirmBox.remove();
+      });
   };
 
-  // Styles shared by confirm boxes
+  const changePhoto = () => {
+      const confirmBox = document.createElement('div');
+      confirmBox.className = 'confirm-box';
+
+      confirmBox.innerHTML = `
+          <div class="confirm-content">
+              <p>Are you sure you want to change your profile photo?</p>
+              <div style="margin-top: 10px;">
+                  <button id="confirm-yes">Yes</button>
+                  <button id="confirm-no">Cancel</button>
+              </div>
+          </div>
+      `;
+
+      addConfirmBoxStyles();
+      document.body.appendChild(confirmBox);
+
+      const yesBtn = confirmBox.querySelector('#confirm-yes');
+      const noBtn = confirmBox.querySelector('#confirm-no');
+
+      yesBtn.addEventListener('click', () => {
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.accept = 'image/*';
+
+          fileInput.addEventListener('change', () => {
+              const file = fileInput.files[0];
+              if (!file) return;
+
+              const reader = new FileReader();
+              reader.onload = () => {
+                  img.src = reader.result;
+                  callAlertBox('Photo updated! Remember to save.', 'success');
+              };
+              reader.readAsDataURL(file);
+          });
+
+          fileInput.click();
+          confirmBox.remove();
+      });
+
+      noBtn.addEventListener('click', () => {
+          confirmBox.remove();
+      });
+  };
+
   function addConfirmBoxStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-      .confirm-box {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: var(--bg-color, #fff);
-        color: var(--text-color, #000);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-      }
-      .confirm-content input {
-        width: 100%;
-        margin: 10px 0;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
-      .confirm-content button {
-        margin-right: 10px;
-        padding: 8px 12px;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-      }
-      .confirm-content button#confirm-yes {
-        background-color: #007bff;
-        color: white;
-      }
-      .confirm-content button#confirm-no {
-        background-color: #dc3545;
-        color: white;
-      }
-    `;
-    document.head.appendChild(style);
+      const style = document.createElement('style');
+      style.textContent = `
+          .confirm-box {
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: var(--bg-color, #fff);
+              color: var(--text-color, #000);
+              padding: 20px;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+              z-index: 1000;
+          }
+          .confirm-content input {
+              width: 100%;
+              margin: 10px 0;
+              padding: 8px;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+          }
+          .confirm-content button {
+              margin-right: 10px;
+              padding: 8px 12px;
+              border-radius: 5px;
+              border: none;
+              cursor: pointer;
+          }
+          .confirm-content button#confirm-yes {
+              background-color: #007bff;
+              color: white;
+          }
+          .confirm-content button#confirm-no {
+              background-color: #dc3545;
+              color: white;
+          }
+      `;
+      document.head.appendChild(style);
   }
 
-  // Show notification
-  const callAlertBox = (msg, type = '') => {
-    const alertBox = document.createElement('div');
-    alertBox.classList.add('alert-box');
-    alertBox.innerHTML = `
-      <style>
-        .alert-box {
-          width: 300px;
-          padding: 15px 20px;
-          position: fixed;
-          top: 60px;
-          right: 20px;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-          animation: fadeIn 0.3s ease-in-out;
-          display: flex;
-          align-items: center;
-          column-gap: 15px;
-          background-color: ${type === 'error' ? '#ffe6e6' : '#e6ffe6'};
-          z-index: 2000;
-        }
-        .alert-box .msg {
-          font-size: 16px;
-          font-weight: 500;
-          color: ${type === 'error' ? '#cc0000' : '#006600'};
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      </style>
-      <div class="icon" style="color: ${type === 'error' ? '#cc0000' : '#006600'};">
-      <i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i>
-      </div>
-      <div class="msg">${msg}</div>
-    `;
-    document.body.appendChild(alertBox);
-    setTimeout(() => alertBox.remove(), 3000);
-  };
-
-  const saveUserData = async (data) => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: 'application/json',
-    });
-
-    try {
-      const handle = await window.showSaveFilePicker({
-        suggestedName: 'account.json',
-        types: [{
-          description: 'JSON File',
-          accept: { 'application/json': ['.json'] },
-        }],
-      });
-
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      await writable.close();
-
-      callAlertBox('Changes saved successfully!');
-    } catch (error) {
-      console.error('File save error:', error);
-      callAlertBox('File save cancelled or failed', 'error');
-    }
-  };
-
   const fetchUserData = async () => {
-    try {
-      const response = await fetch('./data/account.json');
-      if (!response.ok) throw new Error('Failed to load account data');
-
-      accounts = await response.json();
-      const loggedEmail = localStorage.getItem('email');
-      const user = accounts.find(account => account.email === loggedEmail);
-
-      if (user) {
-        name.value = user.name;
-        password.value = user.password;
-        tel.value = user.phone;
-        adresse.value = user.address;
-        birth.value = user.birthDate;
-        cin.value = user.cin;
-        permis.value = user.permis;
-        img.src = user.photo || './src/bg.webp';
+      try {
+          console.log('Fetching user data...');
+          
+          const userEmail = localStorage.getItem('email');
+          
+          if (!userEmail) {
+              throw new Error('No email found in localStorage');
+          }
+          
+          const headers = new Headers();
+          headers.append('X-Email', userEmail);
+          
+          const response = await fetch(`./build/php/account.php?email=${encodeURIComponent(userEmail)}`, {
+              method: 'GET',
+              headers: headers
+          });
+          
+          if (!response.ok) {
+              throw new Error(`Server responded with status: ${response.status}`);
+          }
+          
+          userData = await response.json();
+          console.log('User data received:', userData);
+          
+          if (userData && !userData.status) {
+              name.value = userData.name || '';
+              email.value = userData.email || userEmail || '';
+              password.value = '********';
+              tel.value = userData.phone || '';
+              adresse.value = userData.address || '';
+              birth.value = userData.birth || '';
+              cin.value = userData.cin || '';
+              permis.value = userData.licence || '';
+              
+              if (userData.photo) {
+                  img.src = `data:image/jpeg;base64,${userData.photo}`;
+              } else {
+                  img.src = './src/bg.webp';
+              }
+              
+              accounts = [userData];
+              
+              inputs.forEach(input => {
+                  const event = new Event('input');
+                  input.dispatchEvent(event);
+              });
+          } else {
+              callAlertBox(userData?.message || 'Failed to load user data', 'error');
+          }
+      } catch (error) {
+          console.error('Error fetching user data:', error);
+          callAlertBox('Error loading user data: ' + error.message, 'error');
       }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
   };
 
-  // Save changes
+  const saveUserData = async (field, value) => {
+      try {
+          console.log(`Saving ${field} with value:`, field === 'photo' ? '[PHOTO DATA]' : value);
+          
+          const formData = new FormData();
+          formData.append('field', field);
+          formData.append('value', value);
+          
+          if (field === 'password' && currentPasswordValue) {
+              formData.append('current_password', currentPasswordValue);
+          }
+          
+          const userEmail = localStorage.getItem('email');
+          if (userEmail) {
+              formData.append('email', userEmail);
+          }
+          
+          const response = await fetch('./build/php/account.php', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                  'X-Email': userEmail || ''
+              }
+          });
+          
+          if (!response.ok) {
+              throw new Error(`Server responded with status: ${response.status}`);
+          }
+          
+          const result = await response.json();
+          console.log('Update result:', result);
+          
+          if (result.status === 'success') {
+              callAlertBox(`${field} updated successfully`, 'success');
+              return true;
+          } else {
+              callAlertBox(result.message || 'Update failed', 'error');
+              return false;
+          }
+      } catch (error) {
+          console.error('Error saving user data:', error);
+          callAlertBox('Error saving data: ' + error.message, 'error');
+          return false;
+      }
+  };
+
   save.addEventListener('click', async () => {
-    const loggedEmail = localStorage.getItem('email');
-    const user = accounts.find(account => account.email === loggedEmail);
-    if (!user) return callAlertBox('User not found', 'error');
-
-    const updatedAccount = {
-      email: loggedEmail,
-      name: name.value.trim(),
-      password: password.value.trim(),
-      phone: tel.value.trim(),
-      address: adresse.value.trim(),
-      birthDate: birth.value.trim(),
-      cin: cin.value.trim(),
-      permis: permis.value.trim(),
-      photo: img.src || './src/bg.webp'
-    };
-
-    const updatedAccounts = accounts.filter(acc => acc.email !== loggedEmail);
-    updatedAccounts.push(updatedAccount);
-    await saveUserData(updatedAccounts);
+      const loggedEmail = localStorage.getItem('email');
+      if (!loggedEmail) {
+          return callAlertBox('User not logged in', 'error');
+      }
+      
+      save.disabled = true;
+      save.textContent = 'Saving...';
+      
+      try {
+          let success = true;
+          
+          if (userData) {
+              if (name.value !== userData.name && name.value.trim()) {
+                  success = success && await saveUserData('name', name.value.trim());
+              }
+              
+              if (password.value && password.value !== '********' && password.value.trim()) {
+                  success = success && await saveUserData('password', password.value.trim());
+                  currentPasswordValue = null;
+              }
+              
+              if (tel.value !== userData.phone && tel.value.trim()) {
+                  success = success && await saveUserData('phone', tel.value.trim());
+              }
+              
+              if (adresse.value !== userData.address && adresse.value.trim()) {
+                  success = success && await saveUserData('address', adresse.value.trim());
+              }
+              
+              if (birth.value !== userData.birth && birth.value.trim()) {
+                  success = success && await saveUserData('birthDate', birth.value.trim());
+              }
+              
+              if (cin.value !== userData.cin && cin.value.trim()) {
+                  success = success && await saveUserData('cin', cin.value.trim());
+              }
+              
+              if (permis.value !== userData.licence && permis.value.trim()) {
+                  success = success && await saveUserData('licence', permis.value.trim());
+              }
+              
+              if (img.src.includes('data:image') && (!userData.photo || !img.src.includes(userData.photo))) {
+                  const imageData = img.src.split(',')[1]; 
+                  success = success && await saveUserData('photo', imageData);
+              }
+          } else {
+              callAlertBox('User data not loaded properly', 'error');
+              success = false;
+          }
+          
+          if (success) {
+              callAlertBox('All changes saved successfully', 'success');
+              await fetchUserData();
+          } else {
+              callAlertBox('Some changes could not be saved', 'error');
+          }
+      } catch (error) {
+          console.error('Error saving changes:', error);
+          callAlertBox('Error saving changes: ' + error.message, 'error');
+      } finally {
+          save.disabled = false;
+          save.textContent = 'Confirmer les modifications';
+      }
   });
 
-  // Load email from localStorage
-  email.value = localStorage.getItem('email');
-  fetchUserData();
+  if (localStorage.getItem('email')) {
+      email.value = localStorage.getItem('email');
+      fetchUserData();
+  } else {
+      callAlertBox('No user logged in', 'error');
+      setTimeout(() => {
+          window.location.href = './login.html';
+      }, 2000);
+  }
 
-  // Resize inputs dynamically
   inputs.forEach(input => {
-    const mirror = document.createElement('span');
-    mirror.className = 'input-mirror';
-    document.body.appendChild(mirror);
+      const mirror = document.createElement('span');
+      mirror.className = 'input-mirror';
+      mirror.style.position = 'absolute';
+      mirror.style.left = '-9999px';
+      mirror.style.top = '-9999px';
+      mirror.style.whiteSpace = 'pre';
+      mirror.style.font = getComputedStyle(input).font;
+      document.body.appendChild(mirror);
 
-    const resizeInput = (n = 27) => {
-      mirror.textContent = input.value || input.placeholder || '';
-      input.style.width = `${mirror.offsetWidth + n}px`;
-    };
+      const resizeInput = (n = 27) => {
+          mirror.textContent = input.value || input.placeholder || '';
+          input.style.width = `${mirror.offsetWidth + n}px`;
+      };
 
-    resizeInput();
-    input.addEventListener('input', resizeInput);
-    input.addEventListener('focus', resizeInput);
+      resizeInput();
+      input.addEventListener('input', resizeInput);
+      input.addEventListener('focus', resizeInput);
   });
 
-
-  // Logout
   const logoutAcc = document.getElementById('logout');
   logoutAcc.addEventListener('click', () => {
-    localStorage.setItem('isLoggedIn', 'false');
-    localStorage.setItem('isAdmin', 'false');
-    window.location.href = './main.html';
+      localStorage.removeItem('email');
+      localStorage.setItem('isLoggedIn', 'false');
+      localStorage.setItem('isAdmin', 'false');
+      callAlertBox('Logged out successfully', 'success');
+      setTimeout(() => {
+          window.location.href = './main.html';
+      }, 1000);
   });
 
-  // Enable editing
   const enableEditing = (input) => {
-    inputs.forEach(i => i.disabled = true);
-    input.disabled = false;
-    input.focus();
+      inputs.forEach(i => i.disabled = true);
+      input.disabled = false;
+      input.focus();
   };
 
-  // Edit buttons
   editName.addEventListener('click', () => enableEditing(name));
   editPassword.addEventListener('click', () => allowChange ? enableEditing(password) : confirmPasswordChange());
   editTel.addEventListener('click', () => enableEditing(tel));
@@ -316,19 +414,24 @@ document.addEventListener("DOMContentLoaded", function () {
   editPermis.addEventListener('click', () => enableEditing(permis));
   editImg.addEventListener('click', () => changePhoto());
 
-  // Tab navigation
   const displays = document.querySelectorAll('.display');
   const nav = document.querySelectorAll('.nav-item');
   const show = (id) => {
-    nav.forEach(n => n.classList.toggle('clicked', n.id === id));
-    displays.forEach(d => d.classList.toggle('hidden', d.id !== `${id}-display`));
+      nav.forEach(n => n.classList.toggle('clicked', n.id === id));
+      displays.forEach(d => {
+          if (d.id === `${id}-display`) {
+              d.classList.remove('hidden');
+              d.style.display = 'block';
+          } else {
+              d.classList.add('hidden');
+              d.style.display = 'none';
+          }
+      });
   };
   nav.forEach(n => {
-    if (n.id !== 'logout') {
-      n.addEventListener('click', () => show(n.id));
-    }
+      if (n.id !== 'logout') {
+          n.addEventListener('click', () => show(n.id));
+      }
   });
   show('account');
-
-  
 });

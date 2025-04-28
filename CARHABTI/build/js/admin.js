@@ -71,47 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return isValid;
   }
 
-  const handleFormSubmission = async () => {
-    if (!validateForm()) return;
-
-    try {
-      const newCar = {
-        id: Date.now(),
-        img: await processImage(), // base64 string
-        name: formInputs.name.value.trim(),
-        price: `${formInputs.price.value.trim()}DT`,
-        climatisation: formInputs.airCondition.checked ? 'Avec' : 'Sans',
-        transmission: formInputs.transmission.value.trim(),
-        fuel: formInputs.fuelType.value.trim(),
-        passager: formInputs.passengerCapacity.value.trim(),
-        rating: 0,
-        reviewNumber: 0,
-      };
-
-      const cars = await fetchCarData();
-      cars.push(newCar);
-      await saveCarData(cars);
-
-      addCarForm.reset();
-      closeForm();
-      window.location.href = './reservation.html';
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to add car. Please try again.');
-    }
-  };
-
   const processImage = () => {
     return new Promise((resolve, reject) => {
       const file = formInputs.image.files[0];
 
       if (!file) {
         console.warn('No image file selected. Using default image.');
-        return resolve('./src/bg.webp'); // fallback path
+        return resolve('./src/bg.webp');
       }
 
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result); // base64 string
+      reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => {
         console.error('Error reading image:', error);
         resolve('./src/bg.webp');
@@ -120,47 +90,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const fetchCarData = async () => {
-    const response = await fetch('./data/car.json');
-    if (!response.ok) throw new Error('Failed to fetch car data');
-    return await response.json();
-  };
-
-  const saveCarData = async (cars) => {
-    const blob = new Blob([JSON.stringify(cars, null, 2)], {
-      type: 'application/json',
-    });
+  const handleFormSubmission = async () => {
+    if (!validateForm()) return;
 
     try {
-      if (window.showSaveFilePicker) {
-        const handle = await window.showSaveFilePicker({
-          suggestedName: 'car.json',
-          types: [
-            {
-              description: 'JSON Files',
-              accept: { 'application/json': ['.json'] },
-            },
-          ],
-        });
+      const imageBase64 = await processImage();
 
-        const writable = await handle.createWritable();
-        await writable.write(blob);
-        await writable.close();
+      const formData = new FormData();
+      formData.append('car-name', formInputs.name.value.trim());
+      formData.append('car-price', formInputs.price.value.trim());
+      formData.append('car-image', imageBase64);
+      if (formInputs.airCondition.checked) {
+        formData.append('features[]', 'Air Condition');
+      }
+      formData.append('fuel-type', formInputs.fuelType.value.trim());
+      formData.append('passenger-capacity', formInputs.passengerCapacity.value.trim());
+      formData.append('transmission', formInputs.transmission.value.trim());
 
-        console.log('File saved successfully.');
+      const response = await fetch('./add-car.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        addCarForm.reset();
+        closeForm();
+        window.location.href = './reservation.html';
       } else {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'car.json';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        console.log('File downloaded successfully.');
+        throw new Error(result.message || 'Failed to add car');
       }
     } catch (error) {
-      console.error('Error saving file:', error);
-      alert('Failed to save the file. Please try again.');
+      console.error('Error:', error);
+      alert('Failed to add car. Please try again.');
     }
   };
 });
