@@ -1,142 +1,146 @@
-
-/*main*/
-main{
+main {
   background-color: inherit;
-  max-width: 1150px;
+  max-width: 71.875rem;
   border-radius: 5px;
-  padding-top:60px ;
-  margin: 100px auto;
+  padding-top: 3.75rem;
+  margin: 6.25rem auto;
   overflow: hidden;
-
 }
-h2{
-  font-size: 38px;
+
+h2 {
+  font-size: 2.375rem;
   font-weight: 500;
   text-transform: capitalize;
   position: relative;
 }
-.error{
-  color: red;
-  font-size: 0.8rem;
+
+.error {
+  color: #ff3333;
+  font-size: 0.75rem;
   text-align: left;
 }
-h2::after{
+
+h2::after {
   content: '';
   height: 3px;
-  width: 54px;
+  width: 3.375rem;
   display: block;
   background-color: var(--btn-light);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 5px;
+  margin-top: 0.3125rem;
 }
+
 .bleu {
   color: var(--btn-light);
 }
+
 .bleu:hover {
   color: var(--btn-light-hover);
   text-decoration: underline;
 }
-#login-form {
-  padding: 20px;
+
+#signup-form {
+  padding: 1.25rem;
   background-color: inherit;
-  border-radius: 10px;
-  max-width: 600px;
-  margin: 0 auto 40px;
-  
+  border-radius: 0.625rem;
+  max-width: clamp(18.75rem, 90vw, 37.5rem);
+  margin: 0 auto 2.5rem;
 }
 
-#login-form h2 {
+#signup-form h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
+
 .msg {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
-#login-form label {
+#signup-form label {
   display: block;
-  margin-top: 20px;
-  margin-bottom: 5px;
+  margin-top: 1.25rem;
+  margin-bottom: 0.3125rem;
   font-weight: bold;
 }
 
-#login-form input {
-  width: 96%;
-  padding: 10px;
+#signup-form input {
+  width: 100%;
+  padding: 0.625rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
 }
 
-#login-form button {
+#signup-form button {
   display: block;
   width: 100%;
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 1.25rem;
+  padding: 0.625rem;
   background-color: var(--btn-light);
-  color: whitesmoke;
+  color: var(--dark-text-color);
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
-#login-form button:hover {
+#signup-form button:hover {
   background-color: var(--btn-light-hover);
 }
+
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
-  #login-form {
-    color: whitesmoke;
+  #signup-form {
+      color: var(--dark-text-color);
   }
-  #login-form button{
-    background-color: var(--btn-dark);
+  #signup-form button {
+      background-color: var(--btn-dark);
   }
-  #login-form input {
-    background-color: rgba(245, 245, 245, 0.1);
-    border: solid 1px whitesmoke;
-    border:none;
-    color: whitesmoke;
+  #signup-form button:hover {
+      background-color: var(--btn-dark-hover);
   }
-  h2::after{
-    background-color: var(--btn-dark);
+  #signup-form input {
+      background-color: var(--dark-bg-color);
+      border: 1px solid var(--dark-text-color);
+      color: var(--dark-text-color);
+  }
+  h2::after {
+      background-color: var(--btn-dark);
   }
   .bleu {
-    color: lightblue;
+      color: lightblue;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1084px) {
+  main {
+      padding-top: 3rem;
+      margin: 5rem auto;
   }
 }
 
 @media (max-width: 760px) {
-  #login-form {
-    margin-left: 25px;
-    margin-right: 25px;
+  main {
+      padding-top: 2rem;
+      margin: 3rem auto;
+  }
+  #signup-form {
+      margin-left: 1.5625rem;
+      margin-right: 1.5625rem;
+  }
 }
 
+@media (max-width: 480px) {
+  h2 {
+      font-size: 1.75rem;
+  }
+  #signup-form label {
+      font-size: 0.875rem;
+  }
+  #signup-form button {
+      font-size: 0.875rem;
+  }
 }
-
-
-
-
-
-
-
-
-
-/*animation*/
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-@keyframes slideIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-@keyframes slideOut { from { transform: translateY(0); } to { transform: translateY(-100%); } }
-@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
-@keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
-@keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-@keyframes slideOutLeft { from { transform: translateX(0); } to { transform: translateX(-100%); } }
-@keyframes slideInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
-@keyframes slideOutBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
-@keyframes slideInTop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-/*--------------------------------------------------------------------------------*/
