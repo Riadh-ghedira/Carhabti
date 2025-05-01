@@ -4,6 +4,8 @@ include 'database.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = date_timestamp_get(date_create()) + 1;
+    $id = $id % 1000000; 
     $name = $_POST['car-name'] ?? '';
     $price = $_POST['car-price'] ?? '';
     $image = $_POST['car-image'] ?? './src/bg.webp';
@@ -11,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fuel = $_POST['fuel-type'] ?? '';
     $capacity = $_POST['passenger-capacity'] ?? '';
     $transmission = $_POST['transmission'] ?? '';
-    $disponibility = 1; 
 
     if (empty($name) || empty($price) || empty($fuel) || empty($capacity) || empty($transmission)) {
         http_response_code(400);
@@ -19,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $sql = "INSERT INTO car (name, price, photo, climatisation, fuel, transmission, capacity, rating, nbviews, crash, doors, disponibility) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 4, ?)";
+    $sql = "INSERT INTO car (id ,name, price, photo, climatisation, fuel, transmission, capacity, rating, nbviews, crash, doors, disponibility) VALUES (?,?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 4, 1)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdssssi", $name, $price, $image, $features, $fuel, $transmission, $capacity, $disponibility);
+    $stmt->bind_param("dsdssssi",$id, $name, $price, $image, $features, $fuel, $transmission, $capacity);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Car added successfully']);

@@ -38,9 +38,15 @@
     <a id="top"></a>
     <main class="main">
       <section id="parc" class="parc-auto">
-        <h1>Parc Auto</h1>
+        <h1 class="flex">Parc Auto
+          <div class="add-car" id="add-car">
+            <button class="add-car-btn" id="add-car-btn">
+              <abbr title="add new car"><i class="fa-solid fa-plus"></i></abbr>
+            </button>
+          </div>
+        </h1>
         <div class="parc">
-          <div class="car add-car hidden" id="add-car">
+          <div class="add-car" id="add-car">
             <button class="add-car-btn" id="add-car-btn">
               <abbr title="add new car"><i class="fa-solid fa-plus"></i></abbr>
             </button>
@@ -63,6 +69,7 @@
           <div class="form-group">
             <label for="edit-car-image">Car Image:</label>
             <input type="file" id="edit-car-image" name="car-image" accept="image/*" />
+            <input type="text" id="edit-car-image-base64" name="car-image-url" hidden />
           </div>
           <div class="form-group">
             <label>Features:</label>
@@ -91,7 +98,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="edit-transmission">Transmission:</label>
+            <label for="edit-transmission-select">Transmission:</label>
             <select id="edit-transmission-select" name="transmission" required>
               <option value="Manual">Manual</option>
               <option value="Automatic">Automatic</option>
@@ -123,10 +130,10 @@
         </form>
       </section>
       <section class="add-car-form" id="add-car-form">
-        <button class="close-btn" id="close-add-div">✖</button>
+        <button class="close-btn close-add" id="close-add-div">✖</button>
         <h2>Add Car</h2>
         <form action="./build/php/add-car.php" method="post" id="add-car-form-element">
-          <div class="form-group" >
+          <div class="form-group">
             <label for="car-name">Car Name:</label>
             <input
               type="text"
@@ -137,7 +144,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="-show">Price per Day (DT):</label>
+            <label for="car-price">Price per Day (DT):</label>
             <input
               type="number"
               id="car-price"
@@ -187,7 +194,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="transmission">Transmission:</label>
+            <label for="transmission-select">Transmission:</label>
             <select id="transmission-select" name="transmission" required>
               <option value="Manual">Manual</option>
               <option value="Automatic">Automatic</option>
@@ -197,38 +204,38 @@
         </form>
       </section>
       <section id="reservation" class="reservation hidden">
-        <button type="button" class="close-reserv" onclick="showParc()">
-          ✖
-        </button>
+        <button type="button" id="close-reserv" class="close-reserv">✖</button>
         <section class="car-info">
+          <input type="text" id="carId" name="carId" value="1" hidden />
           <div class="img-box">
             <img
               id="car-img"
               src="./src/bg.webp"
-              alt=""
+              alt="Car Image"
               width="560"
               loading="lazy"
             />
           </div>
           <div class="specs flex">
             <h3>
-              <i class="fa-solid fa-user"></i
-              ><span id="passager">4</span> personne
+              <i class="fa-solid fa-user"></i>
+              <span id="passager">4</span> personne
             </h3>
             <h3>
               <i class="fa-solid fa-map-pin"></i>
-              <span id="transmission"> automatique</span>
+              <span id="transmission">automatique</span>
             </h3>
             <h3>
-              <i class="fa-solid fa-gas-pump"></i> <span id="fuel"></span>
+              <i class="fa-solid fa-gas-pump"></i>
+              <span id="fuel"></span>
             </h3>
           </div>
           <div class="info flex">
             <div class="prise-en-charge">
               <h2>Prise en charge</h2>
               <div class="agence flex">
-                <label for="agence">Agence:</label>
-                <select name="agence" id="agence">
+                <label for="pickup-agence">Agence:</label>
+                <select name="pickup-agence" id="pickup-agence" required>
                   <option value="Tunis">Tunis</option>
                   <option value="Nabeul">Nabeul</option>
                   <option value="Sousse">Sousse</option>
@@ -237,19 +244,19 @@
                 </select>
               </div>
               <div class="date flex">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required />
+                <label for="pickup-date">Date:</label>
+                <input type="date" id="pickup-date" name="pickup-date" required />
               </div>
               <div class="time flex">
-                <label for="time">Time:</label>
-                <input type="time" id="time" name="time" required />
+                <label for="pickup-time">Time:</label>
+                <input type="time" id="pickup-time" name="pickup-time" required />
               </div>
             </div>
             <div class="retour">
               <h2>Retour</h2>
               <div class="agence flex">
-                <label for="agence">Agence:</label>
-                <select name="agence" id="agence">
+                <label for="return-agence">Agence:</label>
+                <select name="return-agence" id="return-agence" required>
                   <option value="Tunis">Tunis</option>
                   <option value="Nabeul">Nabeul</option>
                   <option value="Sousse">Sousse</option>
@@ -258,102 +265,106 @@
                 </select>
               </div>
               <div class="date flex">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required />
+                <label for="return-date">Date:</label>
+                <input type="date" id="return-date" name="return-date" required />
               </div>
               <div class="time flex">
-                <label for="time">Time:</label>
-                <input type="time" id="time" name="time" required />
+                <label for="return-time">Time:</label>
+                <input type="time" id="return-time" name="return-time" required />
               </div>
             </div>
           </div>
         </section>
         <section class="personal-info">
-          <h2 class="car-name" id="car-name-show">car name</h2>
+          <h2 class="car-name" id="car-name-show">Car Name</h2>
           <h4 class="price"><span id="car-price-show">priceDT</span>/jour</h4>
           <h6 class="notice" style="color: red">*Prix des extras non inclus</h6>
-          <div class="name">
-            <label for="name">Nom & Prénom</label><br />
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              placeholder="John Doe"
-            />
-          </div>
-          <div class="phone-input">
-            <label for="tel">Telephone</label><br />
-            <input
-              type="tel"
-              id="tel"
-              name="tel"
-              required
-              placeholder="+216 22 222 222"
-            />
-          </div>
-          <div class="email">
-            <label for="email">Email</label><br />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="example@example.com"
-            />
-          </div>
-          <div class="adresse">
-            <label for="adresse">Adresse</label><br />
-            <input
-              type="text"
-              id="adresse"
-              name="adresse"
-              required
-              placeholder="123 Rue Example"
-            />
-          </div>
-          <div class="message">
-            <label for="message">Message</label><br />
-            <textarea
-              id="message"
-              name="message"
-              rows="2"
-              required
-              placeholder="Write your message here."
-            ></textarea>
-          </div>
-          <table class="check">
-            <tr>
-              <td class="checkbox">
-                <input
-                  type="checkbox"
-                  id="condition"
-                  name="condition"
-                  required
-                />
-              </td>
-              <td>
-                <label class="too-much" for="condition">
-                  J'ai lu et accepté les
-                  <a href="">conditions générales d'utilisation</a>, notamment
-                  la mention relative à la protection des données personnelles.
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td class="checkbox">
-                <input type="checkbox" id="updates" name="updates" />
-              </td>
-              <td>
-                <label class="too-much" for="updates">
-                  Je souhaite recevoir des offres promotionnelles et des
-                  informations sur les produits et services de CARHABTI par
-                  e-mail.
-                </label>
-              </td>
-            </tr>
-          </table>
-          <button type="submit">Rent</button>
+          <form id="reservation-form">
+            <input type="hidden" id="car-id" name="carId" />
+            <div class="name">
+              <label for="name">Nom & Prénom</label><br />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="John Doe"
+              />
+            </div>
+            <div class="phone-input">
+              <label for="tel">Telephone</label><br />
+              <input
+                type="tel"
+                id="tel"
+                name="tel"
+                required
+                placeholder="+216 22 222 222"
+              />
+            </div>
+            <div class="email">
+              <label for="email">Email</label><br />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="example@example.com"
+                value=""
+                required
+              />
+            </div>
+            <div class="adresse">
+              <label for="address">Adresse</label><br />
+              <input
+                type="text"
+                id="address"
+                name="address"
+                required
+                placeholder="123 Rue Example"
+              />
+            </div>
+            <div class="message">
+              <label for="message">Message</label><br />
+              <textarea
+                id="msg"
+                name="message"
+                rows="2"
+                placeholder="Write your message here."
+              ></textarea>
+            </div>
+            <table class="check">
+              <tr>
+                <td class="checkbox">
+                  <input
+                    type="checkbox"
+                    id="condition"
+                    name="condition"
+                    required
+                  />
+                </td>
+                <td>
+                  <label class="too-much" for="condition">
+                    J'ai lu et accepté les
+                    <a href="">conditions générales d'utilisation</a>, notamment
+                    la mention relative à la protection des données personnelles.
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td class="checkbox">
+                  <input type="checkbox" id="updates" name="updates" />
+                </td>
+                <td>
+                  <label class="too-much" for="updates">
+                    Je souhaite recevoir des offres promotionnelles et des
+                    informations sur les produits et services de CARHABTI par
+                    e-mail.
+                  </label>
+                </td>
+              </tr>
+            </table>
+            <button type="submit">Rent</button>
+          </form>
         </section>
       </section>
     </main>

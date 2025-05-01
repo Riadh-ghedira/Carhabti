@@ -1,18 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  console.log('Admin status:', isAdmin);
+
   const addCarForm = document.getElementById('add-car-form');
-  console.log('Admin: ' + isAdmin);
-  if (!isAdmin) {
-    addCarForm.style.display = 'none';
-    addCarForm.querySelectorAll('input, button, select').forEach((element) => {
-      element.disabled = true;
+  const editCarForm = document.getElementById('edit-car-form');
+  const addCarContainer = document.getElementById('add-car');
+  const addCarBtn = document.getElementById('add-car-btn');
+  const closeBtn = document.getElementById('close-add-div');
+  const closeEditBtn = document.getElementById('close-edit-div');
+  const parc = document.querySelector('.parc');
+
+  if (!addCarContainer || !addCarBtn || !addCarForm || !parc) {
+    console.error('Missing required DOM elements:', {
+      addCarContainer: !!addCarContainer,
+      addCarBtn: !!addCarBtn,
+      addCarForm: !!addCarForm,
+      parc: !!parc
     });
     return;
   }
 
-  const addCarBtn = document.getElementById('add-car');
-  const closeBtn = document.getElementById('close-add-div');
-  const parc = document.querySelector('.parc');
+  if (editCarForm) editCarForm.classList.add('hidden');
+  if (addCarForm) addCarForm.classList.add('hidden');
+
+  if (!isAdmin) {
+    addCarContainer.classList.add('hidden');
+    addCarForm.querySelectorAll('input, button, select').forEach((element) => {
+      element.disabled = true;
+    });
+    console.log('Non-admin user: Add car container hidden');
+    return;
+  }
+  const callAlertBox = (msg, type = 'success') => {
+    console.log(`Alert: ${msg} (type: ${type})`);
+    const alertBox = document.createElement('div');
+    alertBox.classList.add('alert-box', type);
+    alertBox.innerHTML = `
+      <div class="icon"><i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i></div>
+      <div class="msg"><p>${msg}</p></div>
+    `;
+    document.body.appendChild(alertBox);
+    setTimeout(() => alertBox.remove(), 3000);
+  };
+  addCarContainer.classList.remove('hidden');
+  console.log('Admin user: Add car container shown');
 
   const formInputs = {
     name: document.getElementById('car-name'),
@@ -25,58 +56,67 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const submitBtn = addCarForm.querySelector('button[type="submit"]');
-  addCarForm.classList.add('hidden');
 
-  isAdmin
-    ? addCarBtn.classList.remove('hidden')
-    : addCarBtn.classList.add('hidden');
+  addCarBtn.addEventListener('click', () => {
+    console.log('Add car button clicked');
+    addCarForm.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    parc.style.opacity = '0.3';
+    validateForm();
+  });
 
-  addCarBtn.addEventListener('click', showForm);
-  closeBtn.addEventListener('click', closeForm);
+  closeBtn?.addEventListener('click', () => {
+    close(addCarForm);
+  });
+ const close = (form)=>{
+  form.classList.add('fadeout');
+    setTimeout(() => {
+      form.classList.add('hidden');
+      parc.style.opacity = '1';
+      form.classList.remove('fadeout');
+      document.body.style.overflow = '';
+    }, 150);
+ }
+  closeEditBtn?.addEventListener('click', () => {
+    close(editCarForm);
+  });
 
   Object.values(formInputs).forEach((input) => {
-    if (input !== formInputs.image && input !== formInputs.airCondition) {
+    if (input && input !== formInputs.image && input !== formInputs.airCondition) {
       input.addEventListener('input', validateForm);
     }
   });
 
   addCarForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('Add car form submitted');
     await handleFormSubmission();
   });
 
-  function showForm() {
-    addCarForm.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    parc.style.opacity = '0.3';
-    validateForm();
-  }
-
-  function closeForm() {
-    addCarForm.classList.add('fadeout');
-    setTimeout(() => {
-      addCarForm.classList.add('hidden');
-      parc.style.opacity = '1';
-      addCarForm.classList.remove('fadeout');
-      document.body.style.overflow = '';
-    }, 150);
-  }
-
   function validateForm() {
     const isValid = Object.entries(formInputs).every(([key, input]) => {
-      if (key === 'image' || key === 'airCondition') return true;
+      if (!input || key === 'image' || key === 'airCondition') return true;
       return input.value.trim() !== '';
     });
-    submitBtn.disabled = !isValid;
+    if (submitBtn) submitBtn.disabled = !isValid;
     return isValid;
   }
 
   const processImage = () => {
     return new Promise((resolve, reject) => {
-      const file = formInputs.image.files[0];
-
+      const file = formInputs.image?.files[0];
       if (!file) {
         console.warn('No image file selected. Using default image.');
+        return resolve('./src/bg.webp');
+      }
+
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        callAlertBox('Please upload a valid image (JPEG, PNG, or WebP).', 'error');
+        return resolve('./src/bg.webp');
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        callAlertBox('Image size must be less than 5MB.' , 'error');
         return resolve('./src/bg.webp');
       }
 
@@ -107,22 +147,32 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('passenger-capacity', formInputs.passengerCapacity.value.trim());
       formData.append('transmission', formInputs.transmission.value.trim());
 
-      const response = await fetch('./add-car.php', {
+      const response = await fetch('/carhabti/CARHABTI/build/php/add-car.php', {
         method: 'POST',
         body: formData,
       });
 
-      const result = await response.json();
+      const resultText = await response.text();
+      console.log('Response:', resultText);
+      let result;
+      result = JSON.parse(resultText);
+      console.log('Parsed response:', result);
       if (result.success) {
-        addCarForm.reset();
-        closeForm();
+        callAlertBox('Car added successfully!' , 'success');
+        addCarForm.classList.add('fadeout');
+        setTimeout(() => {
+          addCarForm.classList.add('hidden');
+          parc.style.opacity = '1';
+          addCarForm.classList.remove('fadeout');
+          document.body.style.overflow = '';
+        }, 150);
         window.location.href = './reservation.html';
       } else {
         throw new Error(result.message || 'Failed to add car');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to add car. Please try again.');
+      callAlertBox('Failed to add car. Please try again.' , 'error');
     }
   };
 });

@@ -103,7 +103,7 @@ class SideNavComponent extends HTMLElement {
             height: 100%;
             background: rgba(21, 114, 211, 0.7);
             color: var(--bg-color);
-            z-index: 500;
+            z-index: 1500;
             animation: slideInRight 0.2s  ease-in forwards;
             transition: 1s;
             padding: 1rem;

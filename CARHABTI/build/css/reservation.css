@@ -21,10 +21,18 @@
   gap: 1.25rem;
 }
 
+.center hr {
+  color: #fff;
+  width: 100%;
+  height: 1px;
+  opacity: 0.6;
+}
+
 .parc-auto h1 {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.25rem;
+  row-gap: 20px;
 }
 
 .car {
@@ -43,6 +51,7 @@
   width: 100%;
   max-width: 18.75rem;
   align-self: center;
+  margin-bottom: auto;
 }
 
 .car button {
@@ -53,15 +62,17 @@
 }
 
 .car h4 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
+
 }
 
 .car .specs {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   padding: 0.625rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   opacity: 0.8;
 }
 
@@ -71,14 +82,14 @@
   padding: 5%;
   position: relative;
   gap: 1.875rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   z-index: 50;
 }
 
 .close-reserv {
   position: absolute;
-  top: 0.625rem;
-  right: 0.625rem;
+  top: 50px;
+  right: 2%;
   font-size: 1.5rem;
   cursor: pointer;
   background-color: transparent;
@@ -88,6 +99,10 @@
 
 .close-reserv:hover {
   opacity: 1;
+}
+
+.close-add {
+  top: 10px;
 }
 
 .car-info, .personal-info {
@@ -138,7 +153,8 @@
   margin-bottom: 0.625rem;
   border: 1px solid #ddd;
   border-radius: 0.3125rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
 }
 
 .personal-info button {
@@ -169,18 +185,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-inline-start: 20px;
 }
 
 .add-car-btn {
   background-color: transparent;
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: var(--bleu);
   border: none;
   cursor: pointer;
 }
 
 .add-car-btn i {
-  font-size: 5rem;
+  font-size: 1.5rem;
   opacity: 0.5;
 }
 
@@ -283,12 +300,16 @@
 
 /* Responsive */
 @media (max-width: 1084px) {
+  .car-info, .personal-info {
+      max-width: 100%;
+  }
+}
+
+@media (max-width: 1240px) {
   .reservation {
       flex-direction: column;
       padding-top: 10%;
-  }
-  .car-info, .personal-info {
-      max-width: 100%;
+      align-items: center;
   }
 }
 

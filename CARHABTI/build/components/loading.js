@@ -5,19 +5,19 @@ class LoadingComponent extends HTMLElement {
       this.shadowRoot.innerHTML = `
         <style>
           .loading-screen { 
+            background: white; 
+            color: black; 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: white; 
-            color: black; 
             display: flex; 
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
             font-size: 2rem; 
-            z-index: 1000; 
+            z-index: 2000; 
             transition: opacity 0.5s ease;
           }
           .hidden {
@@ -43,7 +43,7 @@ class LoadingComponent extends HTMLElement {
             }
           }
         </style>
-        <div class="loading-screen">
+        <div class="loading-screen"">
           <div class="loader"></div>
           <h3 class="loading">loading...</h3>
         </div>

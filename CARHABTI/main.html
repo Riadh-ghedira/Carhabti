@@ -19,8 +19,7 @@
     <script src="./build/js/script.js" defer></script>
     <script src="./build/js/logout.js" defer></script>
     <script defer src="./build/js/carSlide.js"></script>
-    <script defer src="./build/js/reserv-page.js"></script>
-    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <loading-component></loading-component>
@@ -152,8 +151,12 @@
         </section>
         <section class="parc-prev center">
             <h3>Nos véhicules</h3>
-            <h2>Trouvez la voiture qui vous convient en consultannotre parc auto de nos clients</h2>
-            <span class="parc flex"></span>
+            <h2>Trouvez la voiture qui vous convient en consultant notre parc auto de nos clients</h2>
+            <div class="parc flex"></div>
+            <div class="scroll-controls">
+                <button class="scroll-btn scroll-left"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="scroll-btn scroll-right"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
             <button class="parc-btn btn" onclick="window.location.href='./reservation.html'">Voir tout le parc Auto →</button>
         </section>
         <section id="agence" class="map center">

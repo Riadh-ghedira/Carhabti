@@ -29,12 +29,21 @@ CREATE TABLE carhabti.car (
     rating FLOAT NOT NULL DEFAULT 0
 );
 
-CREATE TABLE carhabti.reservation (
-    email VARCHAR(255) REFERENCES account(email),
-    carid INT  REFERENCES car(id),
-    start_date DATE,
-    finish_date DATE,
-    PRIMARY KEY (email, carid)
+CREATE TABLE reservations ( 
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    car_id INT NOT NULL REFERENCES car (id), 
+    email VARCHAR(255) NOT NULL, 
+    name VARCHAR(100) NOT NULL, 
+    phone VARCHAR(20) NOT NULL, 
+    address TEXT NOT NULL, 
+    message TEXT, 
+    pickup_agence VARCHAR(100) NOT NULL, 
+    pickup_date DATE NOT NULL, 
+    pickup_time TIME NOT NULL, 
+    return_agence VARCHAR(100) NOT NULL, 
+    return_date DATE NOT NULL,
+    return_time TIME NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 INSERT INTO car (id, name, price, fuel, transmission, climatisation, capacity, doors, photo, carsh, disponibility, nbviews, rating)

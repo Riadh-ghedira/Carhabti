@@ -26,35 +26,15 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentPasswordValue = null;
 
   const callAlertBox = (msg, type = 'success') => {
-      const alertBox = document.createElement('div');
-      alertBox.classList.add('alert-box', type);
-      alertBox.innerHTML = `
-          <div class="icon"><i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i></div>
-          <div class="msg"><p>${msg}</p></div>
-      `;
-      
-      alertBox.style.position = 'fixed';
-      alertBox.style.top = '20px';
-      alertBox.style.right = '20px';
-      alertBox.style.padding = '10px 20px';
-      alertBox.style.borderRadius = '5px';
-      alertBox.style.zIndex = '1000';
-      alertBox.style.display = 'flex';
-      alertBox.style.alignItems = 'center';
-      alertBox.style.gap = '10px';
-      
-      if (type === 'success') {
-          alertBox.style.backgroundColor = '#d4edda';
-          alertBox.style.color = '#155724';
-          alertBox.style.border = '1px solid #c3e6cb';
-      } else {
-          alertBox.style.backgroundColor = '#f8d7da';
-          alertBox.style.color = '#721c24';
-          alertBox.style.border = '1px solid #f5c6cb';
-      }
-      
-      document.body.appendChild(alertBox);
-      setTimeout(() => alertBox.remove(), 3000);
+    console.log(`Alert: ${msg} (type: ${type})`);
+    const alertBox = document.createElement('div');
+    alertBox.classList.add('alert-box', type);
+    alertBox.innerHTML = `
+      <div class="icon"><i class="fa-solid ${type === 'error' ? 'fa-times-circle' : 'fa-check-circle'}"></i></div>
+      <div class="msg"><p>${msg}</p></div>
+    `;
+    document.body.appendChild(alertBox);
+    setTimeout(() => alertBox.remove(), 3000);
   };
 
   const confirmPasswordChange = () => {
@@ -117,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
       `;
 
-      addConfirmBoxStyles();
       document.body.appendChild(confirmBox);
 
       const yesBtn = confirmBox.querySelector('#confirm-yes');
@@ -148,47 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
           confirmBox.remove();
       });
   };
-
-  function addConfirmBoxStyles() {
-      const style = document.createElement('style');
-      style.textContent = `
-          .confirm-box {
-              position: fixed;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              background-color: var(--bg-color, #fff);
-              color: var(--text-color, #000);
-              padding: 20px;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-              z-index: 1000;
-          }
-          .confirm-content input {
-              width: 100%;
-              margin: 10px 0;
-              padding: 8px;
-              border-radius: 5px;
-              border: 1px solid #ccc;
-          }
-          .confirm-content button {
-              margin-right: 10px;
-              padding: 8px 12px;
-              border-radius: 5px;
-              border: none;
-              cursor: pointer;
-          }
-          .confirm-content button#confirm-yes {
-              background-color: #007bff;
-              color: white;
-          }
-          .confirm-content button#confirm-no {
-              background-color: #dc3545;
-              color: white;
-          }
-      `;
-      document.head.appendChild(style);
-  }
 
   const fetchUserData = async () => {
       try {
