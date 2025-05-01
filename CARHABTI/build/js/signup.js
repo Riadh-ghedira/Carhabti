@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function validateName() {
     const name = nameInput.value.trim();
     if (name.length < 2) {
-      nameError.textContent = 'Name must be at least 2 characters';
+      nameError.textContent = 'Le nom doit comporter au moins 2 caractères';
       return false;
     }
     nameError.textContent = '';
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
-      emailError.textContent = 'Invalid email format';
+      emailError.textContent = 'Format de courriel invalide';
       return false;
     }
 
@@ -50,13 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function validatePassword() {
     const password = passwordInput.value;
     if (password.length < 8) {
-      passwordError.textContent = 'At least 8 characters required';
+      passwordError.textContent = 'Au moins 8 caractères requis';
       return false;
     } else if (!/[A-Z]/.test(password)) {
-      passwordError.textContent = 'Include at least one uppercase letter';
+      passwordError.textContent = 'Inclure au moins une lettre majuscule';
       return false;
     } else if (!/[0-9]/.test(password)) {
-      passwordError.textContent = 'Include at least one number';
+      passwordError.textContent = 'Inclure au moins un chiffre';
       return false;
     }
     passwordError.textContent = '';
@@ -67,10 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
     if (confirmPassword.length === 0) {
-      confirmPasswordError.textContent = 'Please confirm your password';
+      confirmPasswordError.textContent = 'Veuillez confirmer votre mot de passe';
       return false;
     } else if (password !== confirmPassword) {
-      confirmPasswordError.textContent = 'Passwords do not match';
+      confirmPasswordError.textContent = 'Les mots de passe ne correspondent pas';
       return false;
     }
     confirmPasswordError.textContent = '';
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
           callAlertBox(result.message || 'Signup failed', 'error');
         }
       } catch (error) {
-        callAlertBox(error.message || 'Failed to signup. Please try again.', 'error');
+        callAlertBox(error.message || 'Échec de l\'inscription. Veuillez réessayer.', 'error');
         console.error('Signup error:', error);
       } finally {
         btnText.style.display = 'inline-block';

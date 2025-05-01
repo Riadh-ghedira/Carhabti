@@ -114,24 +114,24 @@ document.addEventListener('DOMContentLoaded', () => {
     carDiv.innerHTML = `
       <img class="car-img" src="${isValidImage(car.photo) ? car.photo : './src/bg.webp'}" width="auto">
       <div>
-        <h4>${car.name}${statusLabel}</h4>
-        <span class="rating inline"><i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating} <span> (${car.nbviews} reviews)</span></span>
-        <div class="specs flex">
-          <div class="column">
-            <p class="passager"><i class="fa-solid fa-user"></i> ${car.capacity} Passagers</p>
-            <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation == 1 ? 'With' : 'No'} climatisation</p>
-          </div>
-          <div class="column">
-            <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
-            <p class="doors"><i class="fa-solid fa-car-side"></i> ${car.doors} Doors</p>
-          </div>
+      <h4>${car.name}${statusLabel}</h4>
+      <span class="rating inline"><i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating} <span> (${car.nbviews} avis)</span></span>
+      <div class="specs flex">
+        <div class="column">
+        <p class="passager"><i class="fa-solid fa-user"></i> ${car.capacity} Passagers</p>
+        <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation == 1 ? 'Avec' : 'Sans'} climatisation</p>
+        </div>
+        <div class="column">
+        <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
+        <p class="doors"><i class="fa-solid fa-car-side"></i> ${car.doors} portes</p>
         </div>
       </div>
+      </div>
       <div class="center">
-        <hr>
-        ${isAdmin ?
-          `<button class="reverse-btn" onclick="showUpdateForm(${car.id})">Update Status →</button>` :
-          `<button class="reverse-btn" onclick="showReservation(${car.id})">Rent Now →</button>`}
+      <hr>
+      ${isAdmin ?
+        `<button class="reverse-btn" onclick="showUpdateForm(${car.id})">Mettre à jour →</button>` :
+        `<button class="reverse-btn" onclick="showReservation(${car.id})">Louer maintenant →</button>`}
       </div>
     `;
     return carDiv;
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loadCarListFromData = async (retryCount = 0) => {
     const maxRetries = 3;
-    parcDiv.innerHTML = '<p>Loading cars...</p>';
+    parcDiv.innerHTML = '<p>Chargement des voitures...</p>';
     try {
       const response = await fetch('./build/php/cars.php');
       if (!response.ok) {
@@ -172,15 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
       parcDiv.innerHTML = '';
       if (carList.length === 0) {
         console.warn('No cars found in the data');
-        parcDiv.innerHTML = '<p>No cars available at the moment.</p>';
+        parcDiv.innerHTML = '<p>Aucune voiture disponible pour le moment.</p>';
         return;
       }
-
+      
       const carsToDisplay = isAdmin ? carList : carList.filter(car => car.crash == '0' && car.disponibility == '1');
-
+      
       if (carsToDisplay.length === 0) {
         console.warn('No available cars to display');
-        parcDiv.innerHTML = '<p>No cars available at the moment.</p>';
+        parcDiv.innerHTML = '<p>Aucune voiture disponible pour le moment.</p>';
         return;
       }
 
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Retrying fetch (attempt ${retryCount + 1}/${maxRetries})...`);
         setTimeout(() => loadCarListFromData(retryCount + 1), 1000);
       } else {
-        parcDiv.innerHTML = '<p>Error loading cars. Please try again later.</p>';
+        parcDiv.innerHTML = '<p>Erreur lors du chargement des voitures. Veuillez réessayer plus tard.</p>';
       }
     }
   };
@@ -221,14 +221,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const car = carList.find(c => c.id === carId);
     if (!car) {
       console.error(`Car with ID ${carId} not found in carList`);
-      callAlertBox('Car not found. Please try refreshing the page.', 'error');
+      callAlertBox('Voiture introuvable. Veuillez essayer de rafraîchir la page.', 'error');
       return;
     }
 
     const updateForm = document.getElementById('edit-car-form');
     if (!updateForm) {
       console.error('Update form not found.');
-      callAlertBox('Error: Update form not found on the page.', 'error');
+      callAlertBox('Erreur : Formulaire de mise à jour introuvable sur la page.', 'error');
       return;
     }
 
@@ -258,11 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!validTypes.includes(file.type)) {
-        callAlertBox('Please upload a valid image (JPEG, PNG, or WebP).', 'error');
+        callAlertBox('Veuillez télécharger une image valide (JPEG, PNG ou WebP).', 'error');
         return resolve('./src/bg.webp');
       }
       if (file.size > 5 * 1024 * 1024) {
-        callAlertBox('Image size must be less than 5MB.', 'error');
+        callAlertBox('La taille de l\'image doit être inférieure à 5 Mo.', 'error');
         return resolve('./src/bg.webp');
       }
 
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const returnD = new Date(`${returnDate}T${returnTime}:00`);
     console.log(`Pickup: ${pickup}, Return: ${returnD}`);
     if (isNaN(pickup) || isNaN(returnD) || pickup >= returnD) {
-      callAlertBox('Return date and time must be after pickup date and time.', 'error');
+      callAlertBox('La date et l\'heure de retour doivent être après la date et l\'heure de prise en charge.', 'error');
       return;
     }
 
@@ -317,15 +317,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const result = await response.json();
       if (result.success) {
-        callAlertBox('Reservation successful!', 'success');
+        callAlertBox('Reservation en successé! Vous recevrez un email avec tout reste de contrat.', 'success');
         showParc();
         form.reset();
       } else {
         callAlertBox(result.message || 'Failed to create reservation.', 'error');
       }
     } catch (error) {
-      console.error('Error submitting reservation:', error);
-      callAlertBox('An error occurred. Please try again.', 'error');
+      console.error('Erreur lors de la soumission de la réservation:', error);
+      callAlertBox('Une erreur s\'est produite. Veuillez réessayer.', 'error');
     }
   });
   document.getElementById('edit-car-form')?.addEventListener('submit', async (e) => {

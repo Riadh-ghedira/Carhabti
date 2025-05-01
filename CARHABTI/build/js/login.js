@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
-      emailError.textContent = 'Invalid email format';
+      emailError.textContent = 'Format de courriel invalide';
       return false;
     }
 
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = passwordInput.value;
 
     if (password.length < 8) {
-      passwordError.textContent = 'Password must be at least 8 characters';
+      passwordError.textContent = 'Le mot de passe doit comporter au moins 8 caractères';
       return false;
     }
 
@@ -77,17 +77,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await authenticateUser(email, password);
         
         if (result.success) {
-          callAlertBox('Login successful');
+            callAlertBox('Connexion réussie');
           form.reset();
 
           setTimeout(() => {
             window.location.href = '../CARHABTI/main.html';
           }, 2000);
         } else {
-          callAlertBox(result.message || 'Authentication failed', 'error');
+            callAlertBox(result.message || 'Échec de l\'authentification', 'error');
         }
       } catch (error) {
-        callAlertBox('Failed to login. Please try again.', 'error');
+        callAlertBox('Échec de la connexion. Veuillez réessayer.', 'error');
         console.error('Login error:', error);
       } finally {
         btnText.style.display = 'inline-block';

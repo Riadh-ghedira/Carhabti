@@ -22,7 +22,7 @@ const addBestRatedCars = async () => {
 
     if (bestRatedCars.length === 0) {
       console.warn('No cars to display');
-      parcContainer.innerHTML = '<p>No cars available at the moment.</p>';
+      parcContainer.innerHTML = '<p>Aucune voiture disponible pour le moment.</p>';
       return;
     }
 
@@ -34,23 +34,23 @@ const addBestRatedCars = async () => {
         <div>
           <h4>${car.name}</h4>
           <span class="rating inline">
-            <i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating}
-            <span> (${car.nbviews} reviews)</span>
+        <i style="color:yellow;" class="fa-solid fa-star"></i> ${car.rating}
+        <span> (${car.nbviews} avis)</span>
           </span>
           <div class="specs flex">
-            <div class="column">
-              <p class="passager"><i class="fa-solid fa-user"></i> ${car.capacity} Passagers</p>
-              <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation === 1 ? 'With' : 'No'} climatisation</p>
-            </div>
-            <div class="column">
-              <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
-              <p class="doors"><i class="fa-solid fa-car-side"></i> ${car.doors} Doors</p>
-            </div>
+        <div class="column">
+          <p class="passager"><i class="fa-solid fa-user"></i> ${car.capacity} Passagers</p>
+          <p class="clim"><i class="fa-solid fa-snowflake"></i> ${car.climatisation === 1 ? 'Avec' : 'Sans'} climatisation</p>
+        </div>
+        <div class="column">
+          <p class="gear"><i class="fa-solid fa-map-pin"></i> ${car.transmission}</p>
+          <p class="doors"><i class="fa-solid fa-car-side"></i> ${car.doors} Portes</p>
+        </div>
           </div>
         </div>
         <div class="center">
           <hr>
-          <button class="reverse-btn" onclick="Reservation(${car.id})">Rent Now →</button>
+          <button class="reverse-btn" onclick="Reservation(${car.id})">Louer Maintenant →</button>
         </div>
       `;
       parcContainer.appendChild(carDiv);
@@ -60,7 +60,7 @@ const addBestRatedCars = async () => {
     console.log('scrollWidth:', parcContainer.scrollWidth, 'clientWidth:', parcContainer.clientWidth);
   } catch (error) {
     console.error('Error fetching cars:', error);
-    parcContainer.innerHTML = '<p>Error loading cars. Please try again later.</p>';
+    parcContainer.innerHTML = '<p>Erreur lors du chargement des voitures. Veuillez réessayer plus tard.</p>';
   }
 };
 

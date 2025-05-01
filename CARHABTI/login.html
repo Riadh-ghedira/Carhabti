@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="./build/css/login.css">
     <link rel="stylesheet" href="./build/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
     <script defer src="./build/components/loading.js" ></script>
     <script type="module" src="./build/components/header.js" ></script>
     <script type="module" src="./build/components/sidenav.js" ></script>
     <script type="module" src="./build/components/footer.js" ></script>
     <script defer src="./build/js/script.js"></script>
     <script type="module" src="./build/js/login.js"></script>
-    <script src="https://kit.fontawesome.com/ed1023ad28.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <loading-component></loading-component>
@@ -33,16 +33,16 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <p class="error" id="email-error"></p>
-            <label for="password">Password:</label>
+            <label for="password">Mot de passe:</label>
             <input id="password" name="password" type="password" required>
             <p class="error" id="password-error"></p>
             <button type="submit">
-                <span class="btn-text">Login</span>
+                <span class="btn-text">Connexion</span>
                 <span class="spinner" style="display: none;">
                   <i class="fa fa-spinner fa-spin"></i>
                 </span>
             </button>
-            <p class="msg">don't have an account? <a href="signup.html" class="bleu">Sign up</a>.</p>
+            <p class="msg">Vous n'avez pas de compte ? <a href="signup.html" class="bleu">Inscrivez-vous</a>.</p>
         </form>
     </section>
     </main>

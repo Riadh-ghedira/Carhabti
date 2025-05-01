@@ -241,8 +241,18 @@ header-component{
         background-color: var(--btn-dark-hover);
     }
 
-    .alert-box.success { background-color: #2a4d2a; }
-    .alert-box.error { background-color: #4d2a2a; }
+    .alert-box.success {
+        background-color: var(--success-bg, #065a1a);
+        color: var(--success-text,#97f3ad );
+        border: 1px solid var(--success-border, #c3e6cb);
+      }
+      
+      .alert-box.error {
+        background-color: var(--error-bg, #d8293a );
+        color: var(--error-text,#fcabb2 );
+        border: 1px solid var(--error-border, #f5c6cb);
+        
+      }
 }
 
 /* Responsive Styles */

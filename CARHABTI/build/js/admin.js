@@ -112,11 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!validTypes.includes(file.type)) {
-        callAlertBox('Please upload a valid image (JPEG, PNG, or WebP).', 'error');
+        callAlertBox('Veuillez télécharger une image valide (JPEG, PNG ou WebP).', 'error');
         return resolve('./src/bg.webp');
       }
       if (file.size > 5 * 1024 * 1024) {
-        callAlertBox('Image size must be less than 5MB.' , 'error');
+        callAlertBox('La taille de l\'image doit être inférieure à 5 Mo.', 'error');
         return resolve('./src/bg.webp');
       }
 
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       result = JSON.parse(resultText);
       console.log('Parsed response:', result);
       if (result.success) {
-        callAlertBox('Car added successfully!' , 'success');
+        callAlertBox('Voiture ajoutée avec succès !', 'success');
         addCarForm.classList.add('fadeout');
         setTimeout(() => {
           addCarForm.classList.add('hidden');
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      callAlertBox('Failed to add car. Please try again.' , 'error');
+      callAlertBox('Échec de l\'ajout de la voiture. Veuillez réessayer.', 'error');
     }
   };
 });

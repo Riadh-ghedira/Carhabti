@@ -41,17 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const confirmBox = document.createElement('div');
       confirmBox.className = 'confirm-box';
 
-      confirmBox.innerHTML = `
-          <div class="confirm-content">
-              <label for="current-password">Enter current password:</label>
-              <input type="password" id="current-password" placeholder="Current Password" required>
-              <p>Are you sure you want to change the password?</p>
-              <div style="margin-top: 10px;">
-                  <button id="confirm-yes">Yes</button>
-                  <button id="confirm-no">Cancel</button>
-              </div>
+    confirmBox.innerHTML = `
+        <div class="confirm-content">
+          <label for="current-password">Entrez le mot de passe actuel :</label>
+          <input type="password" id="current-password" placeholder="Mot de passe actuel" required>
+          <p>Êtes-vous sûr de vouloir changer le mot de passe ?</p>
+          <div style="margin-top: 10px;">
+            <button id="confirm-yes">Oui</button>
+            <button id="confirm-no">Annuler</button>
           </div>
-      `;
+        </div>
+    `;
 
       addConfirmBoxStyles();
       document.body.appendChild(confirmBox);
@@ -87,15 +87,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const confirmBox = document.createElement('div');
       confirmBox.className = 'confirm-box';
 
-      confirmBox.innerHTML = `
-          <div class="confirm-content">
-              <p>Are you sure you want to change your profile photo?</p>
-              <div style="margin-top: 10px;">
-                  <button id="confirm-yes">Yes</button>
-                  <button id="confirm-no">Cancel</button>
-              </div>
+    confirmBox.innerHTML = `
+        <div class="confirm-content">
+          <p>Êtes-vous sûr de vouloir changer votre photo de profil ?</p>
+          <div style="margin-top: 10px;">
+            <button id="confirm-yes">Oui</button>
+            <button id="confirm-no">Annuler</button>
           </div>
-      `;
+        </div>
+    `;
 
       document.body.appendChild(confirmBox);
 
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const reader = new FileReader();
               reader.onload = () => {
                   img.src = reader.result;
-                  callAlertBox('Photo updated! Remember to save.', 'success');
+                  callAlertBox('Photo mise à jour ! N\'oubliez pas de sauvegarder.', 'success');
               };
               reader.readAsDataURL(file);
           });
@@ -176,11 +176,11 @@ document.addEventListener("DOMContentLoaded", function () {
                   input.dispatchEvent(event);
               });
           } else {
-              callAlertBox(userData?.message || 'Failed to load user data', 'error');
+              callAlertBox(userData?.message || 'Échec du chargement des données utilisateur', 'error');
           }
       } catch (error) {
           console.error('Error fetching user data:', error);
-          callAlertBox('Error loading user data: ' + error.message, 'error');
+          callAlertBox('Erreur lors du chargement des données utilisateur : ' + error.message, 'error');
       }
   };
 
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log('Update result:', result);
           
           if (result.status === 'success') {
-              callAlertBox(`${field} updated successfully`, 'success');
+              callAlertBox(`${field} mis à jour avec succès`, 'success');
               return true;
           } else {
               callAlertBox(result.message || 'Update failed', 'error');
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
       } catch (error) {
           console.error('Error saving user data:', error);
-          callAlertBox('Error saving data: ' + error.message, 'error');
+          callAlertBox('Erreur lors de l\'enregistrement des données : ' + error.message, 'error');
           return false;
       }
   };
@@ -300,7 +300,7 @@ document.addEventListener("DOMContentLoaded", function () {
       email.value = localStorage.getItem('email');
       fetchUserData();
   } else {
-      callAlertBox('No user logged in', 'error');
+    callAlertBox('Aucun utilisateur connecté', 'error');
       setTimeout(() => {
           window.location.href = './login.html';
       }, 2000);

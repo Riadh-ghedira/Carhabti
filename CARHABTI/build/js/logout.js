@@ -72,15 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('email');
             localStorage.removeItem('userName');
             localStorage.removeItem('isAdmin');
-            callAlertBox('Logged out successfully', 'success');
+            callAlertBox('Déconnexion réussie', 'success');
             setTimeout(() => {
               window.location.href = './main.html';
             }, 2000);
           } else {
-            callAlertBox(result.message || 'Logout failed', 'error');
+            callAlertBox(result.message || 'Échec de la déconnexion', 'error');
           }
         } catch (error) {
-          callAlertBox(error.message || 'Failed to logout. Please try again.', 'error');
+            callAlertBox(error.message || 'Échec de la déconnexion. Veuillez réessayer.', 'error');
         } finally {
           if (btnText && spinner) {
             btnText.style.display = 'inline-block';

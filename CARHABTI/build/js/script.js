@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
 
   const nav = headerRoot.querySelectorAll('.main-nav ul li');
@@ -105,8 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loginNav.classList.add('hidden');
     sideUserNav.classList.remove('hidden');
     sideloginNav.classList.add('hidden');
-    userName.textContent = localStorage.getItem('userName') || 'User';
-    sideUserName.textContent = localStorage.getItem('userName') || 'User';
+    const iconHTML = isAdmin 
+      ? '<i class="fa-solid fa-user-shield"></i>' 
+      : '<i class="fa-solid fa-circle-info"></i>';
+
+    const name = localStorage.getItem('userName') || 'User';
+
+    userName.innerHTML = `${iconHTML} ${name}`;
+    sideUserName.innerHTML = `${iconHTML} ${name}`;
   } else {
     userNav.classList.add('hidden');
     loginNav.classList.add('flex');

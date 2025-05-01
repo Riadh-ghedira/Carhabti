@@ -196,7 +196,7 @@ class HeaderComponent extends HTMLElement {
                       <li><a id="user" href="./account.html"></a> <i class="fa-solid fa-user"></i></li>
                       <li class="reverse-btn a-reverse">
                           <a id="logout-btn" class="btn a-reverse logout-btn">
-                              <span class="btn-text">Deconnect</span>
+                              <span class="btn-text">Deconnecter</span>
                               <span class="spinner" style="display: none;">
                                   <i class="fa fa-spinner fa-spin"></i>
                               </span>
