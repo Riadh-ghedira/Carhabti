@@ -45,13 +45,23 @@ function get_user_data($email) {
 
 function update_user_field($email, $field, $value) {
     global $conn;
-    $allowed_fields = ['name', 'password', 'phone', 'address', 'birth', 'cin', 'licence', 'photo'];
+    $allowed_fields = ['name', 'password', 'phone', 'address', 'birth', 'cin', 'licence', 'photo', 'admin'];
     if (!in_array($field, $allowed_fields)) {
         return false;
     }
     $sql = "UPDATE account SET $field = ? WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $value, $email);
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+}
+
+function delete_user($email) {
+    global $conn;
+    $sql = "DELETE FROM account WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
     $result = $stmt->execute();
     $stmt->close();
     return $result;
@@ -135,6 +145,20 @@ function get_reservations_by_email($email) {
         $reservations[] = $row;
     }
     $stmt->close();
+    return $reservations;
+}
+
+function get_all_reservations() {
+    global $conn;
+    $reservations = [];
+    $sql = "SELECT r.*, c.name AS car_name FROM reservations r JOIN car c ON r.car_id = c.id ORDER BY r.created_at DESC";
+    $result = $conn->query($sql);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $reservations[] = $row;
+        }
+        $result->free();
+    }
     return $reservations;
 }
 

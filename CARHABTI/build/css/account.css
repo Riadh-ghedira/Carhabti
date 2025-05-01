@@ -77,11 +77,12 @@ hr {
   justify-content: space-between;
   align-items: flex-start;
   margin: 0 auto;
-  padding: 1.25rem;
+  padding: 10px;
   margin-bottom: 1.25rem;
-  margin-inline: 0.9375rem;
+  margin-inline: 10px;
   row-gap: 0.625rem;
-  width: 60%;
+  min-width: 60%;
+  max-width: auto;
 }
 
 .display hr {

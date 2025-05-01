@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (agenceRect && agenceRect.top < window.innerHeight / 2 && agenceRect.bottom > window.innerHeight / 2) {
       nav[2].classList.add('a-reverse', 'reverse-btn');
       logNav[1].classList.add('a-reverse', 'reverse-btn');
-    }else if (contactRect && contactRect.top < window.innerHeight && contactRect.bottom > 0) {
+    }else if (contactRect && contactRect.top < window.innerHeight/2 && contactRect.bottom > 0) {
       nav[3].classList.add('a-reverse', 'reverse-btn');
       switch (relativePath) {
         case '/carhabti/CARHABTI/login.html':
@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
           logNav[0].classList.add('a-reverse', 'reverse-btn');
           break;
         case '/carhabti/CARHABTI/signup.html':
+          logNav[1].classList.add('a-reverse', 'reverse-btn');
+          break;
+        case '/carhabti/CARHABTI/account.html':
           logNav[1].classList.add('a-reverse', 'reverse-btn');
           break;
         default:

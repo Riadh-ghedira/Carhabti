@@ -1,0 +1,126 @@
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 auto;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    max-width: 75rem;
+  }
+  
+  .display h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: #333;
+  }
+  
+  .display .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .display table {
+    width: 100%;
+    min-width: 50rem; 
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid var(--btn-light);
+  }
+  
+  .display th, .display td {
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--btn-light);
+  }
+  
+  .display th {
+    background-color: var(--btn-light);
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .display td {
+    color: #222;
+  }
+  
+  .display tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .display tr:hover td {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .display hr {
+    width: 100%;
+    height: 1px;
+    background-color: var(--btn-light);
+    border: none;
+    margin: 0.625rem 0;
+  }
+  
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    .display h2 {
+      color: var(--dark-text-color);
+    }
+    .display table {
+      background-color: var(--dark-bg-color);
+      border-color: var(--btn-dark);
+    }
+    .display th {
+      background-color: var(--btn-dark);
+      color: var(--dark-text-color);
+    }
+    .display td {
+      color: var(--dark-text-color);
+    }
+    .display tr:hover td {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .display hr {
+      background-color: var(--btn-dark);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 1084px) {
+    .display {
+      padding: 0.9375rem;
+      margin-inline: 0.625rem;
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .display {
+      padding: 0.625rem;
+    }
+    .display h2 {
+      font-size: 1.25rem;
+    }
+    .display .table-container {
+      overflow-x: auto;
+    }
+    .display table {
+      min-width: 0;
+      font-size: 0.875rem;
+    }
+    .display th, .display td {
+      padding: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .display table {
+      font-size: 0.75rem;
+    }
+    .display th, .display td {
+      padding: 0.375rem;
+    }
+  }
