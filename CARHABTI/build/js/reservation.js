@@ -1,47 +1,4 @@
-const deleteUser = (email) => {
-    if (confirm(`Are you sure you want to delete user ${email}?`)) {
-        fetch('/carhabti/CARHABTI/build/php/reservations.php', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    callAlertBox('User deleted successfully');
-                    displayUsers(); // Refresh user list
-                } else {
-                    callAlertBox(data.message || 'Failed to delete user', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting user:', error);
-                callAlertBox('Error deleting user', 'error');
-            });
-    }
-};
 
-const changeAdmin = (email) => {
-    fetch('/carhabti/CARHABTI/build/php/reservations.php', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, toggleAdmin: true })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                callAlertBox(`Admin status updated for ${email}`);
-                displayUsers(); // Refresh user list
-            } else {
-                callAlertBox(data.message || 'Failed to update admin status', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error updating admin status:', error);
-            callAlertBox('Error updating admin status', 'error');
-        });
-    
-};
 
 document.addEventListener('DOMContentLoaded', () => {
     const reservationsDisplay = document.getElementById('reservations-display');
@@ -62,7 +19,60 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(alertBox);
         setTimeout(() => alertBox.remove(), 3000);
     };
-
+    const deleteUser = (email) => {
+        if (confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${email} ?`)) {
+            fetch('/carhabti/CARHABTI/build/php/reservations.php', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        callAlertBox('Utilisateur supprimé avec succès');
+                        setTimeout(() => {
+                            displayUsers(); 
+                        }, 300); 
+                    } else {
+                        callAlertBox(data.message || 'Échec de la suppression de l\'utilisateur', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la suppression de l\'utilisateur :', error);
+                    callAlertBox('Erreur lors de la suppression de l\'utilisateur', 'error');
+                });
+        }
+    };
+    
+    const changeAdmin = (email) => {
+        if (confirm(`Êtes-vous sûr de changer la badge Admin de l'utilisateur ${email} ?`)) {
+            fetch('/carhabti/CARHABTI/build/php/reservations.php', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, toggleAdmin: true })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        callAlertBox(`Admin status updated for ${email}`);
+                        setTimeout(() => {
+                            displayUsers(); 
+                        }, 300);
+                    } else {
+                        callAlertBox(data.message || 'Failed to update admin status', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating admin status:', error);
+                    callAlertBox('Error updating admin status', 'error');
+                });
+        }
+    };
+    
+    const Reservation = (id) => {
+        localStorage.setItem('selectedCarId', id);
+        window.location.href = '../CARHABTI/reservation.html';
+    };
     const reservationLine = (data) => {
         const tr = document.createElement('tr');
         const fields = [
@@ -74,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fields.forEach(field => {
             const td = document.createElement('td');
             if (field === 'id') {
-                td.innerHTML = `<a onclick="Reservation(${data['id']})"><i class="fa-solid fa-image"></i></a>`;
+                td.innerHTML = `<a class="view-reservation" data-id="${data['id']}"><i class="fa-solid fa-image"></i></a>`;
             } else {
                 td.textContent = data[field] || '';
             }
@@ -82,11 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         return tr;
-    };
-
-    const Reservation = (id) => {
-        localStorage.setItem('selectedCarId', id);
-        window.location.href = '../CARHABTI/reservation.html';
     };
 
     const userLine = (data) => {
@@ -99,9 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
         fields.forEach(field => {
             const td = document.createElement('td');
             if (field === 'Supprimer') {
-                td.innerHTML = `<a class="delete" onclick="deleteUser('${data['email']}')"><i class="fa-solid fa-trash"></i></a>`;
+                td.innerHTML = `<a class="delete-user" data-email="${data['email']}"><i class="fa-solid fa-trash"></i></a>`;
             } else if (field === 'Change-admin-badge') {
-                td.innerHTML = `<a class="chandAdmin" onclick="changeAdmin('${data['email']}')">${data['admin'] ? '<i class="fa-solid fa-minus"></i>' : '<i class="fa-solid fa-plus"></i>'}</a>`;
+                td.innerHTML = `<a class="change-admin" data-email="${data['email']}">${data['admin'] ? '<i class="fa-solid fa-minus"></i>' : '<i class="fa-solid fa-plus"></i>'}</a>`;
             } else {
                 td.textContent = field === 'admin' ? (data[field] === 1 || data[field] === '1' ? 'Yes' : 'No') : data[field] || '';
             }
@@ -223,6 +228,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
+    const setupEventListeners = () => {
+        
+        reservationsDisplay.addEventListener('click', (event) => {
+            const target = event.target.closest('a');
+            if (!target) return;
+
+            if (target.classList.contains('view-reservation')) {
+                const id = target.dataset.id;
+                Reservation(id);
+            }
+        });
+
+        
+        historiqueDisplay.addEventListener('click', (event) => {
+            const target = event.target.closest('a');
+            if (!target) return;
+
+            if (target.classList.contains('delete-user')) {
+                const email = target.dataset.email;
+                deleteUser(email);
+            } else if (target.classList.contains('change-admin')) {
+                const email = target.dataset.email;
+                changeAdmin(email);
+            }else if (target.classList.contains('view-reservation')) {
+                const id = target.dataset.id;
+                Reservation(id);
+            }
+        });
+    };
+
     if (email === "") {
         console.log('No email found in localStorage');
         callAlertBox("Couldn't find email", 'error');
@@ -303,4 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 historique.innerHTML = '<tr><td colspan="14">Could not load reservation history: ' + error.message + '</td></tr>';
             }
         });
+
+    setupEventListeners(); 
 });
