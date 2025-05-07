@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const video = document.createElement('video');
     video.src = 'video/car.mp4'; 
     video.autoplay = true;
-    video.controls = true;
+    video.controls = false;
     video.style.width = '100%';
     video.style.height = 'auto';
     video.style.display = 'block';

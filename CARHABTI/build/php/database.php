@@ -1,12 +1,7 @@
 <?php
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'carhabti';
-$db_port = 3306;
 
 try {
-    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
+    $conn = new mysqli('localhost', 'root', '', 'carhabti', 3306);
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }

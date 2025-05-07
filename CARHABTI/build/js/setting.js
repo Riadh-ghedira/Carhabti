@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-      addConfirmBoxStyles();
       document.body.appendChild(confirmBox);
 
       const yesBtn = confirmBox.querySelector('#confirm-yes');

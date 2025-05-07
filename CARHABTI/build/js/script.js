@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (loadingScreen && loadingScreen.hide) {
     window.addEventListener('load', () => {
+      localStorage.setItem('videoSeen', 'false');
       loadingScreen.hide();
     });
   }
