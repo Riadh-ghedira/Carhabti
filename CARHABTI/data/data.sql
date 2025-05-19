@@ -9,7 +9,8 @@ CREATE TABLE carhabti.account (
     cin VARCHAR(20),
     licence VARCHAR(20),
     address VARCHAR(255),
-    admin BOOLEAN NOT NULL DEFAULT 0
+    admin BOOLEAN NOT NULL DEFAULT 0,
+    phone INT 
 );
 
 
@@ -45,6 +46,9 @@ CREATE TABLE reservations (
     return_time TIME NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
+
+INSERT INTO account(email, password, name,admin)
+    VALUES (admin@admin.car ,"$2y$10$ceDtI3kf9EBrTo3hhc4Q9.78JDXp9f5ye7GzpOWu6FN68gLs9WQYC" , Admin,1); --password: Admin2222--
 
 INSERT INTO car (id, name, price, fuel, transmission, climatisation, capacity, doors, photo, carsh, disponibility, nbviews, rating)
 VALUES
